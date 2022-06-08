@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Master.dart';
 
 void main() => runApp(MaterialApp(
       home: Home(),
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  static Master master = Master([], []);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Fitness Buddy"),
         centerTitle: true,
         backgroundColor: Colors.black,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.red,
+        child: Icon(
+          Icons.add,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -51,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.red,
       ),
     );
   }
