@@ -26,8 +26,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String searchString = "";
   int _selectedIndex = 0;
   static Master master = Master([], []);
+
+  List<Widget> widgetOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    widgetOptions = listOfWidgets();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.red,
-        child: Icon(
-          Icons.add,
-        ),
+      body: Center(
+        child: widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -68,7 +74,45 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      print(_selectedIndex);
     });
+  }
+
+  void _onSearch(String value) {
+    setState(() {
+      searchString = value.toLowerCase();
+    });
+  }
+
+  List<Widget> listOfWidgets() {
+    return (<Widget>[
+      Column(
+        children: [
+          FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Colors.red,
+            child: const Icon(
+              Icons.add,
+            ),
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: TextField(
+              onChanged: (value) {
+                _onSearch(value);
+              },
+              decoration: const InputDecoration(
+                labelText: 'Søg...',
+                suffixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+        ],
+      ),
+      Column(),
+    ]);
   }
 }
