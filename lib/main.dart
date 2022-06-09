@@ -104,15 +104,23 @@ class _HomeScreenState extends State<HomeScreen> {
       Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.all(15.0),
             child: TextField(
               onChanged: (value) {
                 _onSearch(value);
               },
               decoration: const InputDecoration(
-                labelText: 'Søg...',
-                suffixIcon: Icon(Icons.search),
+                labelText: ('Søg...'),
+                labelStyle: (TextStyle(color: Colors.red)),
+                suffixIcon: Icon(
+                  Icons.search,
+                  color: Colors.red,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 0.5),
+                ),
               ),
+              cursorColor: Colors.red,
             ),
           ),
         ],
