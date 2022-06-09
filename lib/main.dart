@@ -88,7 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
       Column(
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreateWorkout()),
+              );
+            },
             backgroundColor: Colors.red,
             child: const Icon(
               Icons.add,
@@ -116,3 +121,25 @@ class _HomeScreenState extends State<HomeScreen> {
     ]);
   }
 }
+
+class CreateWorkout extends StatelessWidget {
+  const CreateWorkout({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Create Workout'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
