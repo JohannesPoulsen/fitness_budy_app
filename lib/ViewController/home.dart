@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Model/Master.dart';
 import 'create_workout.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -73,11 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> listOfWidgets() {
+    
     return (<Widget>[
-      Column(
-        children: [
-          FloatingActionButton(
-            onPressed: () {
+      Scaffold( 
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {              
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -89,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.add,
             ),
           ),
-        ],
+       
       ),
       Column(
         children: <Widget>[
