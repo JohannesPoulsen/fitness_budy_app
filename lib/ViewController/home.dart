@@ -10,6 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController editingController = TextEditingController();
+  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
+  var items = <String>[];
+
   String searchString = "";
   int _selectedIndex = 0;
   static Master master = Master([], []);
@@ -19,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    items.addAll(duplicateItems);
     widgetOptions = listOfWidgets();
   }
 
@@ -31,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
       ),
       body: Center(
-        child: widgetOptions.elementAt(_selectedIndex),
+        child: listOfWidgets().elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -69,48 +74,89 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> listOfWidgets() {
     return (<Widget>[
-      Column(
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CreateWorkout(master: master)),
-              );
-            },
-            backgroundColor: Colors.red,
-            child: const Icon(
-              Icons.add,
-            ),
+      Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreateWorkout(master: master)),
+            );
+          },
+          backgroundColor: Colors.red,
+          child: const Icon(
+            Icons.add,
           ),
-        ],
+        ),
       ),
       Column(
-        children: [
+        children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) {
-                _onSearch(value);
+                filterSearchResults(value);
               },
+              controller: editingController,
+              cursorColor: Colors.red,
               decoration: const InputDecoration(
-                labelText: ('Søg...'),
+                labelText: "Søg",
+                hintText: "Søg",
                 labelStyle: (TextStyle(color: Colors.red)),
-                suffixIcon: Icon(
+                prefixIcon: Icon(
                   Icons.search,
                   color: Colors.red,
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(width: 3, color: Colors.red),
+                ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red, width: 0.5),
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(width: 3, color: Colors.red),
                 ),
               ),
-              cursorColor: Colors.red,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              key: UniqueKey(),
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(items[index]),
+                  key: UniqueKey(),
+                );
+              },
             ),
           ),
         ],
       ),
       Column(),
     ]);
+  }
+
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = <String>[];
+    dummySearchList.addAll(duplicateItems);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = <String>[];
+      for (var item in dummySearchList) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
+      }
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(duplicateItems);
+      });
+    }
   }
 }

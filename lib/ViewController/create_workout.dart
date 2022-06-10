@@ -20,6 +20,9 @@ class _CreateWorkout extends State<CreateWorkout> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Workout'),
+        backgroundColor: Colors.black,
+        
+
       ),
       body: Center(
         child: Column(
