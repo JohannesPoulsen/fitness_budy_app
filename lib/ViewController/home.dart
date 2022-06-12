@@ -72,21 +72,25 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onSearch(String value) {
-    setState(() {
-      searchString = value.toLowerCase();
-    });
-  }
-
   List<Widget> listOfWidgets() {
     return (<Widget>[
       Scaffold(
+        body: Center(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(items[index]),
+              );
+            },
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => CreateWorkout(master: master)),
+              MaterialPageRoute(builder: (context) => const CreateWorkout()),
             );
           },
           backgroundColor: Colors.red,
@@ -126,13 +130,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              key: UniqueKey(),
               shrinkWrap: true,
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(items[index]),
-                  key: UniqueKey(),
+                  trailing: const Icon(
+                    Icons.fitness_center,
+                  ),
+                  onTap: () {},
                 );
               },
             ),
