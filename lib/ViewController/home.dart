@@ -31,10 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fitness Buddy"),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
+          title: const Text("Fitness Buddy"),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.person),
+              tooltip: "Profile",
+            ),
+          ]),
       body: Center(
         child: listOfWidgets().elementAt(_selectedIndex),
       ),
