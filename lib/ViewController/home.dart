@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Model/Master.dart';
 import 'create_workout.dart';
+import 'profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,10 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
           title: const Text("Fitness Buddy"),
           centerTitle: true,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.grey[850],
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()),
+                );
+              },
               icon: const Icon(Icons.person),
               tooltip: "Profile",
             ),
