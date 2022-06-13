@@ -7,12 +7,12 @@ import 'package:fitness_body_app/ViewController/login.dart';
 
 FocusNode myFocusNode = FocusNode();
 Future<void> main() async {
-  runApp(const MaterialApp(
-    home: Home(),
-  ));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MaterialApp(
+    home: Home(),
+  ));
 }
 
 class Home extends StatelessWidget {
