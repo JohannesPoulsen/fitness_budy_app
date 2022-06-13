@@ -1,15 +1,10 @@
-class User {
-  final String imagePath;
-  final String name;
-  final String email;
-  final String password;
-  final String about;
+import 'package:uuid/uuid.dart';
 
-  const User({
-    required this.imagePath,
-    required this.name,
-    required this.email,
-    required this.about,
-    required this.password,
-  });
+class User {
+  String id;
+  String name;
+  String email;
+
+  User({ required this.name, required this.email, required this.id }){}
+
 }

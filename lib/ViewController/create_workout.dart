@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Model/Workout.dart';
-import '../Model/Cardio.dart';
-import '../Model/Rutine.dart';
-import '../Model/Master.dart';
+import 'package:fitness_body_app/Model/Workout.dart';
+import 'package:fitness_body_app/Model/Cardio.dart';
+import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/Model/Master.dart';
 
 class CreateWorkout extends StatelessWidget {
   const CreateWorkout({Key? key}) : super(key: key);

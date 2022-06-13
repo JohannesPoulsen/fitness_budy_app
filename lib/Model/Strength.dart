@@ -1,12 +1,12 @@
-import 'Rutine.dart';
+import 'package:fitness_body_app/Model/Rutine.dart';
 class Strength extends Rutine{
   int? repitions;
   int? duration;
 
-  Strength(String name, bool public, int this.repitions, int this.duration) : super(name, public);
+  Strength({ name, public, url, this.repitions, this.duration}) : super(name: name, public: public, url: url);
 
-  Strength newCardio(String name, bool public, int repitions, int duration) {
-    return Strength(name, public, repitions, duration);
+  Strength newCardio(String name, bool public, String? url, int? repitions, int? duration) {
+    return Strength(name: name, public: public, repitions: repitions, duration: duration, url: url);
 
   }
 }
