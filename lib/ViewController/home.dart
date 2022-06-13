@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const CreateWorkout()),
+              MaterialPageRoute(builder: (context) => CreateWorkout()),
             );
           },
           backgroundColor: Colors.red,
