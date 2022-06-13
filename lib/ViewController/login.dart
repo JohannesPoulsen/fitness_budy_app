@@ -35,6 +35,7 @@ class _LoginState extends State<Login> {
                   )),
               Container(
                   alignment: Alignment.center,
+                  
                   padding: const EdgeInsets.all(10),
                   child: const Text(
                     'Sign in',
@@ -43,6 +44,7 @@ class _LoginState extends State<Login> {
                       fontSize: 20,
                     ),
                   )),
+                  
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
