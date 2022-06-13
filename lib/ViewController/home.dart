@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../Model/Master.dart';
-import 'create_workout.dart';
-import 'profile.dart';
+import 'package:fitness_body_app/Model/Master.dart';
+import 'package:fitness_body_app/ViewController/create_workout.dart';
+import 'package:fitness_body_app/ViewController/profile.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key, required this.master}) : super(key: key);
 
+  final Master master;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -17,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
-  static Master master = Master([], []);
 
   List<Widget> widgetOptions = [];
 
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CreateWorkout()),
+              MaterialPageRoute(builder: (context) => CreateWorkout(master: widget.master)),
             );
           },
           backgroundColor: Colors.red,

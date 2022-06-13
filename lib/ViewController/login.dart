@@ -17,6 +17,11 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   @override
+  initState(){
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -110,7 +115,8 @@ class _LoginState extends State<Login> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                            builder: (context) => HomeScreen(master: Master([], []))
+                        ),
                       );
                     },
                   )),

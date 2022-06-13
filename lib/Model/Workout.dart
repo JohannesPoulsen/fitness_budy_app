@@ -2,6 +2,14 @@ import 'package:fitness_body_app/Model/Rutine.dart';
 
 class Workout{
   List<Rutine> workoutList = [];
+  List<String> tags = [];
+
+  void set type(String type){
+    this.type = type;
+  }
+  String get type{
+    return this.type;
+  }
 
   void set name(String name){
     this.name = name;
@@ -19,6 +27,10 @@ class Workout{
 
   void addWorkout(List<Rutine> workout){
     this.workoutList = workout;
+  }
+
+  void addTags(List<String> tags){
+    this.tags = tags;
   }
 
   Workout cloneWorkout(){
