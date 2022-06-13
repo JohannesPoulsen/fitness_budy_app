@@ -34,16 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
           title: const Text("Fitness Buddy"),
           centerTitle: true,
-          backgroundColor: Colors.grey[850],
+          backgroundColor: Colors.black,
           actions: <Widget>[
             IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfileScreen()),
-                );
-              },
+              onPressed: () {},
               icon: const Icon(Icons.person),
               tooltip: "Profile",
             ),

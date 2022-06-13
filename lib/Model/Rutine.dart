@@ -1,10 +1,11 @@
 class Rutine{
-  String? name;
+  String name;
   bool public = false;
+  String? url;
 
-  Rutine(String this.name, bool this.public);
+  Rutine({required this.name, required this.public, this.url });
 
   Rutine newRutine(String name, bool public){
-    return Rutine(name, public);
+    return Rutine(name: name, public: public);
   }
 }
