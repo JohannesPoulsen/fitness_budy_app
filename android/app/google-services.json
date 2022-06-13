@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "953919045825",
+    "firebase_url": "https://fitness-appen-future-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fitness-appen-future",
+    "storage_bucket": "fitness-appen-future.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953919045825:android:9e7073838d090fa725d440",
+        "android_client_info": {
+          "package_name": "com.example.fitness_body_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953919045825-s448t83aq93kpcfbvjs6p9evau1qvon3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByB41W89m9VpgZs-uvEpPVxpAxmgzLxA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953919045825-s448t83aq93kpcfbvjs6p9evau1qvon3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "953919045825-ptl2ucqfj4rn1049h0pojubhljbl1798.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitnessBodyApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
