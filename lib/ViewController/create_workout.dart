@@ -72,8 +72,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               height: 100,
               child: ElevatedButton(
                 onPressed: () {
-                  Workout workout = Workout();
-                  workout.name = workoutName;
+                  Workout workout = Workout(name: workoutName);
                   workout.tags = [tagName];
                   workout.type = typeName;
                   Navigator.push(
