@@ -145,8 +145,120 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      Column(),
-    ]);
+      Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Center(
+              child: CircleAvatar(
+                backgroundImage: NetworkImage('https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
+                radius: 40.0,      
+              ),
+              
+            ),
+            Divider(
+              color: Colors.grey[600],
+              height: 60.0,
+            ),
+            const Text(
+              'Navn',
+              style: TextStyle(
+                color: Colors.grey,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            const Text(
+              'Søren Sveder',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 28.0,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 30.0),
+            const Text(
+              'Center',
+              style: TextStyle(
+                color: Colors.grey,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            const Text(
+              'Hornbæk Fitness, Danmark',
+              style: TextStyle(
+                color:  Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 28.0,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 30.0),
+            const Text(
+              'Timer trænet i denne måned',
+              style: TextStyle(
+                color: Colors.grey,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            const Text(
+              '5',
+              style: TextStyle(
+                color:  Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 28.0,
+                letterSpacing: 2.0,
+              ),
+            ),
+            const SizedBox(height: 30.0),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.email,
+                  color: Colors.grey[600],
+                ),
+                const SizedBox(width: 10.0),
+                Text(
+                  'søren.jegsveder@gmail.com',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 18.0,
+                    letterSpacing: 1.0,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 30.0),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+               Text(
+                  'Min uge',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 18.0,
+                    letterSpacing: 1.0,
+                  ),
+                )
+              ],
+            ),
+                 Align(
+              alignment: Alignment.topRight,
+               child: FloatingActionButton(
+                hoverColor: Colors.orange,
+                onPressed: () {},
+                backgroundColor: Colors.red,
+                  child: const Icon(
+                    Icons.more_horiz
+              ),
+            ),
+           ),
+         ],
+        ),
+      ]
+    );    
   }
 
   void filterSearchResults(String query) {
