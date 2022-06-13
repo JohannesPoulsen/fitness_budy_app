@@ -32,6 +32,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               fontWeight: FontWeight.bold,
             )),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.edit),
+            tooltip: "Edit Profile",
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.zero,
