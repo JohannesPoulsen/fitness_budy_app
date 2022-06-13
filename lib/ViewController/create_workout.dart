@@ -4,8 +4,24 @@ import 'package:fitness_body_app/Model/Cardio.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 
-class CreateWorkout extends StatelessWidget {
-  const CreateWorkout({Key? key}) : super(key: key);
+class CreateWorkout extends StatefulWidget {
+  CreateWorkout({Key? key}) : super(key: key);
+
+  @override
+  State<CreateWorkout> createState() => _CreateWorkoutState();
+}
+
+class _CreateWorkoutState extends State<CreateWorkout> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  String workoutName = "";
+
+  String typeName = "";
+
+  String tagName = "";
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +40,7 @@ class CreateWorkout extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Workout: "),
           ),
-          textFieldWidget("Enter workout name..."),
+          textFieldWidget("Enter workout name...", "workoutName"),
           const SizedBox(
             height: 25,
           ),
@@ -32,7 +48,7 @@ class CreateWorkout extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Type: "),
           ),
-          textFieldWidget("Enter type..."),
+          textFieldWidget("Enter type...", "typeName"),
           const SizedBox(
             height: 25,
           ),
@@ -40,7 +56,7 @@ class CreateWorkout extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Tags: "),
           ),
-          textFieldWidget("Add tags..."),
+          textFieldWidget("Add tags...", "tagName"),
           const SizedBox(
             height: 25,
           ),
@@ -66,11 +82,14 @@ class CreateWorkout extends StatelessWidget {
     );
   }
 
-  Widget textFieldWidget(tekst) {
+  Widget textFieldWidget(tekst, content) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: TextField(
         cursorColor: Colors.grey,
+        onChanged: (value) {
+          saveTextValue(content, value);
+        },
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
@@ -87,5 +106,21 @@ class CreateWorkout extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void saveTextValue(content, value) {
+    if (content == "workoutName") {
+      setState(() {
+        workoutName = value;
+      });
+    } else if (content == "typeName") {
+      setState(() {
+        typeName = value;
+      });
+    } else {
+      setState(() {
+        tagName = value;
+      });
+    }
   }
 }

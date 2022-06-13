@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/ViewController/create_workout.dart';
+import '../Model/Master.dart';
+import 'create_workout.dart';
+import 'profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
