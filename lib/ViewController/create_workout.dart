@@ -1,10 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
 import 'package:fitness_body_app/Model/Cardio.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
 import 'package:fitness_body_app/Model/Master.dart';
+import 'package:fitness_body_app/ViewController/add_rutine.dart';
 
 class CreateWorkout extends StatefulWidget {
   const CreateWorkout({Key? key, required this.master}) : super(key: key);
@@ -77,6 +76,10 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   workout.name = workoutName;
                   workout.tags = [tagName];
                   workout.type = typeName;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Add_rutine()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromARGB(255, 190, 24, 12),
