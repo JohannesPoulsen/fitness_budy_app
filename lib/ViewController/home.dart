@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/ViewController/create_workout.dart';
-import 'package:fitness_body_app/ViewController/profile.dart';
+import '../Model/Master.dart';
+import 'create_workout.dart';
+import 'profile.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.master}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-  final Master master;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -18,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
+  static Master master = Master([], []);
 
   List<Widget> widgetOptions = [];
 
@@ -34,10 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
           title: const Text("Fitness Buddy"),
           centerTitle: true,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.grey[850],
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const ProfileScreen(master: widget.master)),
+                );
+              },
               icon: const Icon(Icons.person),
               tooltip: "Profile",
             ),
@@ -91,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CreateWorkout(master: widget.master)),
+              MaterialPageRoute(
+                  builder: (context) => CreateWorkout(master: widget.master)),
             );
           },
           backgroundColor: Colors.red,
@@ -147,119 +155,116 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Center(
-              child: CircleAvatar(
-                backgroundImage: NetworkImage('https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
-                radius: 40.0,      
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Center(
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
+              radius: 40.0,
+            ),
+          ),
+          Divider(
+            color: Colors.grey[600],
+            height: 60.0,
+          ),
+          const Text(
+            'Navn',
+            style: TextStyle(
+              color: Colors.grey,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          const Text(
+            'Søren Sveder',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 28.0,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 30.0),
+          const Text(
+            'Center',
+            style: TextStyle(
+              color: Colors.grey,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          const Text(
+            'Hornbæk Fitness, Danmark',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 28.0,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 30.0),
+          const Text(
+            'Timer trænet i denne måned',
+            style: TextStyle(
+              color: Colors.grey,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          const Text(
+            '5',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 28.0,
+              letterSpacing: 2.0,
+            ),
+          ),
+          const SizedBox(height: 30.0),
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.email,
+                color: Colors.grey[600],
               ),
-              
-            ),
-            Divider(
-              color: Colors.grey[600],
-              height: 60.0,
-            ),
-            const Text(
-              'Navn',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              'Søren Sveder',
-              style: TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            const Text(
-              'Center',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              'Hornbæk Fitness, Danmark',
-              style: TextStyle(
-                color:  Colors.red,
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            const Text(
-              'Timer trænet i denne måned',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              '5',
-              style: TextStyle(
-                color:  Colors.red,
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.email,
+              const SizedBox(width: 10.0),
+              Text(
+                'søren.jegsveder@gmail.com',
+                style: TextStyle(
                   color: Colors.grey[600],
+                  fontSize: 18.0,
+                  letterSpacing: 1.0,
                 ),
-                const SizedBox(width: 10.0),
-                Text(
-                  'søren.jegsveder@gmail.com',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                )
-              ],
+              )
+            ],
+          ),
+          const SizedBox(height: 30.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Min uge',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 18.0,
+                  letterSpacing: 1.0,
+                ),
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: FloatingActionButton(
+              hoverColor: Colors.orange,
+              onPressed: () {},
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.more_horiz),
             ),
-            const SizedBox(height: 30.0),
-             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-               Text(
-                  'Min uge',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                )
-              ],
-            ),
-                 Align(
-              alignment: Alignment.topRight,
-               child: FloatingActionButton(
-                hoverColor: Colors.orange,
-                onPressed: () {},
-                backgroundColor: Colors.red,
-                  child: const Icon(
-                    Icons.more_horiz
-              ),
-            ),
-           ),
-         ],
-        ),
-      ]
-    );    
+          ),
+        ],
+      ),
+    ]);
   }
 
   void filterSearchResults(String query) {
