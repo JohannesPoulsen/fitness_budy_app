@@ -121,7 +121,8 @@ class _LoginState extends State<Login> {
                               id: 'placeholder',
                               amountOfFollowers: 0,
                               amountOfFollowing: 0,
-                              amountOfPublicWorkouts: 0
+                              amountOfPublicWorkouts: 0,
+                              center: 'placeholder'
                             )))
                         ),
                       );

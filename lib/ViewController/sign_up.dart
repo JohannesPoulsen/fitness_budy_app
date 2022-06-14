@@ -5,7 +5,7 @@ import 'package:fitness_body_app/ViewController/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import '../services/authentication.dart';
+import 'package:fitness_body_app/services/authentication.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -140,7 +140,8 @@ class _SignUpState extends State<SignUp> {
                                         id: 'placeholder',
                                         amountOfFollowers: 0,
                                         amountOfFollowing: 0,
-                                        amountOfPublicWorkouts: 0
+                                        amountOfPublicWorkouts: 0,
+                                        center: 'placeholder'
                                     )),
                                   )),
                         );
