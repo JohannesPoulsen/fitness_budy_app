@@ -71,14 +71,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildContent() {
-    final String name = "Amogus Sus";
-    final String email = "amogussus@sussymail.com";
+    //String name = "Amogus Sus";
+    //String email = "amogussus@sussymail.com";
 
     return Column(
       children: [
         const SizedBox(height: 8),
         Text(
-          name,
+          widget.master.currentUser.name,
           style: const TextStyle(
             fontSize: 20,
             color: Colors.black,
@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 2,
         ),
         Text(
-          email,
+          widget.master.currentUser.email,
           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
         ),
         const SizedBox(height: 16),
@@ -99,19 +99,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildCoverImage() => Container(
-        color: Colors.red,
+        color: Colors.grey[900],
         width: double.infinity,
         height: coverHeight,
         // fit: BoxFit.cover,
         child: const Image(
-          image: NetworkImage('https://www.charlottehaven.com/media/1119/healthclub_traaning-og-faciliteter_fitness_topslider1920x1080_01.jpg?anchor=center&mode=crop&width=1200&height=628&rnd=132785091678870000'),
+          image: NetworkImage('https://simplifaster.com/wp-content/uploads/2018/09/Male-Athlete.jpg'),
             ),
       );
 
   Widget buildProfileImage() => CircleAvatar(
         radius: ppHeight / 2,
         backgroundColor: Colors.pinkAccent,
-        backgroundImage: NetworkImage(
+        backgroundImage: const NetworkImage(
             'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec'),
       );
 
@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildSocialIcon(IconData icon, String? link) => CircleAvatar(
         radius: 25,
         child: Material(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           clipBehavior: Clip.hardEdge,
           color: Colors.transparent,
           child: InkWell(
