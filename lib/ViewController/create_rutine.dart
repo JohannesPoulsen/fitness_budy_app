@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Create_rutine extends StatefulWidget {
-  const Create_rutine({Key? key}) : super(key: key);
+class CreateRutine extends StatefulWidget {
+  const CreateRutine({Key? key}) : super(key: key);
 
   @override
-  _Create_rutineState createState() => _Create_rutineState();
+  _CreateRutineState createState() => _CreateRutineState();
 }
 
-class _Create_rutineState extends State<Create_rutine> {
+class _CreateRutineState extends State<CreateRutine> {
   var durationController = TextEditingController();
   var distanceController = TextEditingController();
   var repitionsController = TextEditingController();

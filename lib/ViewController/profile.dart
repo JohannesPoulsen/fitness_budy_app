@@ -103,8 +103,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.infinity,
         height: coverHeight,
         // fit: BoxFit.cover,
-        child: Image.network(
-            'https://www.charlottehaven.com/media/1119/healthclub_traaning-og-faciliteter_fitness_topslider1920x1080_01.jpg?anchor=center&mode=crop&width=1200&height=628&rnd=132785091678870000'),
+        child: const Image(
+          image: NetworkImage('https://www.charlottehaven.com/media/1119/healthclub_traaning-og-faciliteter_fitness_topslider1920x1080_01.jpg?anchor=center&mode=crop&width=1200&height=628&rnd=132785091678870000'),
+            ),
       );
 
   Widget buildProfileImage() => CircleAvatar(

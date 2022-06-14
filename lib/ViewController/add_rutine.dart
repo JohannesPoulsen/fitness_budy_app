@@ -3,18 +3,18 @@ import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
 import 'create_rutine.dart';
 
-class Add_rutine extends StatefulWidget {
-  const Add_rutine({Key? key, required this.master, required this.workout})
+class AddRutine extends StatefulWidget {
+  const AddRutine({Key? key, required this.master, required this.workout})
       : super(key: key);
 
   final Master master;
   final Workout workout;
 
   @override
-  _Add_rutineState createState() => _Add_rutineState();
+  _AddRutineState createState() => _AddRutineState();
 }
 
-class _Add_rutineState extends State<Add_rutine> {
+class _AddRutineState extends State<AddRutine> {
   var rutines = <String>[];
 
   @override
@@ -55,7 +55,7 @@ class _Add_rutineState extends State<Add_rutine> {
           addItem("hej");
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Create_rutine()),
+            MaterialPageRoute(builder: (context) => CreateRutine()),
           );
         },
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),
@@ -69,7 +69,7 @@ class _Add_rutineState extends State<Add_rutine> {
           addItem("hej");
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Create_rutine()),
+            MaterialPageRoute(builder: (context) => CreateRutine()),
           );
         },
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),

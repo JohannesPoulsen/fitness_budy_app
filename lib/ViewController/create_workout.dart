@@ -79,7 +79,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                     workout.workoutType = typeName;
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Add_rutine(master: widget.master, workout: workout),
+                      MaterialPageRoute(builder: (context) => AddRutine(master: widget.master, workout: workout),
                       ),
                     );
                   }
