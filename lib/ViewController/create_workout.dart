@@ -73,9 +73,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               child: ElevatedButton(
                 onPressed: () {
                   Workout workout = Workout(name: workoutName);
+                  workout.addTags(tagName);
+                  workout.workoutType = typeName;
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Add_rutine()),
+                    MaterialPageRoute(builder: (context) => Add_rutine(master: widget.master, workout: workout),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(

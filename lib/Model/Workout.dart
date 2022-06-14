@@ -33,8 +33,8 @@ class Workout{
     this.workoutList = workout;
   }
 
-  void addTags(List<String> tags){
-    this.tags = tags;
+  void addTags(String tags){
+    this.tags.add(tags);
   }
 
   Workout cloneWorkout(){

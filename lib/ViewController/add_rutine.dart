@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fitness_body_app/Model/Master.dart';
+import 'package:fitness_body_app/Model/Workout.dart';
 
 class Add_rutine extends StatefulWidget {
-  const Add_rutine({Key? key}) : super(key: key);
+  const Add_rutine({Key? key, required this.master, required this.workout}) : super(key: key);
+
+  final Master master;
+  final Workout workout;
 
   @override
   _Add_rutineState createState() => _Add_rutineState();
