@@ -13,9 +13,8 @@ class LineTitles {
         getTitles: (value) {
           //value = value * 2;
           switch (value.toInt()) {
-            case 1:{
+            case 1:
               return 'MON';
-            }
             case 2:
               return 'TUE';
             case 3:
@@ -36,24 +35,6 @@ class LineTitles {
       ),
       leftTitles: SideTitles(showTitles: false),
       rightTitles: SideTitles(showTitles: false),
-      /*rightTitles: SideTitles(
-        showTitles: true,
-        getTitles: (value) {
-          switch (value.toInt()) {
-            case 1:
-              return '0';
-            case 2:
-              return '1';  
-            case 3:
-              return '1.5';
-            case 5:
-              return '2';
-          }
-          return '';
-        },
-        reservedSize: 40,
-        margin: 24,
-      ),*/
     );
   }
 }
