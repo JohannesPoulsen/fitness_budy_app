@@ -1,4 +1,5 @@
 import 'package:fitness_body_app/Model/Master.dart';
+import 'package:fitness_body_app/Model/User.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/ViewController/main.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +134,14 @@ class _SignUpState extends State<SignUp> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => HomeScreen(
-                                    master: Master([], []),
+                                    master: Master([], [], User(
+                                        name: 'placeholder',
+                                        email: 'placeholder',
+                                        id: 'placeholder',
+                                        amountOfFollowers: 0,
+                                        amountOfFollowing: 0,
+                                        amountOfPublicWorkouts: 0
+                                    )),
                                   )),
                         );
                       }
