@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fitness_body_app/Model/Cardio.dart';
+import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/Model/OtherRutine.dart';
+import 'package:fitness_body_app/Model/Strength.dart';
 
 class CreateRutine extends StatefulWidget {
   const CreateRutine({Key? key}) : super(key: key);
@@ -13,9 +17,10 @@ class _CreateRutineState extends State<CreateRutine> {
   var repitionsController = TextEditingController();
   String optionsValue = 'Cardio';
 
-  String duration = '';
-  String repitions = '';
-  String distance = '';
+  int duration = 0;
+  int repitions = 0;
+  int distance = 0;
+  String name = '';
 
   var options = [
     'Cardio',
@@ -46,9 +51,9 @@ class _CreateRutineState extends State<CreateRutine> {
               onChanged: (String? newValue) {
                 setState(() {
                   optionsValue = newValue!;
-                  distance = "";
-                  duration = "";
-                  repitions = "";
+                  distance = 0;
+                  duration = 0;
+                  repitions = 0;
                   repitionsController.clear();
                   durationController.clear();
                   distanceController.clear();
@@ -57,7 +62,30 @@ class _CreateRutineState extends State<CreateRutine> {
             ),
             RutineWidget(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Rutine? toAdd;
+                if (optionsValue == "Strenght") {
+                  toAdd = Strength(
+                      name: name,
+                      public: false,
+                      repetitions: repitions,
+                      duration: duration);
+                } else if (optionsValue == "Cardio") {
+                  toAdd = Cardio(
+                      name: name,
+                      public: false,
+                      distance: distance,
+                      duration: duration);
+                } else {
+                  toAdd = OtherRutine(
+                      name: name,
+                      public: false,
+                      repetition: repitions,
+                      duration: duration,
+                      distance: distance);
+                }
+                Navigator.pop(context, toAdd);
+              },
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromARGB(255, 190, 24, 12),
               ),
@@ -162,7 +190,9 @@ class _CreateRutineState extends State<CreateRutine> {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextField(
         cursorColor: Colors.grey,
-        onChanged: (value) {},
+        onChanged: (value) {
+          name = value;
+        },
         decoration: const InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
           labelText: "Name",
@@ -183,15 +213,27 @@ class _CreateRutineState extends State<CreateRutine> {
   void setValue(content, value) {
     if (content == "Duration") {
       setState(() {
-        duration = value;
+        try {
+          duration = int.parse(value);
+        } catch (e) {
+          print(e);
+        }
       });
     } else if (content == "Repitions") {
       setState(() {
-        repitions = value;
+        try {
+          duration = int.parse(value);
+        } catch (e) {
+          print(e);
+        }
       });
     } else {
       setState(() {
-        distance = value;
+        try {
+          duration = int.parse(value);
+        } catch (e) {
+          print(e);
+        }
       });
     }
   }

@@ -73,23 +73,26 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               height: 100,
               child: ElevatedButton(
                 onPressed: () {
-                  if (workoutName.isNotEmpty){
+                  if (workoutName.isNotEmpty) {
                     Workout workout = Workout(name: workoutName);
                     workout.addTags(tagName);
                     workout.workoutType = typeName;
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddRutine(master: widget.master, workout: workout),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Add_rutine(master: widget.master, workout: workout),
                       ),
                     );
-                  }
-                  else{
+                  } else {
                     showDialog(
                         context: context,
-                        builder: (context){
-                          return const ErrorBox(errorName: 'Unnamed parameter.', errorReason: 'Give your workout a name, before continuing.');
-                        }
-                    );
+                        builder: (context) {
+                          return const ErrorBox(
+                              errorName: 'Unnamed parameter.',
+                              errorReason:
+                                  'Give your workout a name, before continuing.');
+                        });
                   }
                 },
                 style: ElevatedButton.styleFrom(
