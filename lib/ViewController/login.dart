@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Do you not have account?'),
+                  const Text('Do you not have an account?'),
                   TextButton(
                     child: const Text(
                       'Sign up here',

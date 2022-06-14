@@ -44,7 +44,7 @@ class _SignUpState extends State<SignUp> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   child: const Text(
-                    'Sign up',
+                    'Create Account',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -150,16 +150,38 @@ class _SignUpState extends State<SignUp> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.black),
                     onPressed: () async {
-                      if (passwordController.text ==
+                      if (passwordController.text !=
                           confirmPasswordController.text) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ErrorBox(
+                                  errorName: 'Password must match',
+                                  errorReason: '');
+                            });
+                      } else if (usernameController.text == "") {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ErrorBox(
+                                  errorName: 'Enter username', errorReason: '');
+                            });
+                      } else {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         try {
-                          await auth.createUserWithEmailAndPassword(
-                            password: passwordController.text,
-                            email: emailController.text,
-                            //auth: auth
-                          );
+                          await auth
+                              .createUserWithEmailAndPassword(
+                                password: passwordController.text,
+                                email: emailController.text,
+                              )
+                              .then((userCredential) => {
+                                    userCredential.user?.updateDisplayName(
+                                        usernameController.text)
+                                  });
+
                           if (!mounted) return;
+                          // updateProfile(user,
+                          //     displayName: usernameController.text);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -168,8 +190,11 @@ class _SignUpState extends State<SignUp> {
                                           [],
                                           [],
                                           localUser(
-                                              name: 'placeholder',
-                                              email: 'placeholder',
+                                              name: auth.currentUser
+                                                      ?.displayName ??
+                                                  '',
+                                              email:
+                                                  auth.currentUser?.email ?? '',
                                               id: 'placeholder',
                                               amountOfFollowers: 0,
                                               amountOfFollowing: 0,
@@ -177,26 +202,22 @@ class _SignUpState extends State<SignUp> {
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
-                          showDialog(context: context,
-                              builder: (context){
-                                return ErrorBox(errorReason: e.message ?? '', errorName: 'User creation error');
-                                }
-                          );
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorBox(
+                                    errorReason: e.message ?? '',
+                                    errorName: 'User creation error');
+                              });
                         } catch (e) {
-                          showDialog(context: context,
-                              builder: (context){
-                                return ErrorBox(errorReason: e.toString(), errorName: 'Unexpected Error');
-                              }
-                          );
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorBox(
+                                    errorReason: e.toString(),
+                                    errorName: 'Unexpected Error');
+                              });
                         }
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const ErrorBox(
-                                  errorName: 'Password must match',
-                                  errorReason: '');
-                            });
                       }
                     },
                     child: const Text('Register'),
