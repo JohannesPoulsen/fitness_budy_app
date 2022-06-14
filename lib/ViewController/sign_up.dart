@@ -149,12 +149,12 @@ class _SignUpState extends State<SignUp> {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.black),
-                    onPressed: () {
+                    onPressed: () async {
                       if (passwordController.text ==
                           confirmPasswordController.text) {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         try {
-                          auth.createUserWithEmailAndPassword(
+                          await auth.createUserWithEmailAndPassword(
                             password: passwordController.text,
                             email: emailController.text,
                             //auth: auth
