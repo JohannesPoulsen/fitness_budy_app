@@ -177,13 +177,11 @@ class _SignUpState extends State<SignUp> {
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            print('The password provided is too weak.');
-                          } else if (e.code == 'email-already-in-use') {
-                            print('The account already exists for that email.');
-                          } else {
-                            print(e);
-                          }
+                          showDialog(context: context,
+                              builder: (context){
+                                return ErrorBox(errorReason: e.message ?? '', errorName: 'User creation error');
+                                }
+                          );
                         } catch (e) {
                           print(e);
                         }
