@@ -1,6 +1,6 @@
 import 'package:fitness_body_app/Model/Rutine.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
-import 'package:fitness_body_app/Model/User.dart';
+import 'package:fitness_body_app/Model/localUser.dart';
 
 class Master {
   List<Rutine> rutines = [];

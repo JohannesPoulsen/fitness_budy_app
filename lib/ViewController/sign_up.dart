@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/Model/User.dart';
+import 'package:fitness_body_app/Model/localUser.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/ViewController/login.dart';
 import 'package:fitness_body_app/ViewController/main.dart';

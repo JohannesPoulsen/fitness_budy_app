@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_body_app/ViewController/forgot_password.dart';
 import 'package:fitness_body_app/ViewController/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'errorBox.dart';
 import 'home.dart';
-import 'package:fitness_body_app/Model/User.dart';
+import 'package:fitness_body_app/Model/localUser.dart';
 import 'package:fitness_body_app/ViewController/main.dart';
 
 class Login extends StatefulWidget {
@@ -99,67 +100,16 @@ class _LoginState extends State<Login> {
               TextButton(
                 onPressed: () async {
                   // TODO: Implementer forgot password
-                  if (emailController.text == "") {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const ErrorBox(
-                              errorName: 'Enter email', errorReason: '');
-                        });
-                  } else if (passwordController.text == "") {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const ErrorBox(
-                              errorName: 'Enter password', errorReason: '');
-                        });
-                  } else {
-                    FirebaseAuth auth = FirebaseAuth.instance;
-                    try {
-                      await auth.signInWithEmailAndPassword(
-                        password: passwordController.text,
-                        email: emailController.text,
-                      );
-                      if (!mounted) return;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(
-                                  master: Master(
-                                      [],
-                                      [],
-                                      localUser(
-                                          name: auth.currentUser?.displayName ??
-                                              '',
-                                          email: auth.currentUser?.email ?? '',
-                                          id: 'placeholder',
-                                          amountOfFollowers: 0,
-                                          amountOfFollowing: 0,
-                                          amountOfPublicWorkouts: 0)),
-                                )),
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ErrorBox(
-                                errorReason: e.message ?? '',
-                                errorName: 'User creation error');
-                          });
-                    } catch (e) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ErrorBox(
-                                errorReason: e.toString(),
-                                errorName: 'Unexpected Error');
-                          });
-                    }
-                  }
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()),
+                  );
                 },
                 style: TextButton.styleFrom(primary: Colors.black),
                 child: const Text(
-                  'Forgot Password',
+                  'Forgot Password?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               Container(
@@ -168,22 +118,66 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     child: const Text('Login'),
                     style: ElevatedButton.styleFrom(primary: Colors.black),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(
-                                master: Master(
-                                    [],
-                                    [],
-                                    localUser(
-                                        name: 'placeholder',
-                                        email: 'placeholder',
-                                        id: 'placeholder',
-                                        amountOfFollowers: 0,
-                                        amountOfFollowing: 0,
-                                        amountOfPublicWorkouts: 0)))),
-                      );
+                    onPressed: () async {
+                      if (emailController.text == "") {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ErrorBox(
+                                  errorName: 'Enter email', errorReason: '');
+                            });
+                      } else if (passwordController.text == "") {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ErrorBox(
+                                  errorName: 'Enter password', errorReason: '');
+                            });
+                      } else {
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        try {
+                          await auth.signInWithEmailAndPassword(
+                            password: passwordController.text,
+                            email: emailController.text,
+                          );
+                          if (!mounted) return;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen(
+                                      master: Master(
+                                          [],
+                                          [],
+                                          localUser(
+                                              name: auth.currentUser
+                                                      ?.displayName ??
+                                                  '',
+                                              email:
+                                                  auth.currentUser?.email ?? '',
+                                              id: 'placeholder',
+                                              amountOfFollowers: 0,
+                                              amountOfFollowing: 0,
+                                              amountOfPublicWorkouts: 0)),
+                                    )),
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorBox(
+                                    errorReason: e.message ?? '',
+                                    errorName: 'User creation error');
+                              });
+                        } catch (e) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ErrorBox(
+                                    errorReason: e.toString(),
+                                    errorName: 'Unexpected Error');
+                              });
+                        }
+                      }
                     },
                   )),
               Row(
@@ -204,6 +198,26 @@ class _LoginState extends State<Login> {
                   )
                 ],
               ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                master: Master(
+                                    [],
+                                    [],
+                                    localUser(
+                                        name: "tester",
+                                        email: "tester@tester.com",
+                                        amountOfFollowers: 0,
+                                        amountOfFollowing: 0,
+                                        amountOfPublicWorkouts: 0,
+                                        id: '')),
+                              )),
+                    );
+                  },
+                  child: const Text("Temp login"))
             ],
           )),
     );
