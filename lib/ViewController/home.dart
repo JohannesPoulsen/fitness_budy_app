@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.red,
+        selectedItemColor: const Color.fromARGB(255, 190, 24, 12),
       ),
     );
   }
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context) => CreateWorkout(master: widget.master)),
             );
           },
-          backgroundColor: Colors.red,
+          backgroundColor: const Color.fromARGB(255, 190, 24, 12),
           child: const Icon(
             Icons.add,
           ),
@@ -117,22 +117,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 filterSearchResults(value);
               },
               controller: editingController,
-              cursorColor: Colors.red,
+              cursorColor: const Color.fromARGB(255, 190, 24, 12),
               decoration: const InputDecoration(
                 labelText: "Søg",
                 hintText: "Søg",
-                labelStyle: (TextStyle(color: Colors.red)),
+                labelStyle:
+                    (TextStyle(color: Color.fromARGB(255, 190, 24, 12))),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Colors.red,
+                  color: Color.fromARGB(255, 190, 24, 12),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  borderSide: BorderSide(width: 3, color: Colors.red),
+                  borderSide: BorderSide(
+                      width: 3, color: Color.fromARGB(255, 190, 24, 12)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  borderSide: BorderSide(width: 3, color: Colors.red),
+                  borderSide: BorderSide(
+                      width: 3, color: Color.fromARGB(255, 190, 24, 12)),
                 ),
               ),
             ),
@@ -179,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             widget.master.currentUser.name,
             style: const TextStyle(
-              color: Colors.red,
+              color: Color.fromARGB(255, 190, 24, 12),
               fontWeight: FontWeight.bold,
               fontSize: 28.0,
               letterSpacing: 2.0,
@@ -197,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             widget.master.currentUser.center ?? '',
             style: const TextStyle(
-              color: Colors.red,
+              color: Color.fromARGB(255, 190, 24, 12),
               fontWeight: FontWeight.bold,
               fontSize: 28.0,
               letterSpacing: 2.0,
@@ -215,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Text(
             '5',
             style: TextStyle(
-              color: Colors.red,
+              color: Color.fromARGB(255, 190, 24, 12),
               fontWeight: FontWeight.bold,
               fontSize: 28.0,
               letterSpacing: 2.0,
@@ -258,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: FloatingActionButton(
               hoverColor: Colors.orange,
               onPressed: () {},
-              backgroundColor: Colors.red,
+              backgroundColor: const Color.fromARGB(255, 190, 24, 12),
               child: const Icon(Icons.more_horiz),
             ),
           ),
