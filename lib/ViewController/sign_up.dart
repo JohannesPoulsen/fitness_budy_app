@@ -159,6 +159,7 @@ class _SignUpState extends State<SignUp> {
                             email: emailController.text,
                             //auth: auth
                           );
+                          if (!mounted) return;
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -180,6 +181,8 @@ class _SignUpState extends State<SignUp> {
                             print('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
                             print('The account already exists for that email.');
+                          } else {
+                            print(e);
                           }
                         } catch (e) {
                           print(e);
