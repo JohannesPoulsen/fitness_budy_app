@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/ViewController/create_workout.dart';
 import 'package:fitness_body_app/ViewController/profile.dart';
+import 'package:fl_chart/fl_chart.dart';
+import '../Model/lineTitles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.master}) : super(key: key);
@@ -157,6 +159,55 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+       Column(
+      children:[
+        const Text(
+              'Statistik',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        Container(
+            width: 1000,
+            height: 600,
+            color: Colors.white,
+            child: LineChart(  
+          LineChartData(
+            gridData: FlGridData(show: false),
+            borderData: FlBorderData(show:false),
+            titlesData: LineTitles.getTitleData(),
+            minX: 0,
+            maxX: 14,
+            minY: 0,
+            maxY: 8,
+            lineBarsData: [
+              LineChartBarData(
+                spots: [
+                  const FlSpot(0, 2.5),
+                  const FlSpot(2, 2),
+                  const FlSpot(4, 3),
+                  const FlSpot(6, 2.5),
+                  const FlSpot(8, 2),
+                  const FlSpot(10, 4),
+                  const FlSpot(12, 2.5),
+                  const FlSpot(14, 1.5),
+                ],
+                isCurved: true,
+                colors: [Colors.red,Colors.red],
+                barWidth: 5,
+                dotData: FlDotData(
+                  show: true,
+                
+                ),
+              ),
+            ],
+          ),
+          ),
+          ),
+        ],
+      ),
+
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
