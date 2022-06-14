@@ -183,7 +183,11 @@ class _SignUpState extends State<SignUp> {
                                 }
                           );
                         } catch (e) {
-                          print(e);
+                          showDialog(context: context,
+                              builder: (context){
+                                return ErrorBox(errorReason: e.toString(), errorName: 'Unexpected Error');
+                              }
+                          );
                         }
                       } else {
                         showDialog(
