@@ -174,8 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.grey[600],
               height: 60.0,
             ),
-            
-           
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -194,20 +192,50 @@ class _HomeScreenState extends State<HomeScreen> {
               child: FloatingActionButton(
                 hoverColor: Colors.orange,
                 onPressed: () {},
-                backgroundColor: const Color.fromARGB(255, 190, 24, 12),
+                backgroundColor: const Color(0xFF6fcd6b),
                 child: const Icon(Icons.more_horiz),
               ),
             ),
-            const Text(
+             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Antal timer i denne uge',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 18.0,
+                    letterSpacing: 1.0,
+                  ),
+                )
+              ],
+            ),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const <Widget>[
+                Text(
+                  '6',
+                  style: TextStyle(
+                    color:  Color(0xFF6fcd6b),
+                    fontSize: 24.0,
+                    letterSpacing: 1.0,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(width: 50, height: 50,),
+
+            const Center(
+            child: Text(
               'Statistik',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            ),
             Container(
-              width: 1000,
-              height: 600,
+              width: 400,
+              height: 400,
               color: Colors.white,
               child: LineChart(
                 LineChartData(
@@ -217,26 +245,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   minX: 0,
                   maxX: 8,
                   minY: 0,
-                  maxY: 6,
+                  maxY: 2.5,
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 3),
-                        const FlSpot(3, 2.5),
-                        const FlSpot(4, 2),
-                        const FlSpot(5, 4),
-                        const FlSpot(6, 2.5),
-                        const FlSpot(7, 1.5)
+                        const FlSpot(1, 1),
+                        const FlSpot(2, 0),
+                        const FlSpot(3, 2),
+                        const FlSpot(4, 0),
+                        const FlSpot(5, 1),
+                        const FlSpot(6, 1),
+                        const FlSpot(7, 2),                      
                       ],
                       isCurved: true,
-                      colors: [Colors.red,Colors.red],
+                      colors: [ const Color(0xFF6fcd6b), const Color(0xFF6fcd6b)],
                       barWidth: 5,
-                      dotData: FlDotData(
-                        show: true,
-
                       ),
-                    ),
                   ],
                 ),
               ),

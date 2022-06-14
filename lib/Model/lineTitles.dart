@@ -9,33 +9,49 @@ class LineTitles {
       topTitles: SideTitles(showTitles: false),
       bottomTitles: SideTitles(
         showTitles: true,
-        reservedSize: 50,
+        reservedSize: 30,
         interval: 1,
         getTitles: (value) {
           switch (value.toInt()) {
             case 1:
-              return 'MON';
+              return 'MAN';
             case 2:
-              return 'TUE';
+              return 'TIRS';
             case 3:
-              return 'WED';
+              return 'ONS';
             case 4:
-              return 'THU';
+              return 'TORS';
             case 5:
-              return 'FRI';
+              return 'FRE';
             case 6:
-              return 'SAT';
+              return 'LØR';
             case 7:
-              return 'SUN';
+              return 'SØN';
             default:
               return '';
           }
-
+        },
+        margin: 20,
+      ),
+      leftTitles: SideTitles(showTitles: false),
+      rightTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 30,
+        interval: 1,
+        getTitles: (value) {
+          switch (value.toInt()) {
+            case 0:
+              return '0';
+            case 1:
+              return '1';
+            case 2:
+              return '2';
+            default:
+              return '';
+          }
         },
         margin: 2,
       ),
-      leftTitles: SideTitles(showTitles: false),
-      rightTitles: SideTitles(showTitles: false),
     );
   }
 }
