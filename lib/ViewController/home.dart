@@ -176,9 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10.0),
-          const Text(
-            'Søren Sveder',
-            style: TextStyle(
+          Text(
+            widget.master.currentUser.name,
+            style: const TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.bold,
               fontSize: 28.0,
@@ -194,9 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10.0),
-          const Text(
-            'Hornbæk Fitness, Danmark',
-            style: TextStyle(
+          Text(
+            widget.master.currentUser.center ?? '',
+            style: const TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.bold,
               fontSize: 28.0,
@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(width: 10.0),
               Text(
-                'søren.jegsveder@gmail.com',
+                widget.master.currentUser.email,
                 style: TextStyle(
                   color: Colors.grey[600],
                   fontSize: 18.0,

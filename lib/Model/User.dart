@@ -6,6 +6,7 @@ class localUser {
   String? coverImagePath;
   String name;
   String email;
+  String? center;
   int amountOfPublicWorkouts;
   int amountOfFollowing;
   int amountOfFollowers;
@@ -16,5 +17,6 @@ class localUser {
       required this.id,
       required this.amountOfPublicWorkouts,
       required this.amountOfFollowing,
-      required this.amountOfFollowers}) {}
+      required this.amountOfFollowers,
+      this.center}) {}
 }
