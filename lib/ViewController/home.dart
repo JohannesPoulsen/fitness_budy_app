@@ -285,20 +285,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderData: FlBorderData(show:false),
                   titlesData: LineTitles.getTitleData(),
                   minX: 0,
-                  maxX: 14,
+                  maxX: 8,
                   minY: 0,
-                  maxY: 8,
+                  maxY: 6,
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        const FlSpot(0, 2.5),
-                        const FlSpot(2, 2),
-                        const FlSpot(4, 3),
+                        const FlSpot(1, 2),
+                        const FlSpot(2, 3),
+                        const FlSpot(3, 2.5),
+                        const FlSpot(4, 2),
+                        const FlSpot(5, 4),
                         const FlSpot(6, 2.5),
-                        const FlSpot(8, 2),
-                        const FlSpot(10, 4),
-                        const FlSpot(12, 2.5),
-                        const FlSpot(14, 1.5),
+                        const FlSpot(7, 1.5)
                       ],
                       isCurved: true,
                       colors: [Colors.red,Colors.red],
