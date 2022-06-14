@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
+import 'create_rutine.dart';
 
 class Add_rutine extends StatefulWidget {
-  const Add_rutine({Key? key, required this.master, required this.workout}) : super(key: key);
+  const Add_rutine({Key? key, required this.master, required this.workout})
+      : super(key: key);
 
   final Master master;
   final Workout workout;
@@ -51,6 +53,10 @@ class _Add_rutineState extends State<Add_rutine> {
         label: const Text("Add Rutine"),
         onPressed: () {
           addItem("hej");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Create_rutine()),
+          );
         },
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),
         // icon: const Icon(
@@ -61,6 +67,10 @@ class _Add_rutineState extends State<Add_rutine> {
       return FloatingActionButton(
         onPressed: () {
           addItem("hej");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Create_rutine()),
+          );
         },
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),
         child: const Icon(
