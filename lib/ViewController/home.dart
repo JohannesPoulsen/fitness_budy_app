@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Icon(Icons.more_horiz),
               ),
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
@@ -209,29 +209,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: const <Widget>[
                 Text(
                   '6',
                   style: TextStyle(
-                    color:  Color(0xFF6fcd6b),
+                    color: Color(0xFF6fcd6b),
                     fontSize: 24.0,
                     letterSpacing: 1.0,
                   ),
                 )
               ],
             ),
-            const SizedBox(width: 50, height: 50,),
-
-            const Center(
-            child: Text(
-              'Statistik',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+            const SizedBox(
+              width: 50,
+              height: 50,
             ),
+            const Center(
+              child: Text(
+                'Statistik',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             Container(
               width: 400,
@@ -240,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: false),
-                  borderData: FlBorderData(show:false),
+                  borderData: FlBorderData(show: false),
                   titlesData: LineTitles.getTitleData(),
                   minX: 0,
                   maxX: 8,
@@ -255,12 +257,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         const FlSpot(4, 0),
                         const FlSpot(5, 1),
                         const FlSpot(6, 1),
-                        const FlSpot(7, 2),                      
+                        const FlSpot(7, 2),
                       ],
                       isCurved: true,
-                      colors: [ const Color(0xFF6fcd6b), const Color(0xFF6fcd6b)],
+                      colors: [
+                        const Color(0xFF6fcd6b),
+                        const Color(0xFF6fcd6b)
+                      ],
                       barWidth: 5,
-                      ),
+                    ),
                   ],
                 ),
               ),

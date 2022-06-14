@@ -154,7 +154,7 @@ class _LoginState extends State<Login> {
                                                   '',
                                               email:
                                                   auth.currentUser?.email ?? '',
-                                              id: 'placeholder',
+                                              id: auth.currentUser?.uid ?? '',
                                               amountOfFollowers: 0,
                                               amountOfFollowing: 0,
                                               amountOfPublicWorkouts: 0)),
