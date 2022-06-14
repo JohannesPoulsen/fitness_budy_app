@@ -174,78 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.grey[600],
               height: 60.0,
             ),
-            const Text(
-              'Navn',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Text(
-              widget.master.currentUser.name,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 190, 24, 12),
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            const Text(
-              'Center',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Text(
-              widget.master.currentUser.center ?? '',
-              style: const TextStyle(
-                color: Color.fromARGB(255, 190, 24, 12),
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            const Text(
-              'Timer trænet i denne måned',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              '5',
-              style: TextStyle(
-                color: Color.fromARGB(255, 190, 24, 12),
-                fontWeight: FontWeight.bold,
-                fontSize: 28.0,
-                letterSpacing: 2.0,
-              ),
-            ),
-            const SizedBox(height: 30.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.email,
-                  color: Colors.grey[600],
-                ),
-                const SizedBox(width: 10.0),
-                Text(
-                  widget.master.currentUser.email,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 30.0),
+            
+           
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
