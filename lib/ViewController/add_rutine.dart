@@ -1,3 +1,5 @@
+import 'package:fitness_body_app/Model/Cardio.dart';
+import 'package:fitness_body_app/Model/Strength.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
@@ -16,6 +18,7 @@ class Add_rutine extends StatefulWidget {
 
 class _AddRutineState extends State<Add_rutine> {
   var rutines = <String>[];
+  var listOfRutines = <Rutine>[];
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +35,32 @@ class _AddRutineState extends State<Add_rutine> {
               fontSize: 30,
             ),
           ),
-          ListView.builder(
+          ReorderableListView.builder(
             shrinkWrap: true,
             itemCount: rutines.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.black, width: 0.5),
-                    borderRadius: BorderRadius.circular(10)),
-                title: Text(rutines[index]),
-                subtitle: Text("Reps: "),
+              return Card(
+                key: Key('$index'),
+                color: tileColorInList(listOfRutines[index]),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.black, width: 0.5),
+                      borderRadius: BorderRadius.circular(10)),
+                  title: Text(rutines[index]),
+                  subtitle: subTitle(listOfRutines[index]),
+                ),
               );
+            },
+            onReorder: (int oldIndex, int newIndex) {
+              setState(() {
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                final String item = rutines.removeAt(oldIndex);
+                final Rutine item2 = listOfRutines.removeAt(oldIndex);
+                rutines.insert(newIndex, item);
+                listOfRutines.insert(newIndex, item2);
+              });
             },
           ),
         ],
@@ -51,10 +69,27 @@ class _AddRutineState extends State<Add_rutine> {
     );
   }
 
-  void addItem(text) {
-    setState(() {
-      rutines.add(text);
-    });
+  Color tileColorInList(rutineString) {
+    if (rutineString is Cardio) {
+      return Colors.lightBlue;
+    } else if (rutineString is Strength) {
+      return Colors.red;
+    } else {
+      return const Color(0xFF6fcd6b);
+    }
+  }
+
+  Widget subTitle(rutine) {
+    if (rutine is Cardio) {
+      return Text(
+          "Distance: ${rutine.distance} - Duration: ${rutine.duration}");
+    } else if (rutine is Strength) {
+      return Text(
+          "Repititions: ${rutine.repetitions} - Duration: ${rutine.duration}");
+    } else {
+      return Text(
+          "Repititions: ${rutine.repetition} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
+    }
   }
 
   Widget addKnap() {
@@ -68,14 +103,12 @@ class _AddRutineState extends State<Add_rutine> {
           );
           if (result != null) {
             setState(() {
-              addItem(result.name);
+              rutines.add(result.name);
+              listOfRutines.add(result);
             });
           }
         },
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),
-        // icon: const Icon(
-        //   Icons.add,
-        // ),
       );
     } else {
       return FloatingActionButton(
@@ -86,7 +119,7 @@ class _AddRutineState extends State<Add_rutine> {
           );
           if (result != null) {
             setState(() {
-              addItem(result.name);
+              rutines.add(result.name);
             });
           }
         },
