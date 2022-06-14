@@ -1,11 +1,9 @@
 import 'package:fitness_body_app/ViewController/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/ViewController/create_workout.dart';
 import 'home.dart';
 import 'package:fitness_body_app/Model/User.dart';
-
-FocusNode myFocusNode = FocusNode();
+import 'package:fitness_body_app/ViewController/main.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,7 +17,7 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   @override
-  initState(){
+  initState() {
     super.initState();
   }
 
@@ -57,7 +55,7 @@ class _LoginState extends State<Login> {
                   focusNode: myFocusNode,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    labelText: 'User Name',
+                    labelText: 'Email',
                     labelStyle: TextStyle(
                         color:
                             myFocusNode.hasFocus ? Colors.blue : Colors.black),
@@ -115,25 +113,27 @@ class _LoginState extends State<Login> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomeScreen(master: Master([], [], User(
-                              name: 'placeholder',
-                              email: 'placeholder',
-                              id: 'placeholder',
-                              amountOfFollowers: 0,
-                              amountOfFollowing: 0,
-                              amountOfPublicWorkouts: 0
-                            )))
-                        ),
+                            builder: (context) => HomeScreen(
+                                master: Master(
+                                    [],
+                                    [],
+                                    localUser(
+                                        name: 'placeholder',
+                                        email: 'placeholder',
+                                        id: 'placeholder',
+                                        amountOfFollowers: 0,
+                                        amountOfFollowing: 0,
+                                        amountOfPublicWorkouts: 0)))),
                       );
                     },
                   )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Does not have account?'),
+                  const Text('Do you not have account?'),
                   TextButton(
                     child: const Text(
-                      'Sign in',
+                      'Sign up here',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     onPressed: () {

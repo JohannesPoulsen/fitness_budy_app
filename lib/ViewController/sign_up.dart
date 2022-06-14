@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/Model/User.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
+import 'package:fitness_body_app/ViewController/login.dart';
 import 'package:fitness_body_app/ViewController/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../services/authentication.dart';
+import 'errorBox.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +58,27 @@ class _SignUpState extends State<SignUp> {
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     labelText: 'Email',
+                    labelStyle: TextStyle(
+                        color:
+                            myFocusNode.hasFocus ? Colors.blue : Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 0.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 3, color: Colors.black),
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  controller: usernameController,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
                     labelStyle: TextStyle(
                         color:
                             myFocusNode.hasFocus ? Colors.blue : Colors.black),
@@ -125,25 +150,48 @@ class _SignUpState extends State<SignUp> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.black),
                     onPressed: () {
-                      if (passwordController.value ==
-                          confirmPasswordController.value) {
-                        Authentication.registerUserWithEmailAndPassword(
-                            password: passwordController.value.toString(),
-                            email: emailController.value.toString());
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen(
-                                    master: Master([], [], User(
-                                        name: 'placeholder',
-                                        email: 'placeholder',
-                                        id: 'placeholder',
-                                        amountOfFollowers: 0,
-                                        amountOfFollowing: 0,
-                                        amountOfPublicWorkouts: 0
+                      if (passwordController.text ==
+                          confirmPasswordController.text) {
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        try {
+                          auth.createUserWithEmailAndPassword(
+                            password: passwordController.text,
+                            email: emailController.text,
+                            //auth: auth
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen(
+                                      master: Master(
+                                          [],
+                                          [],
+                                          localUser(
+                                              name: 'placeholder',
+                                              email: 'placeholder',
+                                              id: 'placeholder',
+                                              amountOfFollowers: 0,
+                                              amountOfFollowing: 0,
+                                              amountOfPublicWorkouts: 0)),
                                     )),
-                                  )),
-                        );
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const ErrorBox(
+                                  errorName: 'Password must match',
+                                  errorReason: '');
+                            });
                       }
                     },
                     child: const Text('Register'),
@@ -151,14 +199,17 @@ class _SignUpState extends State<SignUp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Does not have account?'),
+                  const Text('Already have an account?'),
                   TextButton(
                     child: const Text(
-                      'Sign in',
+                      'Sign in here',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     onPressed: () {
-                      //Signup skal komme her
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                      );
                     },
                   )
                 ],

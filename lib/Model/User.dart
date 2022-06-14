@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
 
-class User {
+class localUser {
   String id;
   String? profileImagePath;
   String? coverImagePath;
@@ -10,7 +10,7 @@ class User {
   int amountOfFollowing;
   int amountOfFollowers;
 
-  User(
+  localUser(
       {required this.name,
       required this.email,
       required this.id,
