@@ -180,8 +180,6 @@ class _SignUpState extends State<SignUp> {
                                   });
 
                           if (!mounted) return;
-                          // updateProfile(user,
-                          //     displayName: usernameController.text);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

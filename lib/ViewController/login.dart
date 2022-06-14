@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/ViewController/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
+import 'errorBox.dart';
 import 'home.dart';
 import 'package:fitness_body_app/Model/User.dart';
 import 'package:fitness_body_app/ViewController/main.dart';
@@ -13,7 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -51,7 +53,7 @@ class _LoginState extends State<Login> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: emailController,
                   focusNode: myFocusNode,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
@@ -95,8 +97,65 @@ class _LoginState extends State<Login> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  //forgot password screen
+                onPressed: () async {
+                  // TODO: Implementer forgot password
+                  if (emailController.text == "") {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ErrorBox(
+                              errorName: 'Enter email', errorReason: '');
+                        });
+                  } else if (passwordController.text == "") {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ErrorBox(
+                              errorName: 'Enter password', errorReason: '');
+                        });
+                  } else {
+                    FirebaseAuth auth = FirebaseAuth.instance;
+                    try {
+                      await auth.signInWithEmailAndPassword(
+                        password: passwordController.text,
+                        email: emailController.text,
+                      );
+                      if (!mounted) return;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen(
+                                  master: Master(
+                                      [],
+                                      [],
+                                      localUser(
+                                          name: auth.currentUser?.displayName ??
+                                              '',
+                                          email: auth.currentUser?.email ?? '',
+                                          id: 'placeholder',
+                                          amountOfFollowers: 0,
+                                          amountOfFollowing: 0,
+                                          amountOfPublicWorkouts: 0)),
+                                )),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ErrorBox(
+                                errorReason: e.message ?? '',
+                                errorName: 'User creation error');
+                          });
+                    } catch (e) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ErrorBox(
+                                errorReason: e.toString(),
+                                errorName: 'Unexpected Error');
+                          });
+                    }
+                  }
                 },
                 style: TextButton.styleFrom(primary: Colors.black),
                 child: const Text(
