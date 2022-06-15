@@ -99,7 +99,7 @@ class _AddRutineState extends State<Add_rutine> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateRutine()),
+            MaterialPageRoute(builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
             setState(() {
@@ -115,7 +115,7 @@ class _AddRutineState extends State<Add_rutine> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateRutine()),
+            MaterialPageRoute(builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
             setState(() {

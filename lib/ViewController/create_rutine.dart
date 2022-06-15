@@ -3,10 +3,11 @@ import 'package:fitness_body_app/Model/Cardio.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
 import 'package:fitness_body_app/Model/OtherRutine.dart';
 import 'package:fitness_body_app/Model/Strength.dart';
+import 'package:fitness_body_app/Model/Master.dart';
 
 class CreateRutine extends StatefulWidget {
-  const CreateRutine({Key? key}) : super(key: key);
-
+  const CreateRutine({Key? key, required this.master}) : super(key: key);
+  final Master master;
   @override
   _CreateRutineState createState() => _CreateRutineState();
 }
@@ -84,6 +85,7 @@ class _CreateRutineState extends State<CreateRutine> {
                       duration: duration,
                       distance: distance);
                 }
+                widget.master.newRutine(toAdd);
                 Navigator.pop(context, toAdd);
               },
               style: ElevatedButton.styleFrom(
