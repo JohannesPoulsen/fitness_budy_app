@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
-  int _counter = 0;
+  double  _counter = 0;
 
   List<Widget> widgetOptions = [];
 
@@ -84,16 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _hourIncrease() {
+  void _hourIncrease(){
     setState(() {
-      _counter++;
+      _counter+= 0.5;
     });
   }
 
   void _hourDecrease() {
     setState(() {
-      _counter--;
-      if (_counter <= 0) {
+      _counter-= 0.5;
+      if(_counter <= 0){
         _counter = 0;
       }
     });
@@ -247,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Antal timer i denne uge',
+                  'Antal timer trænet i dag',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 18.0,
@@ -275,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Center(
               child: Text(
-                'Statistik',
+                'Min uge',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -285,20 +285,20 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: 400,
               height: 400,
-              //color: Colors.grey[400],
               child: LineChart(
-                LineChartData(
+                LineChartData(                  
                   gridData: FlGridData(show: false),
                   borderData: FlBorderData(show: false),
                   titlesData: LineTitles.getTitleData(),
+                  clipData: FlClipData.all(),
                   minX: 0,
                   maxX: 8,
                   minY: 0,
-                  maxY: 2.5,
+                  maxY: 3,
                   lineBarsData: [
                     LineChartBarData(
-                      spots: [
-                        const FlSpot(1, 1),
+                      spots: [                        
+                        FlSpot(1, _counter),
                         const FlSpot(2, 0),
                         const FlSpot(3, 2),
                         const FlSpot(4, 0),
@@ -311,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Color(0xFF6fcd6b),
                         const Color(0xFF6fcd6b)
                       ],
-                      barWidth: 5,
+                      barWidth: 10,
                     ),
                   ],
                 ),
