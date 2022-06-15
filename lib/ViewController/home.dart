@@ -100,6 +100,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Color tileColorInList(workoutType) {
+    if (workoutType == "Cardio") {
+      return Colors.lightBlue;
+    } else if (workoutType == "Strength") {
+      return Colors.red;
+    } else {
+      return const Color(0xFF6fcd6b);
+    }
+  }
+
   List<Widget> listOfWidgets() {
     return (<Widget>[
       Scaffold(
@@ -111,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 return Card(
                   key: Key('$index'),
-                  color: Colors.blue,
+                  color: tileColorInList(widget.master.workouts[index].type),
                   child: ListTile(
                     onTap: () {
                       Navigator.push(

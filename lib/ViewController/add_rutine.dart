@@ -40,7 +40,7 @@ class _AddRutineState extends State<Add_rutine> {
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                if(widget.workout.isAdded){
+                if (widget.workout.isAdded) {
                   widget.workout.addWorkout(listOfRutines);
                 } else {
                   widget.workout.addWorkout(listOfRutines);
