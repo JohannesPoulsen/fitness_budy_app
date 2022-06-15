@@ -1,4 +1,5 @@
 import 'package:fitness_body_app/Model/Workout.dart';
+import 'package:fitness_body_app/ViewController/add_rutine.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/ViewController/create_workout.dart';
@@ -112,6 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   key: Key('$index'),
                   color: Colors.blue,
                   child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Add_rutine(
+                              master: widget.master,
+                              workout: widget.master.workouts[index]),
+                        ),
+                      );
+                    },
                     title: Text(widget.master.workouts[index].workoutName),
                   ),
                 );
