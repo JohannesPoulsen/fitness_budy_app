@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/services/authentication.dart';
 
 class Workout{
   List<Rutine> workoutList = [];
   List<String> tags = [];
   String name;
+  final String? userId = FirebaseAuth.instance.currentUser?.uid;
   String? type;
   String? url;
   bool isAdded = false;

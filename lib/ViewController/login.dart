@@ -99,7 +99,6 @@ class _LoginState extends State<Login> {
               ),
               TextButton(
                 onPressed: () async {
-                  // TODO: Implementer forgot password
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
