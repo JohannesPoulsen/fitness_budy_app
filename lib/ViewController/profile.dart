@@ -77,9 +77,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildContent() {
-    //String name = "Amogus Sus";
-    //String email = "amogussus@sussymail.com";
-
     return Column(
       children: [
         const SizedBox(height: 8),
@@ -100,6 +97,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(height: 16),
         buildSocialIcons(),
+        const SizedBox(height: 16),
+        buildSocialNumbers(
+          workoutsAmount: widget.master.currentUser.amountOfPublicWorkouts,
+          followingAmount: widget.master.currentUser.amountOfFollowing,
+          followersAmount: widget.master.currentUser.amountOfFollowers,
+        ),
       ],
     );
   }
@@ -109,17 +112,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.infinity,
         height: coverHeight,
         // fit: BoxFit.cover,
-        child: const Image(
-          image: NetworkImage(
-              'https://simplifaster.com/wp-content/uploads/2018/09/Male-Athlete.jpg'),
+        child: Image(
+          image: NetworkImage(widget.master.currentUser.coverImagePath),
         ),
       );
 
-  Widget buildProfileImage() => CircleAvatar(
+  Widget buildProfileImage() => Center(
+        child: Stack(
+          children: [
+            buildProfileImagePicture(),
+            Positioned(
+              bottom: 0,
+              right: 4,
+              child: buildEditIcon(),
+            ),
+          ],
+        ),
+      );
+
+  Widget buildProfileImagePicture() => CircleAvatar(
         radius: ppHeight / 2,
         backgroundColor: Colors.pinkAccent,
-        backgroundImage: const NetworkImage(
-            'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec'),
+        backgroundImage: NetworkImage(
+            "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec") /*NetworkImage(widget.master.currentUser.profileImagePath)*/,
+      );
+
+  Widget buildEditIcon() => buildCircle(
+        color: Colors.white,
+        all: 3,
+        child: buildCircle(
+          color: Colors.red,
+          all: 8,
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      );
+
+  Widget buildCircle(
+          {required Widget child, required double all, required Color color}) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
+        ),
       );
 
   Widget buildSocialIcons(
@@ -146,10 +185,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Material(
           shape: const CircleBorder(),
           clipBehavior: Clip.hardEdge,
-          color: Colors.transparent,
+          color: Colors.red[300],
           child: InkWell(
             onTap: () {},
-            child: Center(child: Icon(icon, size: 32)),
+            child: Center(child: Icon(icon, size: 32, color: Colors.white)),
           ),
         ),
       );
@@ -166,4 +205,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     await testUser.set(data);
   }
+}
+
+class buildSocialNumbers extends StatelessWidget {
+  const buildSocialNumbers(
+      {required this.workoutsAmount,
+      required this.followingAmount,
+      required this.followersAmount});
+  final int workoutsAmount;
+  final int followingAmount;
+  final int followersAmount;
+
+  @override
+  Widget build(BuildContext context) => IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            buildSocialButton(context, workoutsAmount, "Workouts"),
+            buildSocialsDivider(),
+            buildSocialButton(context, followingAmount, "Following"),
+            buildSocialsDivider(),
+            buildSocialButton(context, followersAmount, "Followers"),
+          ],
+        ),
+      );
+
+  Widget buildSocialsDivider() => Container(
+        height: 24,
+        child: VerticalDivider(color: Colors.black),
+      );
+
+  Widget buildSocialButton(BuildContext context, int value, String text) =>
+      MaterialButton(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        onPressed: () {},
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              value.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            SizedBox(height: 2),
+            Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      );
 }

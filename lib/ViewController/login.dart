@@ -151,6 +151,8 @@ class _LoginState extends State<Login> {
                                               name: auth.currentUser
                                                       ?.displayName ??
                                                   '',
+                                              profileImagePath: '',
+                                              coverImagePath: '',
                                               email:
                                                   auth.currentUser?.email ?? '',
                                               id: auth.currentUser?.uid ?? '',
@@ -208,6 +210,8 @@ class _LoginState extends State<Login> {
                                     [],
                                     localUser(
                                         name: "tester",
+                                        profileImagePath: "",
+                                        coverImagePath: "",
                                         email: "tester@tester.com",
                                         amountOfFollowers: 0,
                                         amountOfFollowing: 0,

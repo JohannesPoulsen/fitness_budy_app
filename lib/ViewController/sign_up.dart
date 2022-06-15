@@ -176,27 +176,27 @@ class _SignUpState extends State<SignUp> {
                                 email: emailController.text,
                               )
                               .then((userCredential) async => {
-                                    await userCredential.user?.updateDisplayName(
-                                        usernameController.text)
+                                    await userCredential.user
+                                        ?.updateDisplayName(
+                                            usernameController.text)
                                   });
 
                           if (!mounted) return;
                           localUser user = localUser(
-                                              name: auth.currentUser?.displayName ?? '',
-                                              email: auth.currentUser?.email ?? '',
-                                              id: auth.currentUser?.uid ?? '',
-                                              amountOfFollowers: 0,
-                                              amountOfFollowing: 0,
-                                              amountOfPublicWorkouts: 0);
+                              name: auth.currentUser?.displayName ?? '',
+                              profileImagePath: "",
+                              coverImagePath: "",
+                              email: auth.currentUser?.email ?? '',
+                              id: auth.currentUser?.uid ?? '',
+                              amountOfFollowers: 0,
+                              amountOfFollowing: 0,
+                              amountOfPublicWorkouts: 0);
                           FirestoreUpload.uploadUser(user);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen(
-                                      master: Master(
-                                          [],
-                                          [],
-                                          user),
+                                      master: Master([], [], user),
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
