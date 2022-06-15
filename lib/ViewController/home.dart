@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
-  int  _counter = 0;
+  int _counter = 0;
 
   List<Widget> widgetOptions = [];
 
@@ -83,17 +83,17 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
   }
-  
-  void _hourIncrease(){
+
+  void _hourIncrease() {
     setState(() {
       _counter++;
     });
   }
 
-  void _hourDecrease(){
+  void _hourDecrease() {
     setState(() {
       _counter--;
-      if(_counter <= 0){
+      if (_counter <= 0) {
         _counter = 0;
       }
     });
@@ -113,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.blue,
                   child: ListTile(
                     title: Text(widget.master.workouts[index].workoutName),
-                    //subtitle: subTitle(listOfRutines[index]),
                   ),
                 );
               },
@@ -225,21 +224,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Stack(
               children: <Widget>[
                 Align(
-              alignment: Alignment.topRight,
-              child: FloatingActionButton(
-                hoverColor: Colors.orange,
-                onPressed: _hourIncrease, 
-                backgroundColor: const Color(0xFF6fcd6b),
-                child: const Icon(Icons.add),
-              ),
-            ),
-            Align(
-               alignment: Alignment.topLeft,
-              child: FloatingActionButton(
-                hoverColor: Colors.orange,
-                onPressed: _hourDecrease, 
-                backgroundColor: const Color(0xFF6fcd6b),
-                child: const Icon(Icons.remove),
+                  alignment: Alignment.topRight,
+                  child: FloatingActionButton(
+                    hoverColor: Colors.orange,
+                    onPressed: _hourIncrease,
+                    backgroundColor: const Color(0xFF6fcd6b),
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: FloatingActionButton(
+                    hoverColor: Colors.orange,
+                    onPressed: _hourDecrease,
+                    backgroundColor: const Color(0xFF6fcd6b),
+                    child: const Icon(Icons.remove),
                   ),
                 )
               ],
@@ -323,7 +322,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ]);
   }
-
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = <String>[];
