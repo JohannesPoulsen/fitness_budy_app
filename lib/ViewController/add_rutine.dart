@@ -40,8 +40,12 @@ class _AddRutineState extends State<Add_rutine> {
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                widget.workout.addWorkout(listOfRutines);
-                widget.master.newWorkout(widget.workout);
+                if(widget.workout.isAdded){
+                  widget.workout.addWorkout(listOfRutines);
+                } else {
+                  widget.workout.addWorkout(listOfRutines);
+                  widget.master.newWorkout(widget.workout);
+                }
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

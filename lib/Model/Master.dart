@@ -14,6 +14,7 @@ class Master {
   }
 
   void newWorkout(Workout w) {
+    w.isAdded = true;
     workouts.add(w);
   }
 

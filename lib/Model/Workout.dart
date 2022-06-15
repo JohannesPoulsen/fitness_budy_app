@@ -6,6 +6,7 @@ class Workout{
   String name;
   String? type;
   String? url;
+  bool isAdded = false;
   Workout({ required this.name }){}
 
   void set workoutType(String type){

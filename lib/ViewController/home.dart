@@ -114,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.blue,
                   child: ListTile(
                     onTap: () {
-                      print(widget.master.workouts[index].workoutList.length);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
