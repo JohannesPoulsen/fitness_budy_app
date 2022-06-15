@@ -14,6 +14,9 @@ Future<void> main() async {
 
   runApp(MaterialApp(
     initialRoute: '/',
+    theme: ThemeData(
+      primaryColor: Colors.lightGreen,//here it goes try changing this to your preferred colour
+    ),
     routes: {
       '/': (context) => const Login(),
     },
