@@ -4,6 +4,7 @@ import 'package:fitness_body_app/Model/localUser.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/ViewController/login.dart';
 import 'package:fitness_body_app/ViewController/main.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -180,6 +181,14 @@ class _SignUpState extends State<SignUp> {
                                   });
 
                           if (!mounted) return;
+                          localUser user = localUser(
+                                              name: auth.currentUser?.displayName ?? '',
+                                              email: auth.currentUser?.email ?? '',
+                                              id: auth.currentUser?.uid ?? '',
+                                              amountOfFollowers: 0,
+                                              amountOfFollowing: 0,
+                                              amountOfPublicWorkouts: 0);
+                          FirestoreUpload.uploadUser(user);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -187,13 +196,7 @@ class _SignUpState extends State<SignUp> {
                                       master: Master(
                                           [],
                                           [],
-                                          localUser(
-                                              name: auth.currentUser?.displayName ?? '',
-                                              email: auth.currentUser?.email ?? '',
-                                              id: 'placeholder',
-                                              amountOfFollowers: 0,
-                                              amountOfFollowing: 0,
-                                              amountOfPublicWorkouts: 0)),
+                                          user),
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
