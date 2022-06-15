@@ -64,7 +64,7 @@ class _CreateRutineState extends State<CreateRutine> {
             ElevatedButton(
               onPressed: () {
                 Rutine? toAdd;
-                if (optionsValue == "Strenght") {
+                if (optionsValue == "Strength") {
                   toAdd = Strength(
                       name: name,
                       public: false,
@@ -222,7 +222,7 @@ class _CreateRutineState extends State<CreateRutine> {
     } else if (content == "Repitions") {
       setState(() {
         try {
-          duration = int.parse(value);
+          repitions = int.parse(value);
         } catch (e) {
           print(e);
         }
@@ -230,7 +230,7 @@ class _CreateRutineState extends State<CreateRutine> {
     } else {
       setState(() {
         try {
-          duration = int.parse(value);
+          distance = int.parse(value);
         } catch (e) {
           print(e);
         }

@@ -18,7 +18,4 @@ Future<void> main() async {
       '/': (context) => const Login(),
     },
   ));
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 }

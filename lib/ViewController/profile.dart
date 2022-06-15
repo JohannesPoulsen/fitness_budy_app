@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Model/Master.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.master}) : super(key: key);
@@ -34,7 +36,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              final name = "testeste";
+
+              testUpload(name: name);
+            },
             icon: const Icon(Icons.edit),
             tooltip: "Edit Profile",
           ),
@@ -104,8 +110,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         height: coverHeight,
         // fit: BoxFit.cover,
         child: const Image(
-          image: NetworkImage('https://simplifaster.com/wp-content/uploads/2018/09/Male-Athlete.jpg'),
-            ),
+          image: NetworkImage(
+              'https://simplifaster.com/wp-content/uploads/2018/09/Male-Athlete.jpg'),
+        ),
       );
 
   Widget buildProfileImage() => CircleAvatar(
@@ -146,4 +153,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       );
+
+  Future testUpload({required String name}) async {
+    final testUser =
+        FirebaseFirestore.instance.collection('test1').doc("test-id2");
+
+    final data = {
+      "name": name,
+      "alder": 21,
+      "lort": "testelel",
+    };
+
+    await testUser.set(data);
+  }
 }
