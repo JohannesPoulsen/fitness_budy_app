@@ -26,6 +26,22 @@ class _AddRutineState extends State<Add_rutine> {
       appBar: AppBar(
         title: const Text('Add Rutines'),
         backgroundColor: Colors.black,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                widget.workout.addWorkout(listOfRutines);
+                Navigator.pop(context, widget.workout);
+                Navigator.pop(context, widget.workout);
+              },
+              child: const Icon(
+                Icons.save,
+                size: 26.0,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

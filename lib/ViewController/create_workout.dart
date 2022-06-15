@@ -72,18 +72,21 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               width: 250,
               height: 100,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (workoutName.isNotEmpty) {
                     Workout workout = Workout(name: workoutName);
                     workout.addTags(tagName);
                     workout.workoutType = typeName;
-                    Navigator.push(
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
                             Add_rutine(master: widget.master, workout: workout),
                       ),
                     );
+                    if (result != null) {
+                      widget.master.newWorkout(result);
+                    }
                   } else {
                     showDialog(
                         context: context,
