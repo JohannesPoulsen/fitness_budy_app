@@ -23,7 +23,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   String workoutName = "";
 
-  String typeName = "";
+  String typeValue = "Cardio";
+  var options = [
+    'Cardio',
+    'Strength',
+    'Mix',
+  ];
 
   String tagName = "";
 
@@ -52,7 +57,25 @@ class _CreateWorkoutState extends State<CreateWorkout> {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Type: "),
           ),
-          textFieldWidget("Enter type...", "typeName"),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: DropdownButton(
+              isExpanded: true,
+              value: typeValue,
+              icon: const Icon(Icons.arrow_drop_down_circle),
+              items: options.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  typeValue = newValue!;
+                });
+              },
+            ),
+          ),
           const SizedBox(
             height: 25,
           ),
@@ -76,7 +99,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   if (workoutName.isNotEmpty) {
                     Workout workout = Workout(name: workoutName);
                     workout.addTags(tagName);
-                    workout.workoutType = typeName;
+                    workout.workoutType = typeValue;
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -141,10 +164,6 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     if (content == "workoutName") {
       setState(() {
         workoutName = value;
-      });
-    } else if (content == "typeName") {
-      setState(() {
-        typeName = value;
       });
     } else {
       setState(() {
