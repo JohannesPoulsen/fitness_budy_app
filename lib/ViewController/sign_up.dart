@@ -174,8 +174,8 @@ class _SignUpState extends State<SignUp> {
                                 password: passwordController.text,
                                 email: emailController.text,
                               )
-                              .then((userCredential) => {
-                                    userCredential.user?.updateDisplayName(
+                              .then((userCredential) async => {
+                                    await userCredential.user?.updateDisplayName(
                                         usernameController.text)
                                   });
 
@@ -188,11 +188,8 @@ class _SignUpState extends State<SignUp> {
                                           [],
                                           [],
                                           localUser(
-                                              name: auth.currentUser
-                                                      ?.displayName ??
-                                                  '',
-                                              email:
-                                                  auth.currentUser?.email ?? '',
+                                              name: auth.currentUser?.displayName ?? '',
+                                              email: auth.currentUser?.email ?? '',
                                               id: 'placeholder',
                                               amountOfFollowers: 0,
                                               amountOfFollowing: 0,
