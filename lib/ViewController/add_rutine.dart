@@ -20,6 +20,14 @@ class Add_rutine extends StatefulWidget {
 class _AddRutineState extends State<Add_rutine> {
   var rutines = <String>[];
   var listOfRutines = <Rutine>[];
+  @override
+  void initState() {
+    super.initState();
+    listOfRutines = widget.workout.workoutList;
+    for (int i = 0; i < listOfRutines.length; i++) {
+      rutines.add(listOfRutines[i].name);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +43,9 @@ class _AddRutineState extends State<Add_rutine> {
                 widget.workout.addWorkout(listOfRutines);
                 widget.master.newWorkout(widget.workout);
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => HomeScreen(master: widget.master)),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(master: widget.master)),
                 );
               },
               child: const Icon(
@@ -120,7 +128,8 @@ class _AddRutineState extends State<Add_rutine> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateRutine(master: widget.master)),
+            MaterialPageRoute(
+                builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
             setState(() {
@@ -136,7 +145,8 @@ class _AddRutineState extends State<Add_rutine> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateRutine(master: widget.master)),
+            MaterialPageRoute(
+                builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
             setState(() {

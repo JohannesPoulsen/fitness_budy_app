@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
-  double  _counter = 0;
+  double _counter = 0;
 
   List<Widget> widgetOptions = [];
 
@@ -85,16 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _hourIncrease(){
+  void _hourIncrease() {
     setState(() {
-      _counter+= 0.5;
+      _counter += 0.5;
     });
   }
 
   void _hourDecrease() {
     setState(() {
-      _counter-= 0.5;
-      if(_counter <= 0){
+      _counter -= 0.5;
+      if (_counter <= 0) {
         _counter = 0;
       }
     });
@@ -114,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.blue,
                   child: ListTile(
                     onTap: () {
+                      print(widget.master.workouts[index].workoutList.length);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -297,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 400,
               height: 400,
               child: LineChart(
-                LineChartData(                  
+                LineChartData(
                   gridData: FlGridData(show: false),
                   borderData: FlBorderData(show: false),
                   titlesData: LineTitles.getTitleData(),
@@ -308,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   maxY: 3,
                   lineBarsData: [
                     LineChartBarData(
-                      spots: [                        
+                      spots: [
                         FlSpot(1, _counter),
                         const FlSpot(2, 0),
                         const FlSpot(3, 2),
