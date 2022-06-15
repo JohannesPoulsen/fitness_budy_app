@@ -1,3 +1,4 @@
+import 'package:fitness_body_app/Model/Workout.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/ViewController/create_workout.dart';
@@ -101,24 +102,42 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> listOfWidgets() {
     return (<Widget>[
       Scaffold(
-        body: Center(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(items[index]),
-              );
-            },
-          ),
+        body: Column(
+          children: [
+            ReorderableListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.master.workouts.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  key: Key('$index'),
+                  color: Colors.blue,
+                  child: ListTile(
+                    title: Text(widget.master.workouts[index].workoutName),
+                    //subtitle: subTitle(listOfRutines[index]),
+                  ),
+                );
+              },
+              onReorder: (int oldIndex, int newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final Workout item =
+                      widget.master.workouts.removeAt(oldIndex);
+                  widget.master.workouts.insert(newIndex, item);
+                });
+              },
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => CreateWorkout(master: widget.master)),
             );
+            setState(() {});
           },
           backgroundColor: const Color.fromARGB(255, 190, 24, 12),
           child: const Icon(
