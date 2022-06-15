@@ -3,7 +3,8 @@ import 'package:fitness_body_app/Model/Strength.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/Model/Master.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
-import 'create_rutine.dart';
+import 'package:fitness_body_app/ViewController/create_rutine.dart';
+import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
 
 class Add_rutine extends StatefulWidget {
@@ -32,8 +33,12 @@ class _AddRutineState extends State<Add_rutine> {
             child: GestureDetector(
               onTap: () {
                 widget.workout.addWorkout(listOfRutines);
-                Navigator.pop(context, widget.workout);
-                Navigator.pop(context, widget.workout);
+                widget.master.newWorkout(widget.workout);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => HomeScreen(master: widget.master)),
+                );
               },
               child: const Icon(
                 Icons.save,
