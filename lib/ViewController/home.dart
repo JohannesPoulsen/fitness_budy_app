@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
+  int  _counter = 0;
 
   List<Widget> widgetOptions = [];
 
@@ -79,6 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+  
+  void _hourIncrease(){
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _hourDecrease(){
+    setState(() {
+      _counter--;
+      if(_counter <= 0){
+        _counter = 0;
+      }
     });
   }
 
@@ -187,14 +203,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-            Align(
+            Stack(
+              children: <Widget>[
+                Align(
               alignment: Alignment.topRight,
               child: FloatingActionButton(
                 hoverColor: Colors.orange,
-                onPressed: () {},
+                onPressed: _hourIncrease, 
                 backgroundColor: const Color(0xFF6fcd6b),
-                child: const Icon(Icons.more_horiz),
+                child: const Icon(Icons.add),
               ),
+            ),
+            Align(
+               alignment: Alignment.topLeft,
+              child: FloatingActionButton(
+                hoverColor: Colors.orange,
+                onPressed: _hourDecrease, 
+                backgroundColor: const Color(0xFF6fcd6b),
+                child: const Icon(Icons.remove),
+                  ),
+                )
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -211,10 +240,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  '6',
-                  style: TextStyle(
+                  '$_counter',
+                  style: const TextStyle(
                     color: Color(0xFF6fcd6b),
                     fontSize: 24.0,
                     letterSpacing: 1.0,
@@ -235,10 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 400,
               height: 400,
-              color: Colors.white,
+              //color: Colors.grey[400],
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: false),
@@ -275,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ]);
   }
+
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = <String>[];
