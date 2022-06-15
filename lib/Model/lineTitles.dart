@@ -31,7 +31,7 @@ class LineTitles {
               return '';
           }
         },
-        margin: 20,
+        margin: 30,
       ),
       leftTitles: SideTitles(showTitles: false),
       rightTitles: SideTitles(
