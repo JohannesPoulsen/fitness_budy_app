@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/ViewController/forgot_password.dart';
-import 'package:fitness_body_app/ViewController/sign_up.dart';
+import 'package:fitness_body_app/view_controller/forgot_password.dart';
+import 'package:fitness_body_app/view_controller/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'errorBox.dart';
-import 'home.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-import 'package:fitness_body_app/ViewController/main.dart';
+import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
+import 'package:fitness_body_app/view_controller/home.dart';
+import 'package:fitness_body_app/model/local_user.dart';
+import 'package:fitness_body_app/main.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

@@ -1,11 +1,10 @@
-import 'package:fitness_body_app/Model/Cardio.dart';
-import 'package:fitness_body_app/Model/Strength.dart';
+import 'package:fitness_body_app/model/cardio.dart';
+import 'package:fitness_body_app/model/strength.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/Model/Workout.dart';
-import 'package:fitness_body_app/ViewController/create_rutine.dart';
-import 'package:fitness_body_app/ViewController/home.dart';
-import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/model/workout.dart';
+import 'package:fitness_body_app/view_controller/create_rutine.dart';
+import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class Add_rutine extends StatefulWidget {

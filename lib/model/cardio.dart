@@ -1,4 +1,4 @@
-import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/model/rutine.dart';
 
 class Cardio extends Rutine{
   int? distance;

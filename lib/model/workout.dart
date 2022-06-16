@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/Model/Rutine.dart';
-import 'package:fitness_body_app/services/authentication.dart';
+import 'package:fitness_body_app/model/rutine.dart';
 
 class Workout{
   List<Rutine> workoutList = [];

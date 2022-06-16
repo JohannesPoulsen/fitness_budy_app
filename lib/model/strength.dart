@@ -1,4 +1,5 @@
-import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/model/rutine.dart';
+
 class Strength extends Rutine{
   int? repetitions;
   int? duration;
