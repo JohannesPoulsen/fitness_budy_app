@@ -1,6 +1,7 @@
 import 'package:fitness_body_app/Model/Rutine.dart';
 import 'package:fitness_body_app/Model/Workout.dart';
 import 'package:fitness_body_app/Model/localUser.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class Master {
   List<Rutine> rutines = [];
@@ -16,6 +17,7 @@ class Master {
   void newWorkout(Workout w) {
     w.isAdded = true;
     workouts.add(w);
+    currentUser.workoutIDs.add(w.id!);
   }
 
   void deleteRutine(int index) {

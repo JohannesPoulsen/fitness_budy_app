@@ -185,7 +185,7 @@ class _SignUpState extends State<SignUp> {
                           localUser user = localUser(
                               name: auth.currentUser?.displayName ?? '',
                               profileImagePath: "",
-                              coverImagePath: "",
+                              coverImagePath: 'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                               email: auth.currentUser?.email ?? '',
                               id: auth.currentUser?.uid ?? '',
                               amountOfFollowers: 0,

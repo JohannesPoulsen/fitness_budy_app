@@ -6,6 +6,7 @@ import 'package:fitness_body_app/Model/Workout.dart';
 import 'package:fitness_body_app/ViewController/create_rutine.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class Add_rutine extends StatefulWidget {
   final Master master;
@@ -46,11 +47,8 @@ class _AddRutineState extends State<Add_rutine> {
                   widget.workout.addWorkout(listOfRutines);
                   widget.master.newWorkout(widget.workout);
                 }
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(master: widget.master)),
-                );
+                FirestoreUpload.uploadPublicWorkout(widget.workout);
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
               child: const Icon(
                 Icons.save,
@@ -60,43 +58,43 @@ class _AddRutineState extends State<Add_rutine> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text(
-            widget.workout.workoutName,
-            style: const TextStyle(
-              fontSize: 30,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              widget.workout.workoutName,
+              style: const TextStyle(
+                fontSize: 30,
+              ),
             ),
-          ),
-          ReorderableListView.builder(
-            shrinkWrap: true,
-            itemCount: rutines.length,
-            itemBuilder: (context, index) {
-              return Card(
-                key: Key('$index'),
-                color: tileColorInList(listOfRutines[index]),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black, width: 0.5),
-                      borderRadius: BorderRadius.circular(10)),
-                  title: Text(rutines[index]),
-                  subtitle: subTitle(listOfRutines[index]),
-                ),
-              );
-            },
-            onReorder: (int oldIndex, int newIndex) {
-              setState(() {
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                final String item = rutines.removeAt(oldIndex);
-                final Rutine item2 = listOfRutines.removeAt(oldIndex);
-                rutines.insert(newIndex, item);
-                listOfRutines.insert(newIndex, item2);
-              });
-            },
-          ),
-        ],
+            ReorderableListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: listOfRutines.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  key: Key('$index'),
+                  color: tileColorInList(listOfRutines[index]),
+                  child: ListTile(
+                    title: Text(rutines[index]),
+                    subtitle: subTitle(listOfRutines[index]),
+                  ),
+                );
+              },
+              onReorder: (int oldIndex, int newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final String item = rutines.removeAt(oldIndex);
+                  final Rutine item2 = listOfRutines.removeAt(oldIndex);
+                  rutines.insert(newIndex, item);
+                  listOfRutines.insert(newIndex, item2);
+                });
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: addKnap(),
     );
@@ -118,10 +116,10 @@ class _AddRutineState extends State<Add_rutine> {
           "Distance: ${rutine.distance} - Duration: ${rutine.duration}");
     } else if (rutine is Strength) {
       return Text(
-          "Repititions: ${rutine.repetitions} - Duration: ${rutine.duration}");
+          "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration}");
     } else {
       return Text(
-          "Repititions: ${rutine.repetition} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
+          "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
     }
   }
 
@@ -155,6 +153,7 @@ class _AddRutineState extends State<Add_rutine> {
           if (result != null) {
             setState(() {
               rutines.add(result.name);
+              listOfRutines.add(result);
             });
           }
         },

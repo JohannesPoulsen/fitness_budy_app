@@ -135,10 +135,12 @@ class _LoginState extends State<Login> {
                       } else {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         try {
-                          await auth.signInWithEmailAndPassword(
-                            password: passwordController.text,
-                            email: emailController.text,
-                          );
+                          await auth
+                              .signInWithEmailAndPassword(
+                                password: passwordController.text,
+                                email: emailController.text,
+                              )
+                              .then((value) => {});
                           if (!mounted) return;
                           Navigator.pushReplacement(
                             context,
@@ -153,7 +155,8 @@ class _LoginState extends State<Login> {
                                                   '',
                                               profileImagePath:
                                                   "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-                                              coverImagePath: '',
+                                              coverImagePath:
+                                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                                               email:
                                                   auth.currentUser?.email ?? '',
                                               id: auth.currentUser?.uid ?? '',
@@ -213,7 +216,8 @@ class _LoginState extends State<Login> {
                                         name: "tester",
                                         profileImagePath:
                                             "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-                                        coverImagePath: "",
+                                        coverImagePath:
+                                            'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                                         email: "tester@tester.com",
                                         amountOfFollowers: 0,
                                         amountOfFollowing: 0,
