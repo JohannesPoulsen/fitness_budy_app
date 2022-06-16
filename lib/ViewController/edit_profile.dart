@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Model/localUser.dart';
 import '../ViewController/profile.dart';
+import 'package:fitness_body_app/ViewController/main.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key, required this.master}) : super(key: key);
@@ -15,7 +16,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  //localUser user = widget.master.currentUser;
   final double coverHeight = 224.0;
   final double ppHeight = 120.0;
 
@@ -55,9 +55,66 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               onProfileClicked: () {},
               onCoverClicked: () {},
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Column(
+                children: [
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Name",
+                    currText: widget.master.currentUser.name,
+                  ),
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Email",
+                    currText: widget.master.currentUser.email,
+                  ),
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Twitter link",
+                    currText: widget.master.currentUser.twitter ?? "",
+                  ),
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Instagram link",
+                    currText: widget.master.currentUser.instagram ?? "",
+                  ),
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Spotify link",
+                    currText: widget.master.currentUser.spotify ?? "",
+                  ),
+                  SizedBox(height: 24),
+                  profileTextField(
+                    labelText: "Facebook link",
+                    currText: widget.master.currentUser.facebook ?? "",
+                  ),
+                ],
+              ),
+            ),
           ],
         ));
   }
+
+  Widget profileTextField(
+          {required String labelText, required String currText}) =>
+      TextField(
+        controller: TextEditingController(
+          text: currText,
+        ),
+        cursorColor: Colors.black,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Colors.blue : Colors.black),
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 0.5, color: Colors.grey),
+              borderRadius: BorderRadius.circular(15)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Colors.black),
+              borderRadius: BorderRadius.circular(15)),
+        ),
+      );
 }
 
 class ProfileEditWidget extends StatelessWidget {
@@ -109,19 +166,30 @@ class ProfileEditWidget extends StatelessWidget {
         ),
       );
 
-  Widget buildCoverImage() => Container(
-        color: Colors.grey[900],
-        width: double.infinity,
-        height: coverHeight,
-        child: Image(
-          image: NetworkImage(coverImagePath),
-        ),
+  Widget buildCoverImage() => Stack(
+        children: [
+          buildCoverImagePicture(),
+          Positioned(
+            bottom: -1,
+            right: 1,
+            child: buildEditIcon(),
+          ),
+        ],
       );
 
   Widget buildProfileImagePicture() => CircleAvatar(
         radius: ppHeight / 2,
         backgroundColor: Colors.pinkAccent,
         backgroundImage: NetworkImage(profileImagePath),
+      );
+
+  Widget buildCoverImagePicture() => Container(
+        color: Colors.grey[900],
+        width: double.infinity,
+        height: coverHeight,
+        child: Image(
+          image: NetworkImage(coverImagePath),
+        ),
       );
 
   Widget buildEditIcon() => buildCircle(
