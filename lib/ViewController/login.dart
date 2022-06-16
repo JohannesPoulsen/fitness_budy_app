@@ -151,7 +151,8 @@ class _LoginState extends State<Login> {
                                               name: auth.currentUser
                                                       ?.displayName ??
                                                   '',
-                                              profileImagePath: '',
+                                              profileImagePath:
+                                                  "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
                                               coverImagePath: '',
                                               email:
                                                   auth.currentUser?.email ?? '',
@@ -210,7 +211,8 @@ class _LoginState extends State<Login> {
                                     [],
                                     localUser(
                                         name: "tester",
-                                        profileImagePath: "",
+                                        profileImagePath:
+                                            "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
                                         coverImagePath: "",
                                         email: "tester@tester.com",
                                         amountOfFollowers: 0,
