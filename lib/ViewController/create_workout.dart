@@ -32,6 +32,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   String tagName = "";
 
+  bool public = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +87,23 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           ),
           textFieldWidget("Add tags...", "tagName"),
           const SizedBox(
-            height: 25,
+            height: 10,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              const Text("Do you want the workout to be public? "),
+              Checkbox(
+                value: public,
+                onChanged: (bool? value) {
+                  setState(() {
+                    public = value!;
+                  });
+                },
+              ),
+            ],
           ),
           Container(
             width: double.infinity,
@@ -98,6 +116,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 onPressed: () async {
                   if (workoutName.isNotEmpty) {
                     Workout workout = Workout(name: workoutName);
+
                     workout.addTags(tagName);
                     workout.workoutType = typeValue;
                     final result = await Navigator.push(
