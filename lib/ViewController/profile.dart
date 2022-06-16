@@ -126,11 +126,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Stack(
           children: [
             buildProfileImagePicture(),
-            /*Positioned(
-              bottom: 0,
-              right: 4,
-              child: buildEditIcon(),
-            ),*/
           ],
         ),
       );
@@ -138,8 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildProfileImagePicture() => CircleAvatar(
         radius: ppHeight / 2,
         backgroundColor: Colors.pinkAccent,
-        backgroundImage: NetworkImage(
-            "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec") /*NetworkImage(widget.master.currentUser.profileImagePath)*/,
+        backgroundImage:
+            NetworkImage(widget.master.currentUser.profileImagePath),
       );
 
   Widget buildSocialIcons(

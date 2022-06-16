@@ -184,8 +184,10 @@ class _SignUpState extends State<SignUp> {
                           if (!mounted) return;
                           localUser user = localUser(
                               name: auth.currentUser?.displayName ?? '',
-                              profileImagePath: "",
-                              coverImagePath: 'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                              profileImagePath:
+                                  "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+                              coverImagePath:
+                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                               email: auth.currentUser?.email ?? '',
                               id: auth.currentUser?.uid ?? '',
                               amountOfFollowers: 0,
