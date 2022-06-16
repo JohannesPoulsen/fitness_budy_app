@@ -76,6 +76,12 @@ class _AddRutineState extends State<Add_rutine> {
                   key: Key('$index'),
                   color: tileColorInList(listOfRutines[index]),
                   child: ListTile(
+                    trailing: IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () {
+                        removeRutine(index);
+                      },
+                    ),
                     title: Text(rutines[index]),
                     subtitle: subTitle(listOfRutines[index]),
                   ),
@@ -163,6 +169,13 @@ class _AddRutineState extends State<Add_rutine> {
         ),
       );
     }
+  }
+
+  void removeRutine(index) {
+    setState(() {
+      rutines.removeAt(index);
+      listOfRutines.removeAt(index);
+    });
   }
 
   void initRutinesList() {
