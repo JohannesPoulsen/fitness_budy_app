@@ -138,7 +138,9 @@ class _LoginState extends State<Login> {
                           await auth.signInWithEmailAndPassword(
                             password: passwordController.text,
                             email: emailController.text,
-                          );
+                          ).then((value) => {
+
+                          });
                           if (!mounted) return;
                           Navigator.pushReplacement(
                             context,

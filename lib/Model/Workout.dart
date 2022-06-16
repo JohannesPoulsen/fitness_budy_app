@@ -7,10 +7,13 @@ class Workout{
   List<String> tags = [];
   String name;
   final String? userId = FirebaseAuth.instance.currentUser?.uid;
+  String? _workoutID;
   String? type;
   String? url;
   bool isAdded = false;
-  Workout({ required this.name }){}
+  Workout({ required this.name }){
+    this._workoutID = '${this.userId} ${this.name}';
+  }
 
   void set workoutType(String type){
     this.type = type;
@@ -19,6 +22,9 @@ class Workout{
     return this.type ?? '';
   }
 
+  String? get id{
+    return _workoutID;
+  }
   void set workoutName(String name){
     this.name = name;
   }

@@ -30,7 +30,7 @@ class FirestoreUpload {
     //Upload workout document:
     final firestoreWorkoutDocument = FirebaseFirestore.instance
         .collection("publicWorkouts")
-        .doc(workout.name);
+        .doc(workout.id);
     final workoutForUpload = {
       "name": workout.name,
       "type": workout.type,

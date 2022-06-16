@@ -10,6 +10,7 @@ class localUser {
   int amountOfPublicWorkouts;
   int amountOfFollowing;
   int amountOfFollowers;
+  List<String> workoutIDs = [];
 
   localUser({
     required this.name,
