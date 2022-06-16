@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-import 'package:fitness_body_app/ViewController/home.dart';
-import 'package:fitness_body_app/ViewController/login.dart';
-import 'package:fitness_body_app/ViewController/main.dart';
+import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/model/local_user.dart';
+import 'package:fitness_body_app/view_controller/home.dart';
+import 'package:fitness_body_app/view_controller/login.dart';
+import 'package:fitness_body_app/main.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import '../services/authentication.dart';
-import 'errorBox.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -184,8 +181,10 @@ class _SignUpState extends State<SignUp> {
                           if (!mounted) return;
                           localUser user = localUser(
                               name: auth.currentUser?.displayName ?? '',
-                              profileImagePath: "",
-                              coverImagePath: 'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                              profileImagePath:
+                                  "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+                              coverImagePath:
+                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                               email: auth.currentUser?.email ?? '',
                               id: auth.currentUser?.uid ?? '',
                               amountOfFollowers: 0,

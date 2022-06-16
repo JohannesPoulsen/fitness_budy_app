@@ -1,14 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-import 'package:fitness_body_app/ViewController/home.dart';
-import 'package:fitness_body_app/ViewController/login.dart';
-import 'package:fitness_body_app/ViewController/main.dart';
+import 'package:fitness_body_app/view_controller/login.dart';
+import 'package:fitness_body_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import '../services/authentication.dart';
-import 'errorBox.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);

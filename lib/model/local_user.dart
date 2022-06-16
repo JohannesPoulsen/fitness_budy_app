@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 
 class localUser {
   String id;
@@ -10,17 +9,25 @@ class localUser {
   int amountOfPublicWorkouts;
   int amountOfFollowing;
   int amountOfFollowers;
+  String? twitter;
+  String? instagram;
+  String? spotify;
+  String? facebook;
   List<String> workoutIDs = [];
 
   localUser({
+    required this.id,
     required this.name,
     required this.profileImagePath,
     required this.coverImagePath,
     required this.email,
-    required this.id,
     required this.amountOfPublicWorkouts,
     required this.amountOfFollowing,
     required this.amountOfFollowers,
+    this.twitter,
+    this.instagram,
+    this.spotify,
+    this.facebook,
     this.center,
   });
 
@@ -34,6 +41,10 @@ class localUser {
         'amountOfPublicWorkouts': amountOfPublicWorkouts,
         'amountOfFollowing': amountOfFollowing,
         'amountOfFollowers': amountOfFollowers,
+        'twitter': twitter,
+        'instagram': instagram,
+        'spotify': spotify,
+        'facebook': facebook,
       };
 
   static localUser fromJson(Map<String, dynamic> json) => localUser(
@@ -46,5 +57,9 @@ class localUser {
         amountOfPublicWorkouts: json['amountOfPublicWorkouts'],
         amountOfFollowing: json['amountOfFollowing'],
         amountOfFollowers: json['amountOfFollowers'],
+        twitter: json['center'],
+        instagram: json['center'],
+        spotify: json['center'],
+        facebook: json['center'],
       );
 }

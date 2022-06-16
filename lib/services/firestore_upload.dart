@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitness_body_app/Model/OtherRutine.dart';
-import 'package:fitness_body_app/Model/Rutine.dart';
-import 'package:fitness_body_app/Model/Strength.dart';
-import 'package:fitness_body_app/Model/Workout.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-
-import '../Model/Cardio.dart';
+import 'package:fitness_body_app/model/other_rutine.dart';
+import 'package:fitness_body_app/model/rutine.dart';
+import 'package:fitness_body_app/model/strength.dart';
+import 'package:fitness_body_app/model/workout.dart';
+import 'package:fitness_body_app/model/local_user.dart';
+import 'package:fitness_body_app/model/cardio.dart';
 
 class FirestoreUpload {
   static Future uploadUser(localUser user) async {
