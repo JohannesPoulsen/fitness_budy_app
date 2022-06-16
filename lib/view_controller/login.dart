@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/view_controller/forgot_password.dart';
 import 'package:fitness_body_app/view_controller/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
 import 'package:fitness_body_app/view_controller/home.dart';
 import 'package:fitness_body_app/model/local_user.dart';

@@ -3,7 +3,7 @@ import 'package:fitness_body_app/model/cardio.dart';
 import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/model/other_rutine.dart';
 import 'package:fitness_body_app/model/strength.dart';
-import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/model/app_master.dart';
 
 class CreateRutine extends StatefulWidget {
   const CreateRutine({Key? key, required this.master}) : super(key: key);

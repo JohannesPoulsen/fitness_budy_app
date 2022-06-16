@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/model/local_user.dart';
 import 'package:fitness_body_app/view_controller/home.dart';
 import 'package:fitness_body_app/view_controller/login.dart';

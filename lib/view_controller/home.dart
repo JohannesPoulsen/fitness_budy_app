@@ -1,7 +1,7 @@
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/model/master.dart';
+import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/view_controller/create_workout.dart';
 import 'package:fitness_body_app/view_controller/profile.dart';
 import 'package:fl_chart/fl_chart.dart';
