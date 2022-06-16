@@ -154,7 +154,7 @@ class _LoginState extends State<Login> {
                                                       ?.displayName ??
                                                   '',
                                               profileImagePath: '',
-                                              coverImagePath: '',
+                                              coverImagePath: 'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                                               email:
                                                   auth.currentUser?.email ?? '',
                                               id: auth.currentUser?.uid ?? '',
@@ -212,8 +212,8 @@ class _LoginState extends State<Login> {
                                     [],
                                     localUser(
                                         name: "tester",
-                                        profileImagePath: "",
-                                        coverImagePath: "",
+                                        profileImagePath: '',
+                                        coverImagePath: 'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
                                         email: "tester@tester.com",
                                         amountOfFollowers: 0,
                                         amountOfFollowing: 0,

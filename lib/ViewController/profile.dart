@@ -112,9 +112,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: double.infinity,
         height: coverHeight,
         // fit: BoxFit.cover,
-        //child: Image(
-          //image: NetworkImage(widget.master.currentUser.coverImagePath),
-        //),
+        child: Image(
+          image: NetworkImage(widget.master.currentUser.coverImagePath),
+        ),
       );
 
   Widget buildProfileImage() => Center(
