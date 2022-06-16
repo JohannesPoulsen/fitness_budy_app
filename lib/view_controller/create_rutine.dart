@@ -4,6 +4,7 @@ import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/model/other_rutine.dart';
 import 'package:fitness_body_app/model/strength.dart';
 import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
 
 class CreateRutine extends StatefulWidget {
   const CreateRutine({Key? key, required this.master}) : super(key: key);
@@ -65,28 +66,40 @@ class _CreateRutineState extends State<CreateRutine> {
             ElevatedButton(
               onPressed: () {
                 Rutine? toAdd;
-                if (optionsValue == "Strength") {
-                  toAdd = Strength(
-                      name: name,
-                      public: false,
-                      repetitions: repitions,
-                      duration: duration);
-                } else if (optionsValue == "Cardio") {
-                  toAdd = Cardio(
-                      name: name,
-                      public: false,
-                      distance: distance,
-                      duration: duration);
-                } else {
-                  toAdd = OtherRutine(
-                      name: name,
-                      public: false,
-                      repetitions: repitions,
-                      duration: duration,
-                      distance: distance);
+                if (name.isNotEmpty) {
+                  if (optionsValue == "Strength") {
+                    toAdd = Strength(
+                        name: name,
+                        public: false,
+                        repetitions: repitions,
+                        duration: duration);
+                  } else if (optionsValue == "Cardio") {
+                    toAdd = Cardio(
+                        name: name,
+                        public: false,
+                        distance: distance,
+                        duration: duration);
+                  } else {
+                    toAdd = OtherRutine(
+                        name: name,
+                        public: false,
+                        repetitions: repitions,
+                        duration: duration,
+                        distance: distance);
+                  }
+                  widget.master.newRutine(toAdd);
+                  Navigator.pop(context, toAdd);
                 }
-                widget.master.newRutine(toAdd);
-                Navigator.pop(context, toAdd);
+                else{
+                  showDialog(context: context, builder: (context) {
+                    return const ErrorBox(
+                      errorName: 'Unnamed Parameter',
+                      errorReason: 'Rutine must have a name',
+                    );
+                  }
+                    );
+
+                }
               },
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromARGB(255, 190, 24, 12),
