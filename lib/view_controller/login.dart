@@ -1,28 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-import 'package:fitness_body_app/ViewController/home.dart';
-import 'package:fitness_body_app/ViewController/login.dart';
-import 'package:fitness_body_app/ViewController/main.dart';
-import 'package:fitness_body_app/services/firestore_upload.dart';
+import 'package:fitness_body_app/view_controller/forgot_password.dart';
+import 'package:fitness_body_app/view_controller/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import '../services/authentication.dart';
-import 'errorBox.dart';
+import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
+import 'package:fitness_body_app/view_controller/home.dart';
+import 'package:fitness_body_app/model/local_user.dart';
+import 'package:fitness_body_app/main.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  _LoginState createState() => _LoginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
+
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   child: const Text(
-                    'Create Account',
+                    'Sign in',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -59,27 +59,6 @@ class _SignUpState extends State<SignUp> {
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: TextStyle(
-                        color:
-                            myFocusNode.hasFocus ? Colors.blue : Colors.black),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.5, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.black),
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: usernameController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
                     labelStyle: TextStyle(
                         color:
                             myFocusNode.hasFocus ? Colors.blue : Colors.black),
@@ -118,87 +97,72 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextField(
-                  obscureText: true,
-                  controller: confirmPasswordController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    labelStyle: TextStyle(
-                        color:
-                            myFocusNode.hasFocus ? Colors.blue : Colors.black),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 0.5,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 3, color: Colors.black),
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()),
+                  );
+                },
+                style: TextButton.styleFrom(primary: Colors.black),
+                child: const Text(
+                  'Forgot Password?',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
+                    child: const Text('Login'),
                     style: ElevatedButton.styleFrom(primary: Colors.black),
                     onPressed: () async {
-                      if (passwordController.text !=
-                          confirmPasswordController.text) {
+                      if (emailController.text == "") {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return const ErrorBox(
-                                  errorName: 'Password must match',
-                                  errorReason: '');
+                                  errorName: 'Enter email', errorReason: '');
                             });
-                      } else if (usernameController.text == "") {
+                      } else if (passwordController.text == "") {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return const ErrorBox(
-                                  errorName: 'Enter username', errorReason: '');
+                                  errorName: 'Enter password', errorReason: '');
                             });
                       } else {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         try {
                           await auth
-                              .createUserWithEmailAndPassword(
+                              .signInWithEmailAndPassword(
                                 password: passwordController.text,
                                 email: emailController.text,
                               )
-                              .then((userCredential) async => {
-                                    await userCredential.user
-                                        ?.updateDisplayName(
-                                            usernameController.text)
-                                  });
-
+                              .then((value) => {});
                           if (!mounted) return;
-                          localUser user = localUser(
-                              name: auth.currentUser?.displayName ?? '',
-                              profileImagePath:
-                                  "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-                              coverImagePath:
-                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
-                              email: auth.currentUser?.email ?? '',
-                              id: auth.currentUser?.uid ?? '',
-                              amountOfFollowers: 0,
-                              amountOfFollowing: 0,
-                              amountOfPublicWorkouts: 0);
-                          FirestoreUpload.uploadUser(user);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen(
-                                      master: Master([], [], user),
+                                      master: Master(
+                                          [],
+                                          [],
+                                          localUser(
+                                              name: auth.currentUser
+                                                      ?.displayName ??
+                                                  '',
+                                              profileImagePath:
+                                                  'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec',
+                                              coverImagePath:
+                                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                                              email:
+                                                  auth.currentUser?.email ?? '',
+                                              id: auth.currentUser?.uid ?? '',
+                                              amountOfFollowers: 0,
+                                              amountOfFollowing: 0,
+                                              amountOfPublicWorkouts: 0)),
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
@@ -220,26 +184,49 @@ class _SignUpState extends State<SignUp> {
                         }
                       }
                     },
-                    child: const Text('Register'),
                   )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Already have an account?'),
+                  const Text('Do you not have an account?'),
                   TextButton(
                     child: const Text(
-                      'Sign in here',
+                      'Sign up here',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Login()),
+                        MaterialPageRoute(builder: (context) => const SignUp()),
                       );
                     },
                   )
                 ],
               ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                master: Master(
+                                    [],
+                                    [],
+                                    localUser(
+                                        name: "tester",
+                                        profileImagePath:
+                                            "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+                                        coverImagePath:
+                                            'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                                        email: "tester@tester.com",
+                                        amountOfFollowers: 0,
+                                        amountOfFollowing: 0,
+                                        amountOfPublicWorkouts: 0,
+                                        id: '')),
+                              )),
+                    );
+                  },
+                  child: const Text("Temp login"))
             ],
           )),
     );

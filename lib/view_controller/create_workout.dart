@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Workout.dart';
-import 'package:fitness_body_app/Model/Cardio.dart';
-import 'package:fitness_body_app/Model/Rutine.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/ViewController/add_rutine.dart';
-import 'package:fitness_body_app/ViewController/errorBox.dart';
+import 'package:fitness_body_app/model/workout.dart';
+import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/view_controller/add_rutine.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
 
 class CreateWorkout extends StatefulWidget {
   const CreateWorkout({Key? key, required this.master}) : super(key: key);

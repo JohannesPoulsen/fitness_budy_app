@@ -1,28 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/ViewController/forgot_password.dart';
-import 'package:fitness_body_app/ViewController/sign_up.dart';
+import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/model/local_user.dart';
+import 'package:fitness_body_app/view_controller/home.dart';
+import 'package:fitness_body_app/view_controller/login.dart';
+import 'package:fitness_body_app/main.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'errorBox.dart';
-import 'home.dart';
-import 'package:fitness_body_app/Model/localUser.dart';
-import 'package:fitness_body_app/ViewController/main.dart';
+import 'package:fitness_body_app/widgets/error_box.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  @override
-  initState() {
-    super.initState();
-  }
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class _LoginState extends State<Login> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(10),
                   child: const Text(
-                    'Sign in',
+                    'Create Account',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -59,6 +56,27 @@ class _LoginState extends State<Login> {
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     labelText: 'Email',
+                    labelStyle: TextStyle(
+                        color:
+                            myFocusNode.hasFocus ? Colors.blue : Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 0.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 3, color: Colors.black),
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  controller: usernameController,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
                     labelStyle: TextStyle(
                         color:
                             myFocusNode.hasFocus ? Colors.blue : Colors.black),
@@ -97,72 +115,87 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () async {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ForgotPassword()),
-                  );
-                },
-                style: TextButton.styleFrom(primary: Colors.black),
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              Container(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: TextField(
+                  obscureText: true,
+                  controller: confirmPasswordController,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(
+                        color:
+                            myFocusNode.hasFocus ? Colors.blue : Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 0.5,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 3, color: Colors.black),
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
-                    child: const Text('Login'),
                     style: ElevatedButton.styleFrom(primary: Colors.black),
                     onPressed: () async {
-                      if (emailController.text == "") {
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return const ErrorBox(
-                                  errorName: 'Enter email', errorReason: '');
+                                  errorName: 'Password must match',
+                                  errorReason: '');
                             });
-                      } else if (passwordController.text == "") {
+                      } else if (usernameController.text == "") {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return const ErrorBox(
-                                  errorName: 'Enter password', errorReason: '');
+                                  errorName: 'Enter username', errorReason: '');
                             });
                       } else {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         try {
                           await auth
-                              .signInWithEmailAndPassword(
+                              .createUserWithEmailAndPassword(
                                 password: passwordController.text,
                                 email: emailController.text,
                               )
-                              .then((value) => {});
+                              .then((userCredential) async => {
+                                    await userCredential.user
+                                        ?.updateDisplayName(
+                                            usernameController.text)
+                                  });
+
                           if (!mounted) return;
+                          localUser user = localUser(
+                              name: auth.currentUser?.displayName ?? '',
+                              profileImagePath:
+                                  "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+                              coverImagePath:
+                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                              email: auth.currentUser?.email ?? '',
+                              id: auth.currentUser?.uid ?? '',
+                              amountOfFollowers: 0,
+                              amountOfFollowing: 0,
+                              amountOfPublicWorkouts: 0);
+                          FirestoreUpload.uploadUser(user);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen(
-                                      master: Master(
-                                          [],
-                                          [],
-                                          localUser(
-                                              name: auth.currentUser
-                                                      ?.displayName ??
-                                                  '',
-                                              profileImagePath:
-                                                  'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec',
-                                              coverImagePath:
-                                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
-                                              email:
-                                                  auth.currentUser?.email ?? '',
-                                              id: auth.currentUser?.uid ?? '',
-                                              amountOfFollowers: 0,
-                                              amountOfFollowing: 0,
-                                              amountOfPublicWorkouts: 0)),
+                                      master: Master([], [], user),
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {
@@ -184,49 +217,26 @@ class _LoginState extends State<Login> {
                         }
                       }
                     },
+                    child: const Text('Register'),
                   )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Do you not have an account?'),
+                  const Text('Already have an account?'),
                   TextButton(
                     child: const Text(
-                      'Sign up here',
+                      'Sign in here',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUp()),
+                        MaterialPageRoute(builder: (context) => const Login()),
                       );
                     },
                   )
                 ],
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomeScreen(
-                                master: Master(
-                                    [],
-                                    [],
-                                    localUser(
-                                        name: "tester",
-                                        profileImagePath:
-                                            "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
-                                        coverImagePath:
-                                            'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
-                                        email: "tester@tester.com",
-                                        amountOfFollowers: 0,
-                                        amountOfFollowing: 0,
-                                        amountOfPublicWorkouts: 0,
-                                        id: '')),
-                              )),
-                    );
-                  },
-                  child: const Text("Temp login"))
             ],
           )),
     );

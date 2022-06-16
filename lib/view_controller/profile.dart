@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../Model/Master.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:fitness_body_app/model/app_master.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'edit_profile.dart';
+import 'package:fitness_body_app/view_controller/edit_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.master}) : super(key: key);

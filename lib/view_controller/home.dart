@@ -1,11 +1,11 @@
-import 'package:fitness_body_app/Model/Workout.dart';
-import 'package:fitness_body_app/ViewController/add_rutine.dart';
+import 'package:fitness_body_app/model/workout.dart';
+import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:flutter/material.dart';
-import 'package:fitness_body_app/Model/Master.dart';
-import 'package:fitness_body_app/ViewController/create_workout.dart';
-import 'package:fitness_body_app/ViewController/profile.dart';
+import 'package:fitness_body_app/model/app_master.dart';
+import 'package:fitness_body_app/view_controller/create_workout.dart';
+import 'package:fitness_body_app/view_controller/profile.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../Model/lineTitles.dart';
+import 'package:fitness_body_app/widgets/line_titles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.master}) : super(key: key);
