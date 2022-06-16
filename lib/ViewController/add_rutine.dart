@@ -46,8 +46,7 @@ class _AddRutineState extends State<Add_rutine> {
                   widget.workout.addWorkout(listOfRutines);
                   widget.master.newWorkout(widget.workout);
                 }
-                Navigator.pop(context);
-                Navigator.pop(context);
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
               child: const Icon(
                 Icons.save,
