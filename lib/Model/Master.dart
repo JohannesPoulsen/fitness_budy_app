@@ -13,7 +13,7 @@ class Master {
     rutines.add(r);
   }
 
-  void newWorkout(Workout w) {
+  Future<void> newWorkout(Workout w) async {
     w.isAdded = true;
     workouts.add(w);
   }
