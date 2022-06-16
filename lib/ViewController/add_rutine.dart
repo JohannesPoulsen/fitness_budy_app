@@ -6,6 +6,7 @@ import 'package:fitness_body_app/Model/Workout.dart';
 import 'package:fitness_body_app/ViewController/create_rutine.dart';
 import 'package:fitness_body_app/ViewController/home.dart';
 import 'package:fitness_body_app/Model/Rutine.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class Add_rutine extends StatefulWidget {
   final Master master;
@@ -46,6 +47,7 @@ class _AddRutineState extends State<Add_rutine> {
                   widget.workout.addWorkout(listOfRutines);
                   widget.master.newWorkout(widget.workout);
                 }
+                FirestoreUpload.uploadPublicWorkout(widget.workout);
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
               child: const Icon(
