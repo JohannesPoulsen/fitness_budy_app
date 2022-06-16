@@ -58,43 +58,46 @@ class _AddRutineState extends State<Add_rutine> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text(
-            widget.workout.workoutName,
-            style: const TextStyle(
-              fontSize: 30,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              widget.workout.workoutName,
+              style: const TextStyle(
+                fontSize: 30,
+              ),
             ),
-          ),
-          ReorderableListView.builder(
-            shrinkWrap: true,
-            itemCount: rutines.length,
-            itemBuilder: (context, index) {
-              return Card(
-                key: Key('$index'),
-                color: tileColorInList(listOfRutines[index]),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black, width: 0.5),
-                      borderRadius: BorderRadius.circular(10)),
-                  title: Text(rutines[index]),
-                  subtitle: subTitle(listOfRutines[index]),
-                ),
-              );
-            },
-            onReorder: (int oldIndex, int newIndex) {
-              setState(() {
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                final String item = rutines.removeAt(oldIndex);
-                final Rutine item2 = listOfRutines.removeAt(oldIndex);
-                rutines.insert(newIndex, item);
-                listOfRutines.insert(newIndex, item2);
-              });
-            },
-          ),
-        ],
+            ReorderableListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: listOfRutines.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  key: Key('$index'),
+                  color: tileColorInList(listOfRutines[index]),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.black, width: 0.5),
+                        borderRadius: BorderRadius.circular(10)),
+                    title: Text(rutines[index]),
+                    subtitle: subTitle(listOfRutines[index]),
+                  ),
+                );
+              },
+              onReorder: (int oldIndex, int newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final String item = rutines.removeAt(oldIndex);
+                  final Rutine item2 = listOfRutines.removeAt(oldIndex);
+                  rutines.insert(newIndex, item);
+                  listOfRutines.insert(newIndex, item2);
+                });
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: addKnap(),
     );
@@ -153,6 +156,7 @@ class _AddRutineState extends State<Add_rutine> {
           if (result != null) {
             setState(() {
               rutines.add(result.name);
+              listOfRutines.add(result);
             });
           }
         },

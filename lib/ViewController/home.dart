@@ -113,42 +113,45 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> listOfWidgets() {
     return (<Widget>[
       Scaffold(
-        body: Column(
-          children: [
-            ReorderableListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.master.workouts.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  key: Key('$index'),
-                  color: tileColorInList(widget.master.workouts[index].type),
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Add_rutine(
-                              master: widget.master,
-                              workout: widget.master.workouts[index]),
-                        ),
-                      );
-                    },
-                    title: Text(widget.master.workouts[index].workoutName),
-                  ),
-                );
-              },
-              onReorder: (int oldIndex, int newIndex) {
-                setState(() {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final Workout item =
-                      widget.master.workouts.removeAt(oldIndex);
-                  widget.master.workouts.insert(newIndex, item);
-                });
-              },
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: widget.master.workouts.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    key: Key('$index'),
+                    color: tileColorInList(widget.master.workouts[index].type),
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Add_rutine(
+                                master: widget.master,
+                                workout: widget.master.workouts[index]),
+                          ),
+                        );
+                      },
+                      title: Text(widget.master.workouts[index].workoutName),
+                    ),
+                  );
+                },
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    final Workout item =
+                        widget.master.workouts.removeAt(oldIndex);
+                    widget.master.workouts.insert(newIndex, item);
+                  });
+                },
+              ),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
