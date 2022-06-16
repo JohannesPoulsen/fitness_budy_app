@@ -46,11 +46,7 @@ class _AddRutineState extends State<Add_rutine> {
                   widget.workout.addWorkout(listOfRutines);
                   widget.master.newWorkout(widget.workout);
                 }
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(master: widget.master)),
-                );
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
               child: const Icon(
                 Icons.save,

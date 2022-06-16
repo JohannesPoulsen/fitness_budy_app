@@ -81,7 +81,7 @@ class _CreateRutineState extends State<CreateRutine> {
                   toAdd = OtherRutine(
                       name: name,
                       public: false,
-                      repetition: repitions,
+                      repetitions: repitions,
                       duration: duration,
                       distance: distance);
                 }
