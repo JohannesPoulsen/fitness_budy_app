@@ -19,4 +19,12 @@ class OtherRutine extends Rutine {
         duration: duration,
         repetitions: repetition);
   }
+
+  static Rutine fromJson(Map<String, dynamic> json) => OtherRutine(
+      name: json["name"],
+      public: json["public"],
+      //url: json["url"],
+      distance: json["distance"],
+      duration: json["duration"],
+      repetitions: json["repetition"]);
 }
