@@ -74,9 +74,6 @@ class _AddRutineState extends State<Add_rutine> {
                   key: Key('$index'),
                   color: tileColorInList(listOfRutines[index]),
                   child: ListTile(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.black, width: 0.5),
-                        borderRadius: BorderRadius.circular(10)),
                     title: Text(rutines[index]),
                     subtitle: subTitle(listOfRutines[index]),
                   ),
@@ -120,7 +117,7 @@ class _AddRutineState extends State<Add_rutine> {
           "Repititions: ${rutine.repetitions} - Duration: ${rutine.duration}");
     } else {
       return Text(
-          "Repititions: ${rutine.repetition} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
+          "Repititions: ${rutine.repetitions} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
     }
   }
 
