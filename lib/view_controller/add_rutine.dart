@@ -121,7 +121,7 @@ class _AddRutineState extends State<Add_rutine> {
           "Distance: ${rutine.distance} - Duration: ${rutine.duration}");
     } else if (rutine is Strength) {
       return Text(
-          "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration}");
+          "Repetitions: ${rutine.repetitions} - Sets: ${rutine.duration}");
     } else {
       return Text(
           "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");

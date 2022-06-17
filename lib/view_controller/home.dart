@@ -136,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                       title: Text(widget.master.workouts[index].workoutName),
+                      subtitle: tagTitle(widget.master.workouts[index]),
                     ),
                   );
                 },
@@ -345,6 +346,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     ]);
+  }
+
+  Widget tagTitle(workout) {
+    String title = "";
+    for (String t in workout.tags) {
+      title += t;
+    }
+    return Text(
+      title,
+    );
   }
 
   void filterSearchResults(String query) {
