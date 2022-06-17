@@ -143,7 +143,7 @@ class _CreateRutineState extends State<CreateRutine> {
             const SizedBox(
               width: 20,
             ),
-            ExpTextField("Duration", durationController),
+            ExpTextField("Sets", durationController),
             const SizedBox(width: 10),
           ])
         ],
@@ -225,7 +225,7 @@ class _CreateRutineState extends State<CreateRutine> {
   }
 
   void setValue(content, value) {
-    if (content == "Duration") {
+    if (content == "Duration" || content == "Sets") {
       setState(() {
         try {
           duration = int.parse(value);
