@@ -58,16 +58,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           buildContent(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Text('Log out'),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: const Color.fromARGB(255, 190, 24, 12),
         onPressed: () {
           FirebaseAuth.instance.signOut();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => Login()),
+                builder: (context) =>  const Login()),
           );
         },
+        label: const Text('Log out'),
       ),
     );
   }

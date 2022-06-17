@@ -7,12 +7,12 @@ class Strength extends Rutine {
   Strength({name, public, url, this.repetitions, this.duration})
       : super(name: name, public: public, url: url);
 
-  Strength newCardio(
-      String name, bool public, String? url, int? repitions, int? duration) {
+  Strength newStrength(
+      String name, bool public, String? url, int? repetitions, int? duration) {
     return Strength(
         name: name,
         public: public,
-        repetitions: repitions,
+        repetitions: repetitions,
         duration: duration,
         url: url);
   }
