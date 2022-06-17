@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_body_app/view_controller/login.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:fitness_body_app/model/app_master.dart';
@@ -55,6 +57,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           buildTop(),
           buildContent(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: const Color.fromARGB(255, 190, 24, 12),
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>  const Login()),
+          );
+        },
+        label: const Text('Log out'),
       ),
     );
   }

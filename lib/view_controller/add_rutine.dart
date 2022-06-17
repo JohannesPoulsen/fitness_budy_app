@@ -1,4 +1,5 @@
 import 'package:fitness_body_app/model/cardio.dart';
+import 'package:fitness_body_app/model/other_rutine.dart';
 import 'package:fitness_body_app/model/strength.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_body_app/model/app_master.dart';
@@ -6,6 +7,8 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/create_rutine.dart';
 import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class Add_rutine extends StatefulWidget {
   final Master master;
@@ -75,11 +78,59 @@ class _AddRutineState extends State<Add_rutine> {
                   key: Key('$index'),
                   color: tileColorInList(listOfRutines[index]),
                   child: ListTile(
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        removeRutine(index);
+                    trailing: DropdownButton2(
+                      customButton: const Icon(
+                        Icons.more_vert,
+                      ),
+                      customItemsIndexes: const [2],
+                      customItemsHeight: 8,
+                      items: [
+                        ...MenuItems.firstItems.map(
+                              (item) =>
+                              DropdownMenuItem<MenuItem>(
+                                value: item,
+                                child: MenuItems.buildItem(item),
+                              ),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        switch (value) {
+                          case MenuItems.clone:
+                            setState(() {
+                              if(listOfRutines[index] is Strength){
+                                Strength clone = listOfRutines[index] as Strength;
+                                clone.newStrength(clone.name, clone.public, clone.url, clone.repetitions, clone.duration);
+                                listOfRutines.add(clone);
+                                rutines.add(clone.name);
+                              }
+                              else if(listOfRutines[index] is Cardio){
+                                Cardio clone = listOfRutines[index] as Cardio;
+                                clone.newCardio(clone.name, clone.public, clone.url, clone.distance, clone.duration);
+                                listOfRutines.add(clone);
+                                rutines.add(clone.name);
+                              }
+                              else if(listOfRutines[index] is OtherRutine){
+                                OtherRutine clone = listOfRutines[index] as OtherRutine;
+                                clone.newOtherRutine(clone.name, clone.public, clone.url, clone.distance, clone.duration, clone.repetitions);
+                                listOfRutines.add(clone);
+                                rutines.add(clone.name);
+                              }
+                            });
+                            break ;
+                          case MenuItems.delete:
+                            removeRutine(index);
+                            break;
+                        }
                       },
+                      itemHeight: 48,
+                      itemPadding: const EdgeInsets.only(left: 16, right: 16),
+                      dropdownWidth: 160,
+                      dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      dropdownElevation: 8,
+                      offset: const Offset(0, 8),
                     ),
                     title: Text(rutines[index]),
                     subtitle: subTitle(listOfRutines[index]),
@@ -101,7 +152,7 @@ class _AddRutineState extends State<Add_rutine> {
           ],
         ),
       ),
-      floatingActionButton: addKnap(),
+      floatingActionButton: addRutineKnap(),
     );
   }
 
@@ -121,17 +172,18 @@ class _AddRutineState extends State<Add_rutine> {
           "Distance: ${rutine.distance} - Duration: ${rutine.duration}");
     } else if (rutine is Strength) {
       return Text(
-          "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration}");
+          "Repetitions: ${rutine.repetitions} - Sets: ${rutine.duration}");
     } else {
       return Text(
           "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
     }
   }
 
-  Widget addKnap() {
+  Widget addRutineKnap() {
     if (rutines.length < 6) {
       return FloatingActionButton.extended(
-        label: const Text("Add Rutine"),
+        label: const Text("Add New Rutine"),
+        heroTag: 'btn1',
         onPressed: () async {
           final result = await Navigator.push(
             context,
@@ -149,6 +201,7 @@ class _AddRutineState extends State<Add_rutine> {
       );
     } else {
       return FloatingActionButton(
+        heroTag: 'btn2',
         onPressed: () async {
           final result = await Navigator.push(
             context,
@@ -183,5 +236,39 @@ class _AddRutineState extends State<Add_rutine> {
         rutines.add(r.name);
       }
     });
+  }
+}
+
+
+class MenuItem {
+  final String text;
+  final IconData icon;
+
+  const MenuItem({
+    required this.text,
+    required this.icon,
+  });
+}
+
+class MenuItems {
+  static const List<MenuItem> firstItems = [clone, delete];
+
+  static const clone = MenuItem(text: 'Clone', icon: Icons.copy);
+  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
+
+  static Widget buildItem(MenuItem item) {
+    return Row(
+      children: [
+        Icon(
+            item.icon,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          item.text,
+        ),
+      ],
+    );
   }
 }

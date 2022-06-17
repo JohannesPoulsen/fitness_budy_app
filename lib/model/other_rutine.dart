@@ -10,14 +10,14 @@ class OtherRutine extends Rutine {
       : super(name: name, public: public, url: url);
 
   OtherRutine newOtherRutine(String name, bool public, String? url,
-      int? distance, int? duration, int? repetition) {
+      int? distance, int? duration, int? repetitions) {
     return OtherRutine(
         name: name,
         public: public,
         url: url,
         distance: distance,
         duration: duration,
-        repetitions: repetition);
+        repetitions: repetitions);
   }
 
   static Rutine fromJson(Map<String, dynamic> json) => OtherRutine(
