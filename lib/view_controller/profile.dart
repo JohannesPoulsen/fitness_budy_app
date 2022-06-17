@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 MaterialPageRoute(
                     builder: (context) =>
                         EditProfileScreen(master: widget.master)),
-              );
+              ).then((value) => setState(() {}));
             },
             icon: const Icon(Icons.edit),
             tooltip: "Edit Profile",
@@ -114,10 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: Colors.grey[900],
         width: double.infinity,
         height: coverHeight,
-        // fit: BoxFit.cover,
-        child: Image(
-          image: NetworkImage(widget.master.currentUser.coverImagePath),
-        ),
+        child: Image.network(widget.master.currentUser.coverImagePath),
       );
 
   Widget buildProfileImage() => Center(
