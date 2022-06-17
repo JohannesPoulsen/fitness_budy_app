@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/view_controller/forgot_password.dart';
 import 'package:fitness_body_app/view_controller/sign_up.dart';
@@ -18,6 +19,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  late localUser tempUser;
 
   @override
   initState() {
@@ -142,28 +144,19 @@ class _LoginState extends State<Login> {
                               )
                               .then((value) => {});
                           if (!mounted) return;
+                          tempUser = await getUserInfo(
+                              email: auth.currentUser?.email ?? "");
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                      master: Master(
-                                          [],
-                                          [],
-                                          localUser(
-                                              name: auth.currentUser
-                                                      ?.displayName ??
-                                                  '',
-                                              profileImagePath:
-                                                  'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec',
-                                              coverImagePath:
-                                                  'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
-                                              email:
-                                                  auth.currentUser?.email ?? '',
-                                              id: auth.currentUser?.uid ?? '',
-                                              amountOfFollowers: 0,
-                                              amountOfFollowing: 0,
-                                              amountOfPublicWorkouts: 0)),
-                                    )),
+                            MaterialPageRoute(builder: (context) {
+                              return HomeScreen(
+                                master: Master(
+                                  [],
+                                  [],
+                                  tempUser,
+                                ),
+                              );
+                            }),
                           );
                         } on FirebaseAuthException catch (e) {
                           showDialog(
@@ -230,5 +223,13 @@ class _LoginState extends State<Login> {
             ],
           )),
     );
+  }
+
+  Future<localUser> getUserInfo({required String email}) async {
+    final userDocument =
+        FirebaseFirestore.instance.collection('users').doc(email);
+    final snapshot = await userDocument.get();
+
+    return localUser.fromJson(snapshot.data()!);
   }
 }
