@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double _counter = 0;
 
   List<Widget> widgetOptions = [];
+  List<String> days = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag' ];
 
   @override
   void initState() {
@@ -88,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _hourIncrease() {
     setState(() {
       _counter += 0.5;
+      if(_counter >=2){
+        _counter=2;
+      }
     });
   }
 
@@ -97,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (_counter <= 0) {
         _counter = 0;
       }
+      
     });
   }
 
@@ -235,14 +240,15 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Min uge',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                )
+                DropdownButton<String>(
+                  items: days.map((String value){
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue){},                 
+                ),
               ],
             ),
             Stack(
@@ -314,7 +320,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   gridData: FlGridData(show: false),
                   borderData: FlBorderData(show: false),
                   titlesData: LineTitles.getTitleData(),
-                  clipData: FlClipData.all(),
                   minX: 0,
                   maxX: 8,
                   minY: 0,
@@ -335,6 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Color(0xFF6fcd6b),
                         const Color(0xFF6fcd6b)
                       ],
+                      
                       barWidth: 10,
                     ),
                   ],
