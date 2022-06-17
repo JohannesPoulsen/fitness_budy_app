@@ -89,16 +89,15 @@ class _CreateRutineState extends State<CreateRutine> {
                   }
                   widget.master.newRutine(toAdd);
                   Navigator.pop(context, toAdd);
-                }
-                else{
-                  showDialog(context: context, builder: (context) {
-                    return const ErrorBox(
-                      errorName: 'Unnamed Parameter',
-                      errorReason: 'Rutine must have a name',
-                    );
-                  }
-                    );
-
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const ErrorBox(
+                          errorName: 'Unnamed Parameter',
+                          errorReason: 'Rutine must have a name',
+                        );
+                      });
                 }
               },
               style: ElevatedButton.styleFrom(

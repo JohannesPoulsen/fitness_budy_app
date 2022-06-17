@@ -76,7 +76,7 @@ class _AddRutineState extends State<Add_rutine> {
                   color: tileColorInList(listOfRutines[index]),
                   child: ListTile(
                     trailing: IconButton(
-                      icon: const Icon(Icons.remove),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         removeRutine(index);
                       },
