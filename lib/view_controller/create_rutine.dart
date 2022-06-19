@@ -72,7 +72,7 @@ class _CreateRutineState extends State<CreateRutine> {
                         name: name,
                         public: false,
                         repetitions: repitions,
-                        duration: duration);
+                        sets: duration);
                   } else if (optionsValue == "Cardio") {
                     toAdd = Cardio(
                         name: name,

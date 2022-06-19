@@ -38,20 +38,32 @@ class FirestoreUpload {
 
     //Upload rutines to the workout document:
     for (Rutine rutine in workout.workoutList) {
-      final firestoreRutineDocument = FirebaseFirestore.instance
-          .collection("publicWorkouts")
-          .doc(workout.name)
-          .collection("rutines")
-          .doc(rutine.name);
+      // final firestoreRutineDocument = FirebaseFirestore.instance
+      //     .collection("publicWorkouts")
+      //     .doc(workout.name)
+      //     .collection("rutines")
+      //     .doc(rutine.name);
 
       if (rutine is Strength) {
+        final firestoreRutineDocument = FirebaseFirestore.instance
+            .collection("publicWorkouts")
+            .doc(workout.workoutID)
+            .collection("strength")
+            .doc(rutine.name);
+
         final rutineForUpload = {
           "name": rutine.name,
           "repetitions": rutine.repetitions,
-          "duration": rutine.duration,
+          "sets": rutine.sets,
         };
         await firestoreRutineDocument.set(rutineForUpload);
       } else if (rutine is Cardio) {
+        final firestoreRutineDocument = FirebaseFirestore.instance
+            .collection("publicWorkouts")
+            .doc(workout.workoutID)
+            .collection("cardio")
+            .doc(rutine.name);
+
         final rutineForUpload = {
           "name": rutine.name,
           "distance": rutine.distance,
@@ -59,6 +71,12 @@ class FirestoreUpload {
         };
         await firestoreRutineDocument.set(rutineForUpload);
       } else if (rutine is OtherRutine) {
+        final firestoreRutineDocument = FirebaseFirestore.instance
+            .collection("publicWorkouts")
+            .doc(workout.workoutID)
+            .collection("other")
+            .doc(rutine.name);
+
         final rutineForUpload = {
           "name": rutine.name,
           "repetitions": rutine.repetitions,

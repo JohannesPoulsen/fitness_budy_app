@@ -15,6 +15,10 @@ class Workout {
     this._workoutID = '${this.userId} ${this.name}';
   }
 
+  String? get workoutID {
+    return this._workoutID;
+  }
+
   void set workoutType(String type) {
     this.type = type;
   }

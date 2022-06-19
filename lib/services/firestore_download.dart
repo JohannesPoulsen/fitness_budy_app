@@ -1,7 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_body_app/model/workout.dart';
 
+import '../model/cardio.dart';
+import '../model/other_rutine.dart';
+import '../model/rutine.dart';
+import '../model/strength.dart';
+
 class FirestoreDownload {
+  static List<String> workoutIDList = [];
+
   static Workout downloadWorkout() {
     var workout = Workout(name: "name");
     return workout;
@@ -22,11 +29,63 @@ class FirestoreDownload {
       for (var doc in workoutsFromFirebase.docs) {
         String name = doc.data()["name"];
         print(doc.data());
+        workoutIDList.add(doc.id);
         var workout = Workout(name: name);
+        workout.workoutList = await getRutines(doc.id);
         workout.type = doc.data()["type"];
         workoutList.add(workout);
       }
     }
     return workoutList;
+  }
+
+  static Future<List<Rutine>> getRutines(workoutID) async {
+    List<Rutine> rutines = [];
+    var cardioCollection = await FirebaseFirestore.instance
+        .collection("publicWorkouts")
+        .doc(workoutID)
+        .collection("cardio")
+        .get();
+    var strengthCollection = await FirebaseFirestore.instance
+        .collection("publicWorkouts")
+        .doc(workoutID)
+        .collection("strength")
+        .get();
+    var otherCollection = await FirebaseFirestore.instance
+        .collection("publicWorkouts")
+        .doc(workoutID)
+        .collection("other")
+        .get();
+
+    for (var cardioDoc in cardioCollection.docs) {
+      var cardio = Cardio(
+        name: cardioDoc.data()["name"],
+        public: true,
+      );
+      cardio.distance = cardioDoc.data()["distance"];
+      cardio.duration = cardioDoc.data()["duration"];
+      rutines.add(cardio);
+    }
+    for (var strengthDoc in strengthCollection.docs) {
+      var strength = Strength(
+        name: strengthDoc.data()["name"],
+        public: true,
+      );
+      strength.sets = strengthDoc.data()["sets"];
+      strength.repetitions = strengthDoc.data()["repetitions"];
+      rutines.add(strength);
+    }
+    for (var otherDoc in otherCollection.docs) {
+      var other = OtherRutine(
+        name: otherDoc.data()["name"],
+        public: true,
+      );
+      other.duration = otherDoc.data()["duration"];
+      other.repetitions = otherDoc.data()["repetitions"];
+      other.distance = otherDoc.data()["distance"];
+      rutines.add(other);
+    }
+
+    return rutines;
   }
 }
