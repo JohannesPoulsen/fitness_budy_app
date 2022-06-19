@@ -27,9 +27,8 @@ class FirestoreUpload {
 
   static Future uploadPublicWorkout(Workout workout) async {
     //Upload workout document:
-    final firestoreWorkoutDocument = FirebaseFirestore.instance
-        .collection("publicWorkouts")
-        .doc(workout.id);
+    final firestoreWorkoutDocument =
+        FirebaseFirestore.instance.collection("publicWorkouts").doc(workout.id);
     final workoutForUpload = {
       "name": workout.name,
       "type": workout.type,

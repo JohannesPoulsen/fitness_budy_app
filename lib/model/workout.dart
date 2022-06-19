@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_body_app/model/rutine.dart';
+import 'package:flutter/material.dart';
 
 class Workout {
   List<Rutine> workoutList = [];
@@ -61,7 +62,12 @@ class Workout {
     var workout = Workout(name: json["name"]);
     workout.type = json["type"];
     workout._workoutID = json["workoutID"];
-    workout.tags.add(json["tags"]);
+    //workout.tags.add(json["tags"]);
     return workout;
   }
+
+  static Widget buildWorkout(Workout workout) => ListTile(
+        title: Text(workout.name),
+        subtitle: Text(workout.type!),
+      );
 }

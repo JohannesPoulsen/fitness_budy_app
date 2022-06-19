@@ -1,3 +1,4 @@
+import 'package:fitness_body_app/main.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:fitness_body_app/view_controller/create_workout.dart';
 import 'package:fitness_body_app/view_controller/profile.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fitness_body_app/widgets/line_titles.dart';
+import 'package:fitness_body_app/services/firestore_download.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.master}) : super(key: key);
@@ -16,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List? workouts;
   TextEditingController editingController = TextEditingController();
   final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
   var items = <String>[];
@@ -209,10 +212,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: items.length,
+              itemCount: publicWorkouts!.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(items[index]),
+                  title: Text(publicWorkouts![index].name),
                   trailing: const Icon(
                     Icons.fitness_center,
                   ),
