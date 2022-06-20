@@ -223,12 +223,19 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               itemCount: publicWorkouts!.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(publicWorkouts![index].name),
-                  trailing: const Icon(
-                    Icons.fitness_center,
+                return Card(
+                  color: tileColorInList(publicWorkouts![index].type),
+                  key: Key('$index'),
+                  //color: tileColorInList(widget.master.workouts[index].type),
+                  child: ListTile(
+                    trailing: IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {},
+                    ),
+                    onTap: () {},
+                    title: Text(publicWorkouts![index].name),
+                    subtitle: tagTitle(publicWorkouts![index]),
                   ),
-                  onTap: () {},
                 );
               },
             ),
