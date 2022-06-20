@@ -13,20 +13,20 @@ class LineTitles {
         interval: 1,
         getTitles: (value) {
           switch (value.toInt()) {
+            case 0:
+              return 'MON';
             case 1:
-              return 'MAN';
+              return 'TUE';
             case 2:
-              return 'TIRS';
+              return 'WED';
             case 3:
-              return 'ONS';
+              return 'THU';
             case 4:
-              return 'TORS';
+              return 'FRI';
             case 5:
-              return 'FRE';
+              return 'SAT';
             case 6:
-              return 'LØR';
-            case 7:
-              return 'SØN';
+              return 'SUN';
             default:
               return '';
           }
@@ -36,7 +36,7 @@ class LineTitles {
       leftTitles: SideTitles(showTitles: false),
       rightTitles: SideTitles(
         showTitles: true,
-        reservedSize: 30,
+        reservedSize: 5,
         interval: 1,
         getTitles: (value) {
           switch (value.toInt()) {
@@ -46,6 +46,8 @@ class LineTitles {
               return '1';
             case 2:
               return '2';
+            case 3:
+              return '3';
             default:
               return '';
           }
