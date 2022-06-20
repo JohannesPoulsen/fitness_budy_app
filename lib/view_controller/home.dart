@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    items.addAll(duplicateItems!);
+    items.addAll(duplicateItems);
     widgetOptions = listOfWidgets();
   }
 
@@ -455,7 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void filterSearchResults(String query) {
     List<Workout> dummySearchList = <Workout>[];
-    dummySearchList.addAll(duplicateItems!);
+    dummySearchList.addAll(duplicateItems);
     if (query.isNotEmpty) {
       List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
@@ -471,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems!);
+        items.addAll(duplicateItems);
       });
     }
   }

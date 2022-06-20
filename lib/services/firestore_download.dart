@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_body_app/model/workout.dart';
-
 import '../model/cardio.dart';
 import '../model/other_rutine.dart';
 import '../model/rutine.dart';
@@ -41,6 +41,7 @@ class FirestoreDownload {
   }
 
   static Future<List<Rutine>> getRutines(workoutID) async {
+    await Firebase.initializeApp();
     List<Rutine> rutines = [];
     var cardioCollection = await FirebaseFirestore.instance
         .collection("publicWorkouts")
