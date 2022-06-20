@@ -59,6 +59,10 @@ class Workout {
     this.tags = tags;
   }
 
+  void set workoutID(String? workoutID) {
+    this._workoutID = workoutID;
+  }
+
   Workout cloneWorkout() {
     Workout workout = Workout(name: '${this.name} copy');
     workout.url = this.url;
