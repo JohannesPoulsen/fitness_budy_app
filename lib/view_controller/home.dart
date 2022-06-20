@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         customButton: const Icon(
                           Icons.more_vert,
                         ),
-                        customItemsIndexes: const [2],
+                        customItemsIndexes: const [3],
                         customItemsHeight: 8,
                         items: [
                           ...MenuItems.secondItems.map(
