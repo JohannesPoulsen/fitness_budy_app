@@ -15,6 +15,12 @@ class Master {
     currentUser.addWorkoutID(w.id!);
   }
 
+  void addWorkout(Workout w) {
+    w.isAdded = false;
+    workouts.add(w);
+    currentUser.addWorkoutID(w.id!);
+  }
+
   void deleteWorkout(int index) {
     workouts.remove(index);
   }

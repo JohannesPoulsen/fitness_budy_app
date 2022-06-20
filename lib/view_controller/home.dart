@@ -446,7 +446,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void addWorkoutToWorkout(workout) {
     if (!widget.master.workouts.contains(workout)) {
       setState(() {
-        widget.master.newWorkout(workout);
+        widget.master.addWorkout(workout);
         workout.isAdded = true;
       });
     }

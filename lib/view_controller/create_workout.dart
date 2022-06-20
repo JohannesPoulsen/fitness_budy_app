@@ -123,9 +123,19 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 onPressed: () async {
                   if (workoutName.isNotEmpty) {
                     if (widget.workout != null) {
-                      widget.workout!.workoutName = workoutName;
-                      widget.workout!.workoutType = typeValue;
-                      widget.workout!.tags = tagName;
+                      late Workout w;
+                      if (widget.workout!.isAdded){
+                        w = widget.workout!;
+                      }
+                      else {
+                        w = widget.workout!.cloneWorkout();
+                        widget.master.currentUser
+                        widget.master.workouts.remove(widget.workout!);
+                        widget.master.newWorkout(w);
+                      }
+                      w.workoutName = workoutName;
+                      w.workoutType = typeValue;
+                      w.tags = tagName;
                       Navigator.pop(context);
                     } else {
                       Workout workout = Workout(name: workoutName);
