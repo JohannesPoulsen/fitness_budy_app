@@ -84,7 +84,6 @@ class _CreateRutineState extends State<CreateRutine> {
                         duration: duration,
                         distance: distance);
                   }
-                  widget.master.newRutine(toAdd);
                   Navigator.pop(context, toAdd);
                 } else {
                   showDialog(

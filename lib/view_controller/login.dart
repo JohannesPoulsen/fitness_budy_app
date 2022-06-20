@@ -153,9 +153,8 @@ class _LoginState extends State<Login> {
                             MaterialPageRoute(builder: (context) {
                               return HomeScreen(
                                 master: Master(
-                                  [],
-                                  userWorkouts,
-                                  tempUser,
+                                  workouts: userWorkouts,
+                                  currentUser: tempUser,
                                 ),
                               );
                             }),
@@ -217,7 +216,7 @@ class _LoginState extends State<Login> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreen(
-                                master: Master([], userWorkouts, testUser),
+                                master: Master(workouts: userWorkouts,currentUser: testUser),
                               )),
                     );
                   },
