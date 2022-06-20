@@ -228,8 +228,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   key: Key('$index'),
                   child: ListTile(
                     trailing: IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {},
+                      icon: iconForSearchList(items[index]),
+                      onPressed: () {
+                        addWorkoutToWorkout(items[index]);
+                      },
                     ),
                     onTap: () {},
                     title: Text(items[index].name),
@@ -489,13 +491,28 @@ class _HomeScreenState extends State<HomeScreen> {
     return Text(workout.tags);
   }
 
+  Widget iconForSearchList(workout) {
+    if (widget.master.workouts.contains(workout)) {
+      return const Icon(Icons.check);
+    }
+    return const Icon(Icons.add);
+  }
+
+  void addWorkoutToWorkout(workout) {
+    if (!widget.master.workouts.contains(workout)) {
+      setState(() {
+        widget.master.workouts.add(workout);
+      });
+    }
+  }
+
   void filterSearchResults(String query) {
     List<Workout> dummySearchList = <Workout>[];
     dummySearchList.addAll(duplicateItems!);
     if (query.isNotEmpty) {
       List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.name.contains(query)) {
+        if (item.name.contains(query) || item.tags!.contains(query)) {
           dummyListData.add(item);
         }
       }
