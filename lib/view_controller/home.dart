@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_body_app/main.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
@@ -192,6 +193,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               setState(() {});
                               break;
                             case MenuItems.delete:
+                              String n = widget.master.workouts[index].name;
+                              showAlertDialog(context, widget.master, index,
+                                  "Are you sure you want to delete your workout $n");
+                              widget.master.workouts.remove(index);
+                              setState(() {});
                               break;
                           }
                         },
@@ -299,17 +305,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // const Center(
-            //   child: CircleAvatar(
-            //     backgroundImage: NetworkImage(
-            //         'https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
-            //     radius: 40.0,
-            //   ),
-            // ),
-            // Divider(
-            //   color: Colors.grey[600],
-            //   height: 60.0,
-            // ),
             Stack(
               children: <Widget>[
                 Align(
@@ -509,4 +504,48 @@ extension EnumParser on String {
     return values.firstWhere((e) =>
         e.toString().toLowerCase().split(".").last == '$this'.toLowerCase());
   }
+}
+
+showAlertDialog(
+    BuildContext context, Master master, int index, String alertText) {
+  Widget cancelButton = FlatButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget continueButton = FlatButton(
+    child: Text("Confirm"),
+    onPressed: () {
+      Navigator.of(context).pop();
+      final t1 = FirebaseFirestore.instance
+          .collection('publicWorkouts')
+          .doc(master.workouts[index].id);
+      final t2 = FirebaseFirestore.instance
+          .collection('users')
+          .doc(master.currentUser.email);
+
+      t1.delete();
+      t2.update({
+        'workoutIDs': FieldValue.arrayRemove([master.workouts[index].id]),
+      });
+      master.workouts.remove(index);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text("Warning!"),
+    content: Text(alertText),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
