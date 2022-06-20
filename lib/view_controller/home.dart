@@ -32,8 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   double _counter = 0;
 
   List<Widget> widgetOptions = [];
-  List<String> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  List <double> hours  = [0,0,0,0,0,0,0];
+  List<String> days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+  List<double> hours = [0, 0, 0, 0, 0, 0, 0];
   weekdays _dropdownvalue = weekdays.Monday;
 
   @override
@@ -88,8 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
 
   void _onItemTapped(int index) {
     setState(() {
@@ -156,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         customItemsHeight: 8,
                         items: [
                           ...MenuItems.secondItems.map(
-                                (item) => DropdownMenuItem<MenuItem2>(
+                            (item) => DropdownMenuItem<MenuItem2>(
                               value: item,
                               child: MenuItems.buildItem(item),
                             ),
@@ -166,7 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           switch (value) {
                             case MenuItems.clone:
                               setState(() {
-                                Workout w = widget.master.workouts[index].cloneWorkout();
+                                Workout w = widget.master.workouts[index]
+                                    .cloneWorkout();
                                 FirestoreUpload.uploadPublicWorkout(w);
                                 widget.master.newWorkout(w);
                               });
@@ -175,9 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateWorkout(master: widget.master, workout: widget.master.workouts[index],)),
+                                    builder: (context) => CreateWorkout(
+                                          master: widget.master,
+                                          workout:
+                                              widget.master.workouts[index],
+                                        )),
                               );
-                              FirestoreUpload.uploadPublicWorkout(widget.master.workouts[index]);
+                              FirestoreUpload.uploadPublicWorkout(
+                                  widget.master.workouts[index]);
                               setState(() {});
                               break;
                           }
@@ -185,7 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemHeight: 48,
                         itemPadding: const EdgeInsets.only(left: 16, right: 16),
                         dropdownWidth: 160,
-                        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+                        dropdownPadding:
+                            const EdgeInsets.symmetric(vertical: 6),
                         dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -325,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 DropdownButton<String>(
                   value: _dropdownvalue.weekdayToString(),
-                  items: days.map((String value){
+                  items: days.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -378,41 +391,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0), child:
-            SizedBox(
-              width: 400,
-              height: 400,
-              child: LineChart(
-                LineChartData(
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(show: false),
-                  titlesData: LineTitles.getTitleData(),
-                  minX: 0,
-                  maxX: 8,
-                  minY: 0,
-                  maxY: 4,
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: [
-                        FlSpot(weekdays.Monday.index.toDouble(), hours[weekdays.Monday.index]),
-                        FlSpot(weekdays.Tuesday.index.toDouble(), hours[weekdays.Tuesday.index]),
-                        FlSpot(weekdays.Wednesday.index.toDouble(), hours[weekdays.Wednesday.index]),
-                        FlSpot(weekdays.Thursday.index.toDouble(), hours[weekdays.Thursday.index]),
-                        FlSpot(weekdays.Friday.index.toDouble(), hours[weekdays.Friday.index]),
-                        FlSpot(weekdays.Saturday.index.toDouble(), hours[weekdays.Saturday.index]),
-                        FlSpot(weekdays.Sunday.index.toDouble(), hours[weekdays.Sunday.index]),
-                      ],
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b),
-                      ],
-                      barWidth: 10,
-                    ),
-                  ],
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+              child: SizedBox(
+                width: 400,
+                height: 400,
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(show: false),
+                    titlesData: LineTitles.getTitleData(),
+                    minX: 0,
+                    maxX: 8,
+                    minY: 0,
+                    maxY: 4,
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: [
+                          FlSpot(weekdays.Monday.index.toDouble(),
+                              hours[weekdays.Monday.index]),
+                          FlSpot(weekdays.Tuesday.index.toDouble(),
+                              hours[weekdays.Tuesday.index]),
+                          FlSpot(weekdays.Wednesday.index.toDouble(),
+                              hours[weekdays.Wednesday.index]),
+                          FlSpot(weekdays.Thursday.index.toDouble(),
+                              hours[weekdays.Thursday.index]),
+                          FlSpot(weekdays.Friday.index.toDouble(),
+                              hours[weekdays.Friday.index]),
+                          FlSpot(weekdays.Saturday.index.toDouble(),
+                              hours[weekdays.Saturday.index]),
+                          FlSpot(weekdays.Sunday.index.toDouble(),
+                              hours[weekdays.Sunday.index]),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b),
+                        ],
+                        barWidth: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             ),
           ],
         ),
@@ -436,6 +458,7 @@ class _HomeScreenState extends State<HomeScreen> {
       widget.master.currentUser.addWorkoutID(workout.workoutID);
       setState(() {
         widget.master.workouts.add(workout);
+        workout.isAdded = true;
       });
     }
   }
@@ -482,9 +505,7 @@ extension ParseToString on weekdays {
 
 extension EnumParser on String {
   T toEnum<T>(List<T> values) {
-    return values.firstWhere(
-        (e) => e.toString().toLowerCase().split(".").last == '$this'.toLowerCase());
+    return values.firstWhere((e) =>
+        e.toString().toLowerCase().split(".").last == '$this'.toLowerCase());
   }
 }
-
-
