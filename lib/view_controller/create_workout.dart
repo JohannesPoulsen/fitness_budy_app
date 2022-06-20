@@ -5,7 +5,8 @@ import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
 
 class CreateWorkout extends StatefulWidget {
-  const CreateWorkout({Key? key, required this.master, this.workout}) : super(key: key);
+  const CreateWorkout({Key? key, required this.master, this.workout})
+      : super(key: key);
 
   final Master master;
   final Workout? workout;
@@ -15,7 +16,6 @@ class CreateWorkout extends StatefulWidget {
 }
 
 class _CreateWorkoutState extends State<CreateWorkout> {
-
   String workoutName = "";
 
   String typeValue = "Cardio";
@@ -32,12 +32,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   @override
   void initState() {
     super.initState();
-    if(widget.workout != null){
-      workoutName = widget.workout!.name!;
+    if (widget.workout != null) {
+      workoutName = widget.workout!.name;
       typeValue = widget.workout!.type!;
       public = widget.workout!.public;
       tagName = widget.workout!.tags!;
-
     }
   }
 
@@ -127,9 +126,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                       widget.workout!.workoutType = typeValue;
                       widget.workout!.tags = tagName;
                       Navigator.pop(context);
-                    }
-
-                    else {
+                    } else {
                       Workout workout = Workout(name: workoutName);
 
                       workout.tags = tagName;
@@ -137,9 +134,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                       final result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              Add_rutine(
-                                  master: widget.master, workout: workout),
+                          builder: (context) => Add_rutine(
+                              master: widget.master, workout: workout),
                         ),
                       );
 
@@ -147,18 +143,16 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                         widget.master.newWorkout(result);
                       }
                     }
-                  }
-                  else {
+                  } else {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return const ErrorBox(
                               errorName: 'Unnamed parameter.',
                               errorReason:
-                              'Give your workout a name, before continuing.');
+                                  'Give your workout a name, before continuing.');
                         });
                   }
-
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromARGB(255, 190, 24, 12),
