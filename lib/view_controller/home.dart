@@ -299,17 +299,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // const Center(
-            //   child: CircleAvatar(
-            //     backgroundImage: NetworkImage(
-            //         'https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
-            //     radius: 40.0,
-            //   ),
-            // ),
-            // Divider(
-            //   color: Colors.grey[600],
-            //   height: 60.0,
-            // ),
             Stack(
               children: <Widget>[
                 Align(

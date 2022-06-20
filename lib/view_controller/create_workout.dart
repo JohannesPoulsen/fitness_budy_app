@@ -47,7 +47,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
         title: const Text('Create Workout'),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+   body: SingleChildScrollView(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(
@@ -164,6 +165,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           )
         ],
       ),
+    ),
     );
   }
 
