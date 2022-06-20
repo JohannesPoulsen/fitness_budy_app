@@ -28,11 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
   double _counter = 0;
 
   List<Widget> widgetOptions = [];
-  List <String> days = ['Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag','Søndag'];
-  List <double> hours  = [];
+  List<String> days = [
+    'Mandag',
+    'Tirsdag',
+    'Onsdag',
+    'Torsdag',
+    'Fredag',
+    'Lørdag',
+    'Søndag'
+  ];
+  List<double> hours = [];
   String _dropdownvalue = 'Mandag';
-
-
 
   @override
   void initState() {
@@ -87,8 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -98,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _hourIncrease() {
     setState(() {
       _counter += 0.5;
-      if(_counter >=2){
-        _counter=2;
+      if (_counter >= 2) {
+        _counter = 2;
       }
     });
   }
@@ -110,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (_counter <= 0) {
         _counter = 0;
       }
-      
     });
   }
 
@@ -274,17 +277,17 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 DropdownButton<String>(
                   value: _dropdownvalue,
-                  items: days.map((String value){
+                  items: days.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue){
+                  onChanged: (newValue) {
                     setState(() {
                       _dropdownvalue = newValue!;
-                    });                   
-                  },                 
+                    });
+                  },
                 ),
               ],
             ),
@@ -341,131 +344,131 @@ class _HomeScreenState extends State<HomeScreen> {
                   maxY: 3,
                   lineBarsData: [
                     if (_dropdownvalue == 'Mandag')
-                    LineChartBarData(  
-                        spots:[
-                        FlSpot(1, _counter),
-                        const FlSpot(2, 0),
-                        const FlSpot(3, 0),
-                        const FlSpot(4, 0),
-                        const FlSpot(5, 0),
-                        const FlSpot(6, 0),
-                        const FlSpot(7, 0),
-                        ],        
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          FlSpot(1, _counter),
+                          const FlSpot(2, 0),
+                          const FlSpot(3, 0),
+                          const FlSpot(4, 0),
+                          const FlSpot(5, 0),
+                          const FlSpot(6, 0),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Tirsdag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        FlSpot(2, _counter),
-                        const FlSpot(3, 0),
-                        const FlSpot(4, 0),
-                        const FlSpot(5, 0),
-                        const FlSpot(6, 0),
-                        const FlSpot(7, 0),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),           
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          FlSpot(2, _counter),
+                          const FlSpot(3, 0),
+                          const FlSpot(4, 0),
+                          const FlSpot(5, 0),
+                          const FlSpot(6, 0),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Onsdag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 2),
-                        FlSpot(3, _counter),
-                        const FlSpot(4, 0),
-                        const FlSpot(5, 0),
-                        const FlSpot(6, 0),
-                        const FlSpot(7, 0),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          const FlSpot(2, 2),
+                          FlSpot(3, _counter),
+                          const FlSpot(4, 0),
+                          const FlSpot(5, 0),
+                          const FlSpot(6, 0),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Torsdag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 2),
-                        const FlSpot(3, 2),
-                        FlSpot(4, _counter),
-                        const FlSpot(5, 0),
-                        const FlSpot(6, 0),
-                        const FlSpot(7, 0),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          const FlSpot(2, 2),
+                          const FlSpot(3, 2),
+                          FlSpot(4, _counter),
+                          const FlSpot(5, 0),
+                          const FlSpot(6, 0),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Fredag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 2),
-                        const FlSpot(3, 2),
-                        const FlSpot(4, 2),
-                        FlSpot(5, _counter),
-                        const FlSpot(6, 0),
-                        const FlSpot(7, 0),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          const FlSpot(2, 2),
+                          const FlSpot(3, 2),
+                          const FlSpot(4, 2),
+                          FlSpot(5, _counter),
+                          const FlSpot(6, 0),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Lørdag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 2),
-                        const FlSpot(3, 2),
-                        const FlSpot(4, 2),
-                        const FlSpot(5, 2),
-                        FlSpot(6, _counter),
-                        const FlSpot(7, 0),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          const FlSpot(2, 2),
+                          const FlSpot(3, 2),
+                          const FlSpot(4, 2),
+                          const FlSpot(5, 2),
+                          FlSpot(6, _counter),
+                          const FlSpot(7, 0),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                     if (_dropdownvalue == 'Søndag')
-                    LineChartBarData(  
-                        spots:[
-                        const FlSpot(1, 2),
-                        const FlSpot(2, 2),
-                        const FlSpot(3, 2),
-                        const FlSpot(4, 2),
-                        const FlSpot(5, 2),
-                        const FlSpot(6, 2),
-                        FlSpot(7, _counter),
-                        ],             
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      barWidth: 10,
-                    ),      
+                      LineChartBarData(
+                        spots: [
+                          const FlSpot(1, 2),
+                          const FlSpot(2, 2),
+                          const FlSpot(3, 2),
+                          const FlSpot(4, 2),
+                          const FlSpot(5, 2),
+                          const FlSpot(6, 2),
+                          FlSpot(7, _counter),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b)
+                        ],
+                        barWidth: 10,
+                      ),
                   ],
                 ),
               ),
@@ -477,13 +480,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget tagTitle(workout) {
-    String title = "";
-    for (String t in workout.tags) {
-      title += t;
-    }
-    return Text(
-      title,
-    );
+    return Text(workout.tags);
   }
 
   void filterSearchResults(String query) {

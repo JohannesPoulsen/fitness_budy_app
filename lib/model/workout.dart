@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Workout {
   List<Rutine> workoutList = [];
-  List<String> tags = [];
+  String? tags;
   String name;
   final String? userId = FirebaseAuth.instance.currentUser?.uid;
   String? _workoutID;
@@ -51,8 +51,8 @@ class Workout {
     this.workoutList = workout;
   }
 
-  void addTags(String tags) {
-    this.tags.add(tags);
+  void set Tags(String tags) {
+    this.tags = tags;
   }
 
   Workout cloneWorkout() {
@@ -66,7 +66,7 @@ class Workout {
     var workout = Workout(name: json["name"]);
     workout.type = json["type"];
     workout._workoutID = json["workoutID"];
-    //workout.tags.add(json["tags"]);
+    workout.tags = json["tags"];
     return workout;
   }
 
