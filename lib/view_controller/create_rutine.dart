@@ -70,24 +70,20 @@ class _CreateRutineState extends State<CreateRutine> {
                   if (optionsValue == "Strength") {
                     toAdd = Strength(
                         name: name,
-                        public: false,
                         repetitions: repitions,
                         sets: duration);
                   } else if (optionsValue == "Cardio") {
                     toAdd = Cardio(
                         name: name,
-                        public: false,
                         distance: distance,
                         duration: duration);
                   } else {
                     toAdd = OtherRutine(
                         name: name,
-                        public: false,
                         repetitions: repitions,
                         duration: duration,
                         distance: distance);
                   }
-                  widget.master.newRutine(toAdd);
                   Navigator.pop(context, toAdd);
                 } else {
                   showDialog(
@@ -139,7 +135,7 @@ class _CreateRutineState extends State<CreateRutine> {
           ),
           Row(children: [
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repetitions", repitionsController),
             const SizedBox(
               width: 20,
             ),
@@ -163,7 +159,7 @@ class _CreateRutineState extends State<CreateRutine> {
             ),
             ExpTextField("Duration", durationController),
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repetitions", repitionsController),
             const SizedBox(
               width: 10,
             )
@@ -233,7 +229,7 @@ class _CreateRutineState extends State<CreateRutine> {
           print(e);
         }
       });
-    } else if (content == "Repitions") {
+    } else if (content == "Repetitions") {
       setState(() {
         try {
           repitions = int.parse(value);

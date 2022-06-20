@@ -9,7 +9,7 @@ import 'package:fitness_body_app/view_controller/login.dart';
 import 'services/firestore_download.dart';
 
 FocusNode myFocusNode = FocusNode();
-List<Workout>? publicWorkouts;
+List<Workout> publicWorkouts = [];
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

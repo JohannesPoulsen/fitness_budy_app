@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/forgot_password.dart';
 import 'package:fitness_body_app/view_controller/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -146,14 +147,14 @@ class _LoginState extends State<Login> {
                           if (!mounted) return;
                           tempUser = await getUserInfo(
                               email: auth.currentUser?.email ?? "");
+                          var userWorkouts = tempUser.getWorkouts();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) {
                               return HomeScreen(
                                 master: Master(
-                                  [],
-                                  [],
-                                  tempUser,
+                                  workouts: userWorkouts,
+                                  currentUser: tempUser,
                                 ),
                               );
                             }),
@@ -197,25 +198,27 @@ class _LoginState extends State<Login> {
                 ],
               ),
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    var testUser =
+                        await getUserInfo(email: "tester@tester.com");
+                    //     name: "tester",
+                    //     profileImagePath:
+                    //         "https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec",
+                    //     coverImagePath:
+                    //         'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
+                    //     email: "tester@tester.com",
+                    //     amountOfFollowers: 0,
+                    //     amountOfFollowing: 0,
+                    //     amountOfPublicWorkouts: 0,
+                    //     id: '');
+                    var userWorkouts = testUser.getWorkouts();
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreen(
                                 master: Master(
-                                    [],
-                                    [],
-                                    localUser(
-                                        name: "tester",
-                                        profileImagePath:
-                                            "https://www.inside.dtu.dk/gimage.ashx?i=VHJ1ZV9ffHxfX2h0dHBzOi8vd3d3LmR0dWJhc2VuLmR0dS5kay9zaG93aW1hZ2UuYXNweD9pZD0xNjk3MjlfX3x8X18xMDNfX3x8X18xNDBfX3x8X19UcnVlX198fF9fRmFsc2VfX3x8X19GYWxzZV9ffHxfXzBfX3x8X19fX3x8X18w",
-                                        coverImagePath:
-                                            'https://www.developingngo.org/wp-content/uploads/2018/01/2560x1440-gray-solid-color-background.jpg',
-                                        email: "tester@tester.com",
-                                        amountOfFollowers: 0,
-                                        amountOfFollowing: 0,
-                                        amountOfPublicWorkouts: 0,
-                                        id: '')),
+                                    workouts: userWorkouts,
+                                    currentUser: testUser),
                               )),
                     );
                   },

@@ -195,7 +195,7 @@ class _SignUpState extends State<SignUp> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen(
-                                      master: Master([], [], user),
+                                      master: Master(workouts: [], currentUser: user),
                                     )),
                           );
                         } on FirebaseAuthException catch (e) {

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_body_app/model/workout.dart';
-
 import '../model/cardio.dart';
 import '../model/other_rutine.dart';
 import '../model/rutine.dart';
@@ -41,6 +41,7 @@ class FirestoreDownload {
   }
 
   static Future<List<Rutine>> getRutines(workoutID) async {
+    await Firebase.initializeApp();
     List<Rutine> rutines = [];
     var cardioCollection = await FirebaseFirestore.instance
         .collection("publicWorkouts")
@@ -61,7 +62,6 @@ class FirestoreDownload {
     for (var cardioDoc in cardioCollection.docs) {
       var cardio = Cardio(
         name: cardioDoc.data()["name"],
-        public: true,
       );
       cardio.distance = cardioDoc.data()["distance"];
       cardio.duration = cardioDoc.data()["duration"];
@@ -70,7 +70,6 @@ class FirestoreDownload {
     for (var strengthDoc in strengthCollection.docs) {
       var strength = Strength(
         name: strengthDoc.data()["name"],
-        public: true,
       );
       strength.sets = strengthDoc.data()["sets"];
       strength.repetitions = strengthDoc.data()["repetitions"];
@@ -79,7 +78,6 @@ class FirestoreDownload {
     for (var otherDoc in otherCollection.docs) {
       var other = OtherRutine(
         name: otherDoc.data()["name"],
-        public: true,
       );
       other.duration = otherDoc.data()["duration"];
       other.repetitions = otherDoc.data()["repetitions"];
