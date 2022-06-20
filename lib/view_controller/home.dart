@@ -20,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List? workouts;
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  var items = <String>[];
+  final duplicateItems = publicWorkouts;
+  var items = <Workout>[];
 
   String searchString = "";
   int _selectedIndex = 0;
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    items.addAll(duplicateItems);
+    items.addAll(duplicateItems!);
     widgetOptions = listOfWidgets();
   }
 
@@ -221,20 +221,19 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: publicWorkouts!.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color: tileColorInList(publicWorkouts![index].type),
+                  color: tileColorInList(items[index].type),
                   key: Key('$index'),
-                  //color: tileColorInList(widget.master.workouts[index].type),
                   child: ListTile(
                     trailing: IconButton(
                       icon: const Icon(Icons.add),
                       onPressed: () {},
                     ),
                     onTap: () {},
-                    title: Text(publicWorkouts![index].name),
-                    subtitle: tagTitle(publicWorkouts![index]),
+                    title: Text(items[index].name),
+                    subtitle: tagTitle(items[index]),
                   ),
                 );
               },
@@ -497,12 +496,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void filterSearchResults(String query) {
-    List<String> dummySearchList = <String>[];
-    dummySearchList.addAll(duplicateItems);
+    List<Workout> dummySearchList = <Workout>[];
+    dummySearchList.addAll(duplicateItems!);
     if (query.isNotEmpty) {
-      List<String> dummyListData = <String>[];
+      List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.contains(query)) {
+        if (item.name.contains(query)) {
           dummyListData.add(item);
         }
       }
@@ -514,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems);
+        items.addAll(duplicateItems!);
       });
     }
   }
