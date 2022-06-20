@@ -9,6 +9,7 @@ import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fitness_body_app/widgets/menu_items.dart';
 
 class Add_rutine extends StatefulWidget {
   final Master master;
@@ -86,7 +87,7 @@ class _AddRutineState extends State<Add_rutine> {
                       customItemsHeight: 8,
                       items: [
                         ...MenuItems.firstItems.map(
-                          (item) => DropdownMenuItem<MenuItem>(
+                          (item) => DropdownMenuItem<MenuItem2>(
                             value: item,
                             child: MenuItems.buildItem(item),
                           ),
@@ -242,38 +243,5 @@ class _AddRutineState extends State<Add_rutine> {
         rutines.add(r.name);
       }
     });
-  }
-}
-
-class MenuItem {
-  final String text;
-  final IconData icon;
-
-  const MenuItem({
-    required this.text,
-    required this.icon,
-  });
-}
-
-class MenuItems {
-  static const List<MenuItem> firstItems = [clone, delete];
-
-  static const clone = MenuItem(text: 'Clone', icon: Icons.copy);
-  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
-
-  static Widget buildItem(MenuItem item) {
-    return Row(
-      children: [
-        Icon(
-          item.icon,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Text(
-          item.text,
-        ),
-      ],
-    );
   }
 }

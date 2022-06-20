@@ -8,6 +8,10 @@ import 'package:fitness_body_app/view_controller/profile.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fitness_body_app/widgets/line_titles.dart';
 import 'package:fitness_body_app/services/firestore_download.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fitness_body_app/widgets/menu_items.dart';
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.master}) : super(key: key);
@@ -154,6 +158,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       title: Text(widget.master.workouts[index].workoutName),
                       subtitle: tagTitle(widget.master.workouts[index]),
+                      trailing: DropdownButton2(
+                        customButton: const Icon(
+                          Icons.more_vert,
+                        ),
+                        customItemsIndexes: const [2],
+                        customItemsHeight: 8,
+                        items: [
+                          ...MenuItems.secondItems.map(
+                                (item) => DropdownMenuItem<MenuItem2>(
+                              value: item,
+                              child: MenuItems.buildItem(item),
+                            ),
+                          ),
+                        ],
+                        onChanged: (value) async {
+                          switch (value) {
+                            case MenuItems.clone:
+                              setState(() {
+                                Workout w = widget.master.workouts[index].cloneWorkout();
+                                FirestoreUpload.uploadPublicWorkout(w);
+                                widget.master.newWorkout(w);
+                              });
+                              break;
+                            case MenuItems.edit:
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateWorkout(master: widget.master, workout: widget.master.workouts[index],)),
+                              );
+                              FirestoreUpload.uploadPublicWorkout(widget.master.workouts[index]);
+                              setState(() {});
+                              break;
+                          }
+                        },
+                        itemHeight: 48,
+                        itemPadding: const EdgeInsets.only(left: 16, right: 16),
+                        dropdownWidth: 160,
+                        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        dropdownElevation: 8,
+                        offset: const Offset(0, 8),
+                      ),
                     ),
                   );
                 },
@@ -261,6 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(
+                    heroTag: 'fl1',
                     hoverColor: Colors.orange,
                     onPressed: _hourIncrease,
                     backgroundColor: const Color(0xFF6fcd6b),
@@ -270,6 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: FloatingActionButton(
+                    heroTag: 'fl2',
                     hoverColor: Colors.orange,
                     onPressed: _hourDecrease,
                     backgroundColor: const Color(0xFF6fcd6b),
@@ -512,3 +562,5 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
+
+

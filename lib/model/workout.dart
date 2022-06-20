@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_body_app/model/cardio.dart';
+import 'package:fitness_body_app/model/other_rutine.dart';
 import 'package:fitness_body_app/model/rutine.dart';
+import 'package:fitness_body_app/model/strength.dart';
 import 'package:flutter/material.dart';
 
 class Workout {
@@ -10,6 +13,7 @@ class Workout {
   String? _workoutID;
   String? type;
   String? url;
+  bool public = false;
   bool isAdded = false;
   Workout({required this.name}) {
     this._workoutID = '${this.userId} ${this.name}';
@@ -58,7 +62,27 @@ class Workout {
   Workout cloneWorkout() {
     Workout workout = Workout(name: '${this.name} copy');
     workout.url = this.url;
-    addWorkout(this.workoutList);
+    workout.Tags = this.tags ?? '';
+    workout.workoutType = this.type ?? '';
+    List<Rutine> l = [];
+    for (var i = 0; i < workoutList.length; i++){
+      if (workoutList[i] is Cardio){
+        Cardio r = workoutList[i] as Cardio;
+        Cardio c = Cardio(name: r.name, public: r.public, distance:  r.distance, url: r.url, duration: r.duration);
+        l.add(c);
+      }
+      else if (workoutList[i] is Strength){
+        Strength r = workoutList[i] as Strength;
+        Strength c = Strength(name: r.name, public: r.public, repetitions: r.repetitions , url: r.url, sets: r.sets);
+        l.add(c);
+      }
+      else if (workoutList[i] is OtherRutine){
+        OtherRutine r = workoutList[i] as OtherRutine;
+        OtherRutine c = OtherRutine(name: r.name, public: r.public, repetitions: r.repetitions , url: r.url, distance: r.distance, duration: r.duration);
+        l.add(c);
+      }
+    }
+    workout.addWorkout(l);
     return workout;
   }
 

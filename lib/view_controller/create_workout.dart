@@ -5,19 +5,16 @@ import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
 
 class CreateWorkout extends StatefulWidget {
-  const CreateWorkout({Key? key, required this.master}) : super(key: key);
+  const CreateWorkout({Key? key, required this.master, this.workout}) : super(key: key);
 
   final Master master;
+  final Workout? workout;
 
   @override
   State<CreateWorkout> createState() => _CreateWorkoutState();
 }
 
 class _CreateWorkoutState extends State<CreateWorkout> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   String workoutName = "";
 
@@ -31,6 +28,18 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   String tagName = "";
 
   bool public = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.workout != null){
+      workoutName = widget.workout!.name!;
+      typeValue = widget.workout!.type!;
+      public = widget.workout!.public;
+      tagName = widget.workout!.tags!;
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +58,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Workout: "),
           ),
-          textFieldWidget("Enter workout name...", "workoutName"),
+          textFieldWidget("Enter workout name...", "workoutName", workoutName),
           const SizedBox(
             height: 25,
           ),
@@ -83,7 +92,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Tags: "),
           ),
-          textFieldWidget("Add tags...", "tagName"),
+          textFieldWidget("Add tags...", "tagName", tagName),
           const SizedBox(
             height: 10,
           ),
@@ -113,30 +122,43 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (workoutName.isNotEmpty) {
-                    Workout workout = Workout(name: workoutName);
-
-                    workout.tags = tagName;
-                    workout.workoutType = typeValue;
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            Add_rutine(master: widget.master, workout: workout),
-                      ),
-                    );
-                    if (result != null) {
-                      widget.master.newWorkout(result);
+                    if (widget.workout != null) {
+                      widget.workout!.workoutName = workoutName;
+                      widget.workout!.workoutType = typeValue;
+                      widget.workout!.tags = tagName;
+                      Navigator.pop(context);
                     }
-                  } else {
+
+                    else {
+                      Workout workout = Workout(name: workoutName);
+
+                      workout.tags = tagName;
+                      workout.workoutType = typeValue;
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Add_rutine(
+                                  master: widget.master, workout: workout),
+                        ),
+                      );
+
+                      if (result != null) {
+                        widget.master.newWorkout(result);
+                      }
+                    }
+                  }
+                  else {
                     showDialog(
                         context: context,
                         builder: (context) {
                           return const ErrorBox(
                               errorName: 'Unnamed parameter.',
                               errorReason:
-                                  'Give your workout a name, before continuing.');
+                              'Give your workout a name, before continuing.');
                         });
                   }
+
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromARGB(255, 190, 24, 12),
@@ -151,10 +173,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     );
   }
 
-  Widget textFieldWidget(tekst, content) {
+  Widget textFieldWidget(tekst, content, initial) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: TextField(
+        controller: TextEditingController()..text = '$initial',
         cursorColor: Colors.grey,
         onChanged: (value) {
           saveTextValue(content, value);
@@ -179,13 +202,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   void saveTextValue(content, value) {
     if (content == "workoutName") {
-      setState(() {
-        workoutName = value;
-      });
+      workoutName = value;
     } else {
-      setState(() {
-        tagName = value;
-      });
+      tagName = value;
     }
   }
 }
