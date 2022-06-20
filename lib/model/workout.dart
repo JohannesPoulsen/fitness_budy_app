@@ -68,21 +68,22 @@ class Workout {
     workout.url = this.url;
     workout.Tags = this.tags ?? '';
     workout.workoutType = this.type ?? '';
+    workout.public = this.public;
     List<Rutine> l = [];
     for (var i = 0; i < workoutList.length; i++){
       if (workoutList[i] is Cardio){
         Cardio r = workoutList[i] as Cardio;
-        Cardio c = Cardio(name: r.name, public: r.public, distance:  r.distance, url: r.url, duration: r.duration);
+        Cardio c = Cardio(name: r.name, distance:  r.distance, url: r.url, duration: r.duration);
         l.add(c);
       }
       else if (workoutList[i] is Strength){
         Strength r = workoutList[i] as Strength;
-        Strength c = Strength(name: r.name, public: r.public, repetitions: r.repetitions , url: r.url, sets: r.sets);
+        Strength c = Strength(name: r.name, repetitions: r.repetitions , url: r.url, sets: r.sets);
         l.add(c);
       }
       else if (workoutList[i] is OtherRutine){
         OtherRutine r = workoutList[i] as OtherRutine;
-        OtherRutine c = OtherRutine(name: r.name, public: r.public, repetitions: r.repetitions , url: r.url, distance: r.distance, duration: r.duration);
+        OtherRutine c = OtherRutine(name: r.name, repetitions: r.repetitions , url: r.url, distance: r.distance, duration: r.duration);
         l.add(c);
       }
     }

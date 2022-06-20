@@ -61,7 +61,6 @@ class FirestoreDownload {
     for (var cardioDoc in cardioCollection.docs) {
       var cardio = Cardio(
         name: cardioDoc.data()["name"],
-        public: true,
       );
       cardio.distance = cardioDoc.data()["distance"];
       cardio.duration = cardioDoc.data()["duration"];
@@ -70,7 +69,6 @@ class FirestoreDownload {
     for (var strengthDoc in strengthCollection.docs) {
       var strength = Strength(
         name: strengthDoc.data()["name"],
-        public: true,
       );
       strength.sets = strengthDoc.data()["sets"];
       strength.repetitions = strengthDoc.data()["repetitions"];
@@ -79,7 +77,6 @@ class FirestoreDownload {
     for (var otherDoc in otherCollection.docs) {
       var other = OtherRutine(
         name: otherDoc.data()["name"],
-        public: true,
       );
       other.duration = otherDoc.data()["duration"];
       other.repetitions = otherDoc.data()["repetitions"];

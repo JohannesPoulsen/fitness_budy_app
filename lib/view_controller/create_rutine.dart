@@ -70,19 +70,16 @@ class _CreateRutineState extends State<CreateRutine> {
                   if (optionsValue == "Strength") {
                     toAdd = Strength(
                         name: name,
-                        public: false,
                         repetitions: repitions,
                         sets: duration);
                   } else if (optionsValue == "Cardio") {
                     toAdd = Cardio(
                         name: name,
-                        public: false,
                         distance: distance,
                         duration: duration);
                   } else {
                     toAdd = OtherRutine(
                         name: name,
-                        public: false,
                         repetitions: repitions,
                         duration: duration,
                         distance: distance);

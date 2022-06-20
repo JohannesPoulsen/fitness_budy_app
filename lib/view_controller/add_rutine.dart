@@ -100,13 +100,13 @@ class _AddRutineState extends State<Add_rutine> {
                               if (listOfRutines[index] is Strength) {
                                 Strength clone =
                                     listOfRutines[index] as Strength;
-                                clone.newStrength(clone.name, clone.public,
+                                clone.newStrength(clone.name,
                                     clone.url, clone.repetitions, clone.sets);
                                 listOfRutines.add(clone);
                                 rutines.add(clone.name);
                               } else if (listOfRutines[index] is Cardio) {
                                 Cardio clone = listOfRutines[index] as Cardio;
-                                clone.newCardio(clone.name, clone.public,
+                                clone.newCardio(clone.name,
                                     clone.url, clone.distance, clone.duration);
                                 listOfRutines.add(clone);
                                 rutines.add(clone.name);
@@ -115,7 +115,6 @@ class _AddRutineState extends State<Add_rutine> {
                                     listOfRutines[index] as OtherRutine;
                                 clone.newOtherRutine(
                                     clone.name,
-                                    clone.public,
                                     clone.url,
                                     clone.distance,
                                     clone.duration,

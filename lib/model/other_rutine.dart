@@ -6,14 +6,13 @@ class OtherRutine extends Rutine {
   int? repetitions;
 
   OtherRutine(
-      {name, public, url, this.distance, this.duration, this.repetitions})
-      : super(name: name, public: public, url: url);
+      {name, url, this.distance, this.duration, this.repetitions})
+      : super(name: name, url: url);
 
-  OtherRutine newOtherRutine(String name, bool public, String? url,
+  OtherRutine newOtherRutine(String name, String? url,
       int? distance, int? duration, int? repetitions) {
     return OtherRutine(
         name: name,
-        public: public,
         url: url,
         distance: distance,
         duration: duration,
@@ -22,7 +21,6 @@ class OtherRutine extends Rutine {
 
   static Rutine fromJson(Map<String, dynamic> json) => OtherRutine(
       name: json["name"],
-      public: json["public"],
       //url: json["url"],
       distance: json["distance"],
       duration: json["duration"],
