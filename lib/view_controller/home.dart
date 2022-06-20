@@ -157,11 +157,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         customButton: const Icon(
                           Icons.more_vert,
                         ),
-                        customItemsIndexes: const [3],
+                        customItemsIndexes: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? const [3] : const [1],
                         customItemsHeight: 8,
-                        items: [
+                        items: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? [
                           ...MenuItems.secondItems.map(
                             (item) => DropdownMenuItem<MenuItem2>(
+                              value: item,
+                              child: MenuItems.buildItem(item),
+                            ),
+                          ),
+                        ] : [
+                          ...MenuItems.thirdItems.map(
+                                (item) => DropdownMenuItem<MenuItem2>(
                               value: item,
                               child: MenuItems.buildItem(item),
                             ),

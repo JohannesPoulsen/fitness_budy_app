@@ -9,7 +9,7 @@ class Workout {
   List<Rutine> workoutList = [];
   String? tags;
   String name;
-  final String? userId = FirebaseAuth.instance.currentUser?.uid;
+  String? userId = FirebaseAuth.instance.currentUser?.uid;
   String? _workoutID;
   String? type;
   String? url;
@@ -96,6 +96,7 @@ class Workout {
     workout.type = json["type"];
     workout._workoutID = json["workoutID"];
     workout.tags = json["tags"];
+    workout.userId = json["user"];
     return workout;
   }
 

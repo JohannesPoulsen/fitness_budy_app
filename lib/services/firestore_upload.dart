@@ -33,6 +33,7 @@ class FirestoreUpload {
       "name": workout.name,
       "type": workout.type,
       "tags": workout.tags,
+      "user": workout.userId,
     };
     await firestoreWorkoutDocument.set(workoutForUpload);
 

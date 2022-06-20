@@ -34,6 +34,7 @@ class FirestoreDownload {
         workout.workoutList = await getRutines(doc.id);
         workout.type = doc.data()["type"];
         workout.tags = doc.data()["tags"];
+        workout.userId = doc.data()["user"];
         workoutList.add(workout);
       }
     }

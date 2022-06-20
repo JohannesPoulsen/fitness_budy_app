@@ -14,6 +14,7 @@ class MenuItem2 {
 class MenuItems {
   static const List<MenuItem2> firstItems = [clone, delete];
   static const List<MenuItem2> secondItems = [edit, clone, delete];
+  static const List<MenuItem2> thirdItems = [clone];
 
   static const clone = MenuItem2(text: 'Clone', icon: Icons.copy);
   static const delete = MenuItem2(text: 'Delete', icon: Icons.delete);
