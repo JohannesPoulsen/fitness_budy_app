@@ -192,6 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   widget.master.workouts[index]);
                               setState(() {});
                               break;
+                            case MenuItems.delete:
+                              break;
                           }
                         },
                         itemHeight: 48,
