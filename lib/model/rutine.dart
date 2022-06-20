@@ -5,9 +5,6 @@ class Rutine {
 
   Rutine({required this.name, this.url});
 
-  Rutine newRutine(String name, bool public) {
-    return Rutine(name: name, public: public);
-  }
   Added(){
     isAdded = true;
   }

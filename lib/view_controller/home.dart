@@ -200,9 +200,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               break;
                             case MenuItems.delete:
                               String n = widget.master.workouts[index].name;
-                              showAlertDialog(context, widget.master, index,
-                                  "Are you sure you want to delete your workout $n");
-                              widget.master.workouts.remove(index);
+                              await showDialog(context: context, builder: (context) => AlertBox(master: widget.master, index: index,
+                                  alertText: "Are you sure you want to delete your workout $n"));
                               setState(() {});
                               break;
                           }
@@ -511,46 +510,44 @@ extension EnumParser on String {
   }
 }
 
-showAlertDialog(
-    BuildContext context, Master master, int index, String alertText) {
-  Widget cancelButton = FlatButton(
-    child: Text("Cancel"),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
-  Widget continueButton = FlatButton(
-    child: Text("Confirm"),
-    onPressed: () {
-      Navigator.of(context).pop();
-      final t1 = FirebaseFirestore.instance
-          .collection('publicWorkouts')
-          .doc(master.workouts[index].id);
-      final t2 = FirebaseFirestore.instance
-          .collection('users')
-          .doc(master.currentUser.email);
+class AlertBox extends StatelessWidget {
+  const AlertBox({Key? key, required this.alertText, required this.index,required this.master}) : super(key: key);
 
-      t1.delete();
-      t2.update({
-        'workoutIDs': FieldValue.arrayRemove([master.workouts[index].id]),
-      });
-      master.workouts.remove(index);
-    },
-  );
+  final String alertText;
+  final int index;
+  final Master master;
 
-  AlertDialog alert = AlertDialog(
-    title: Text("Warning!"),
-    content: Text(alertText),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Warning!"),
+      content: Text(alertText),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        TextButton(
+          child: Text("Confirm"),
+          onPressed: () {
+            final t1 = FirebaseFirestore.instance
+                .collection('publicWorkouts')
+                .doc(master.workouts[index].id);
+            final t2 = FirebaseFirestore.instance
+                .collection('users')
+                .doc(master.currentUser.email);
 
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+            t1.delete();
+            t2.update({
+              'workoutIDs': FieldValue.arrayRemove([master.workouts[index].id]),
+            });
+            master.workouts.removeAt(index);
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
 }

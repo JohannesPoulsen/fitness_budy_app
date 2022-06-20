@@ -62,11 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: const Color.fromARGB(255, 190, 24, 12),
         onPressed: () {
           FirebaseAuth.instance.signOut();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>  const Login()),
-          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => Login()),
+                  (Route<dynamic> route) => false);
         },
         label: const Text('Log out'),
       ),

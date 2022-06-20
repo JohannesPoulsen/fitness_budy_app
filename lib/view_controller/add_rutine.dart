@@ -39,7 +39,7 @@ class _AddRutineState extends State<Add_rutine> {
       appBar: AppBar(
         title: const Text('Add Rutines'),
         backgroundColor: Colors.black,
-        actions: <Widget>[
+        actions: (widget.master.currentUser.id == widget.workout.userId) ? <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
@@ -59,7 +59,7 @@ class _AddRutineState extends State<Add_rutine> {
               ),
             ),
           ),
-        ],
+        ] : [],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -176,7 +176,7 @@ class _AddRutineState extends State<Add_rutine> {
           ],
         ),
       ),
-      floatingActionButton: addRutineKnap(),
+      floatingActionButton: (widget.master.currentUser.id == widget.workout.userId) ? addRutineKnap() : Container(),
     );
   }
 

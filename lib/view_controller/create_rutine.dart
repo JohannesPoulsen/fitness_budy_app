@@ -49,7 +49,7 @@ class _CreateRutineState extends State<CreateRutine> {
           Strength s = r as Strength;
           optionsValue = 'Strength';
 
-          duration = s.duration!;
+          duration = s.sets!;
           repitions = s.repetitions!;
           name = s.name;
         }
