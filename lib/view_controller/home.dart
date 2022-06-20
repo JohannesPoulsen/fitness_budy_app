@@ -470,7 +470,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (query.isNotEmpty) {
       List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.name.contains(query)) {
+        if (item.name.contains(query) || item.tags!.contains(query)) {
           dummyListData.add(item);
         }
       }
