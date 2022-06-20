@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String searchString = "";
   int _selectedIndex = 0;
-  double _counter = 0;
 
   List<Widget> widgetOptions = [];
   List<String> days = [
@@ -79,15 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_run),
-            label: 'Træninger',
+            label: 'Workouts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
-            label: 'Søg',
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Udvikling',
+            label: 'Progress',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -250,8 +249,8 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: editingController,
               cursorColor: const Color.fromARGB(255, 190, 24, 12),
               decoration: const InputDecoration(
-                labelText: "Søg",
-                hintText: "Søg",
+                labelText: "Search",
+                hintText: "Search",
                 labelStyle:
                     (TextStyle(color: Color.fromARGB(255, 190, 24, 12))),
                 prefixIcon: Icon(
@@ -386,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Center(
               child: Text(
-                'Min uge',
+                'My week',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -501,7 +500,7 @@ enum weekdays {
 
 extension ParseToString on weekdays {
   String weekdayToString() {
-    return this.toString().split('.').last;
+    return toString().split('.').last;
   }
 }
 
