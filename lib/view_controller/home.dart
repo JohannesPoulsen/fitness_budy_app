@@ -20,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List? workouts;
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  var items = <String>[];
+  final duplicateItems = publicWorkouts;
+  var items = <Workout>[];
 
   String searchString = "";
   int _selectedIndex = 0;
@@ -32,12 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List <double> hours  = [0,0,0,0,0,0,0];
   weekdays _dropdownvalue = weekdays.Monday;
 
-
-
   @override
   void initState() {
     super.initState();
-    items.addAll(duplicateItems);
+    items.addAll(duplicateItems!);
     widgetOptions = listOfWidgets();
   }
 
@@ -86,29 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-_doSomething() {
-  if (_dropdownvalue == 'Mandag'){
-    _counter =  hours[0];
-  }
-  else if (_dropdownvalue == 'Tirsdag'){
-    _counter = hours[1];
-  }
-  else if (_dropdownvalue == 'Onsdag'){
-    _counter = hours[2];
-  }
-  else if (_dropdownvalue == 'Torsdag'){
-    _counter = hours[3];
-  }
-  else if (_dropdownvalue == 'Fredag'){
-    _counter = hours[4];
-  }
-  else if (_dropdownvalue == 'Lørdag'){
-    _counter = hours[5];
-  }
-  else if (_dropdownvalue == 'Søndag'){
-    _counter = hours[6];
-  }
-}
+
 
 
   void _onItemTapped(int index) {
@@ -235,14 +211,22 @@ _doSomething() {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: publicWorkouts!.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(publicWorkouts![index].name),
-                  trailing: const Icon(
-                    Icons.fitness_center,
+                return Card(
+                  color: tileColorInList(items[index].type),
+                  key: Key('$index'),
+                  child: ListTile(
+                    trailing: IconButton(
+                      icon: iconForSearchList(items[index]),
+                      onPressed: () {
+                        addWorkoutToWorkout(items[index]);
+                      },
+                    ),
+                    onTap: () {},
+                    title: Text(items[index].name),
+                    subtitle: tagTitle(items[index]),
                   ),
-                  onTap: () {},
                 );
               },
             ),
@@ -297,7 +281,7 @@ _doSomething() {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue){
+                  onChanged: (newValue) {
                     setState(() {
                       _dropdownvalue = newValue!.toEnum(weekdays.values)!;
                     });                   
@@ -387,22 +371,32 @@ _doSomething() {
   }
 
   Widget tagTitle(workout) {
-    String title = "";
-    for (String t in workout.tags) {
-      title += t;
+    return Text(workout.tags);
+  }
+
+  Widget iconForSearchList(workout) {
+    if (widget.master.workouts.contains(workout)) {
+      return const Icon(Icons.check);
     }
-    return Text(
-      title,
-    );
+    return const Icon(Icons.add);
+  }
+
+  void addWorkoutToWorkout(workout) {
+    if (!widget.master.workouts.contains(workout)) {
+      widget.master.currentUser.addWorkoutID(workout.workoutID);
+      setState(() {
+        widget.master.workouts.add(workout);
+      });
+    }
   }
 
   void filterSearchResults(String query) {
-    List<String> dummySearchList = <String>[];
-    dummySearchList.addAll(duplicateItems);
+    List<Workout> dummySearchList = <Workout>[];
+    dummySearchList.addAll(duplicateItems!);
     if (query.isNotEmpty) {
-      List<String> dummyListData = <String>[];
+      List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.contains(query)) {
+        if (item.name.contains(query) || item.tags!.contains(query)) {
           dummyListData.add(item);
         }
       }
@@ -414,7 +408,7 @@ _doSomething() {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems);
+        items.addAll(duplicateItems!);
       });
     }
   }

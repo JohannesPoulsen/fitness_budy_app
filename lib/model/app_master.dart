@@ -16,7 +16,7 @@ class Master {
   void newWorkout(Workout w) {
     w.isAdded = true;
     workouts.add(w);
-    currentUser.workoutIDs.add(w.id!);
+    currentUser.addWorkoutID(w.id!);
   }
 
   void deleteRutine(int index) {

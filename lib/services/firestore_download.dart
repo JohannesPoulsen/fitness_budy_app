@@ -28,11 +28,12 @@ class FirestoreDownload {
     if (workoutsFromFirebase.docs.isNotEmpty) {
       for (var doc in workoutsFromFirebase.docs) {
         String name = doc.data()["name"];
-        print(doc.data());
         workoutIDList.add(doc.id);
         var workout = Workout(name: name);
+        workout.workoutID = doc.id;
         workout.workoutList = await getRutines(doc.id);
         workout.type = doc.data()["type"];
+        workout.tags = doc.data()["tags"];
         workoutList.add(workout);
       }
     }

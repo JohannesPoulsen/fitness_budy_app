@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class localUser {
   String id;
@@ -45,6 +47,7 @@ class localUser {
         'instagram': instagram,
         'spotify': spotify,
         'facebook': facebook,
+        "workoutIDs": workoutIDs,
       };
 
   static localUser fromJson(Map<String, dynamic> json) => localUser(
@@ -62,4 +65,11 @@ class localUser {
         spotify: json['center'],
         facebook: json['center'],
       );
+
+  void addWorkoutID(String id) {
+    workoutIDs.add(id);
+    FirebaseFirestore.instance.collection("users").doc(email).update({
+      "workoutIDs": FieldValue.arrayUnion([id]),
+    });
+  }
 }
