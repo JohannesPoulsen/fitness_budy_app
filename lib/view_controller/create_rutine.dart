@@ -7,16 +7,17 @@ import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
 
 class CreateRutine extends StatefulWidget {
-  const CreateRutine({Key? key, required this.master}) : super(key: key);
+  const CreateRutine({Key? key, required this.master, this.rutine}) : super(key: key);
   final Master master;
+  final Rutine? rutine;
   @override
   _CreateRutineState createState() => _CreateRutineState();
 }
 
 class _CreateRutineState extends State<CreateRutine> {
-  var durationController = TextEditingController();
-  var distanceController = TextEditingController();
-  var repitionsController = TextEditingController();
+  TextEditingController durationController = TextEditingController();
+  TextEditingController distanceController = TextEditingController();
+  TextEditingController repitionsController = TextEditingController();
   String optionsValue = 'Cardio';
 
   int duration = 0;
@@ -31,7 +32,43 @@ class _CreateRutineState extends State<CreateRutine> {
   ];
 
   @override
+  initState() {
+    super.initState();
+    if (widget.rutine !=null){
+      Rutine r = widget.rutine!;
+      if(r.isAdded){
+        if(r is Cardio){
+          Cardio c = r as Cardio;
+          optionsValue = 'Cardio';
+
+          duration = c.duration!;
+          distance = c.distance!;
+          name = c.name;
+        }
+        if(r is Strength){
+          Strength s = r as Strength;
+          optionsValue = 'Strength';
+
+          duration = s.duration!;
+          repitions = s.repetitions!;
+          name = s.name;
+        }
+        if(r is OtherRutine){
+          OtherRutine o = r as OtherRutine;
+          optionsValue = 'Other';
+
+          duration = o.duration!;
+          distance = o.distance!;
+          repitions = o.repetitions!;
+          name = o.name;
+        }
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Rutine To Workout"),
@@ -121,11 +158,11 @@ class _CreateRutineState extends State<CreateRutine> {
           ),
           Row(children: [
             const SizedBox(width: 10),
-            ExpTextField("Distance", distanceController),
+            ExpTextField("Distance", distanceController, distance),
             const SizedBox(
               width: 20,
             ),
-            ExpTextField("Duration", durationController),
+            ExpTextField("Duration", durationController, duration),
             const SizedBox(width: 10),
           ])
         ],
@@ -139,11 +176,11 @@ class _CreateRutineState extends State<CreateRutine> {
           ),
           Row(children: [
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repitions", repitionsController, repitions),
             const SizedBox(
               width: 20,
             ),
-            ExpTextField("Sets", durationController),
+            ExpTextField("Sets", durationController, duration),
             const SizedBox(width: 10),
           ])
         ],
@@ -157,13 +194,13 @@ class _CreateRutineState extends State<CreateRutine> {
           ),
           Row(children: [
             const SizedBox(width: 10),
-            ExpTextField("Distance", distanceController),
+            ExpTextField("Distance", distanceController, distance),
             const SizedBox(
               width: 10,
             ),
-            ExpTextField("Duration", durationController),
+            ExpTextField("Duration", durationController, duration),
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repitions", repitionsController, repitions),
             const SizedBox(
               width: 10,
             )
@@ -173,11 +210,11 @@ class _CreateRutineState extends State<CreateRutine> {
     }
   }
 
-  Widget ExpTextField(content, controller) {
+  Widget ExpTextField(content, TextEditingController controller, initial) {
     return Expanded(
       child: TextField(
         cursorColor: Colors.grey,
-        controller: controller,
+        controller: controller..text = '$initial',
         onChanged: (value) {
           setValue(content, value);
         },
@@ -203,6 +240,7 @@ class _CreateRutineState extends State<CreateRutine> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextField(
+        controller: TextEditingController()..text = name,
         cursorColor: Colors.grey,
         onChanged: (value) {
           name = value;
@@ -226,29 +264,23 @@ class _CreateRutineState extends State<CreateRutine> {
 
   void setValue(content, value) {
     if (content == "Duration" || content == "Sets") {
-      setState(() {
-        try {
+      try {
           duration = int.parse(value);
         } catch (e) {
           print(e);
         }
-      });
     } else if (content == "Repitions") {
-      setState(() {
-        try {
+      try {
           repitions = int.parse(value);
         } catch (e) {
           print(e);
         }
-      });
     } else {
-      setState(() {
         try {
           distance = int.parse(value);
         } catch (e) {
           print(e);
         }
-      });
     }
   }
 }

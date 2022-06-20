@@ -82,7 +82,7 @@ class _AddRutineState extends State<Add_rutine> {
                       customButton: const Icon(
                         Icons.more_vert,
                       ),
-                      customItemsIndexes: const [2],
+                      customItemsIndexes: const [3],
                       customItemsHeight: 8,
                       items: [
                         ...MenuItems.firstItems.map(
@@ -93,8 +93,25 @@ class _AddRutineState extends State<Add_rutine> {
                               ),
                         ),
                       ],
-                      onChanged: (value) {
+                      onChanged: (value) async{
                         switch (value) {
+                          case MenuItems.edit:
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateRutine(master: widget.master, rutine: listOfRutines[index])),
+                            );
+                            if (result != null) {
+                              Rutine r = result as Rutine;
+                              setState(() {
+                                r.Added();
+                                rutines.insert(index, r.name);
+                                listOfRutines.insert(index, r);
+                                rutines.removeAt(index+1);
+                                listOfRutines.removeAt(index+1);
+                              });
+                            }
+                            break;
                           case MenuItems.clone:
                             setState(() {
                               if(listOfRutines[index] is Strength){
@@ -191,9 +208,11 @@ class _AddRutineState extends State<Add_rutine> {
                 builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
+            Rutine r = result as Rutine;
             setState(() {
-              rutines.add(result.name);
-              listOfRutines.add(result);
+              r.Added();
+              rutines.add(r.name);
+              listOfRutines.add(r);
             });
           }
         },
@@ -209,9 +228,11 @@ class _AddRutineState extends State<Add_rutine> {
                 builder: (context) => CreateRutine(master: widget.master)),
           );
           if (result != null) {
+            Rutine r = result as Rutine;
             setState(() {
-              rutines.add(result.name);
-              listOfRutines.add(result);
+              r.Added();
+              rutines.add(r.name);
+              listOfRutines.add(r);
             });
           }
         },
@@ -251,8 +272,9 @@ class MenuItem {
 }
 
 class MenuItems {
-  static const List<MenuItem> firstItems = [clone, delete];
+  static const List<MenuItem> firstItems = [edit, clone, delete];
 
+  static const edit = MenuItem(text: 'Edit', icon: Icons.edit);
   static const clone = MenuItem(text: 'Clone', icon: Icons.copy);
   static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
 
