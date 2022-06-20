@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_body_app/main.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
@@ -8,6 +9,10 @@ import 'package:fitness_body_app/view_controller/profile.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fitness_body_app/widgets/line_titles.dart';
 import 'package:fitness_body_app/services/firestore_download.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fitness_body_app/widgets/menu_items.dart';
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.master}) : super(key: key);
@@ -20,15 +25,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List? workouts;
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  var items = <String>[];
+  final duplicateItems = publicWorkouts;
+  var items = <Workout>[];
 
   String searchString = "";
   int _selectedIndex = 0;
-  double _counter = 0;
 
   List<Widget> widgetOptions = [];
-  List<String> days = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag' ];
+  List<String> days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+  List<double> hours = [0, 0, 0, 0, 0, 0, 0];
+  weekdays _dropdownvalue = weekdays.Monday;
 
   @override
   void initState() {
@@ -65,15 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_run),
-            label: 'Træninger',
+            label: 'Workouts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
-            label: 'Søg',
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Udvikling',
+            label: 'Progress',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -91,20 +105,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _hourIncrease() {
     setState(() {
-      _counter += 0.5;
-      if(_counter >=2){
-        _counter=2;
-      }
+      if (hours[weekdays.values.indexOf(_dropdownvalue)] >= 3) return;
+      hours[weekdays.values.indexOf(_dropdownvalue)] += 0.5;
     });
   }
 
   void _hourDecrease() {
     setState(() {
-      _counter -= 0.5;
-      if (_counter <= 0) {
-        _counter = 0;
-      }
-      
+      if (hours[weekdays.values.indexOf(_dropdownvalue)] <= 0) return;
+      hours[weekdays.values.indexOf(_dropdownvalue)] -= 0.5;
     });
   }
 
@@ -145,6 +154,70 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       title: Text(widget.master.workouts[index].workoutName),
                       subtitle: tagTitle(widget.master.workouts[index]),
+                      trailing: DropdownButton2(
+                        customButton: const Icon(
+                          Icons.more_vert,
+                        ),
+                        customItemsIndexes: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? const [3] : const [1],
+                        customItemsHeight: 8,
+                        items: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? [
+                          ...MenuItems.secondItems.map(
+                            (item) => DropdownMenuItem<MenuItem2>(
+                              value: item,
+                              child: MenuItems.buildItem(item),
+                            ),
+                          ),
+                        ] : [
+                          ...MenuItems.thirdItems.map(
+                                (item) => DropdownMenuItem<MenuItem2>(
+                              value: item,
+                              child: MenuItems.buildItem(item),
+                            ),
+                          ),
+                        ],
+                        onChanged: (value) async {
+                          switch (value) {
+                            case MenuItems.clone:
+                              setState(() {
+                                Workout w = widget.master.workouts[index]
+                                    .cloneWorkout();
+                                FirestoreUpload.uploadPublicWorkout(w);
+                                widget.master.newWorkout(w);
+                              });
+                              break;
+                            case MenuItems.edit:
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateWorkout(
+                                          master: widget.master,
+                                          workout:
+                                              widget.master.workouts[index],
+                                        )),
+                              );
+                              FirestoreUpload.uploadPublicWorkout(widget.master.workouts[index]);
+                              setState(() {});
+                              break;
+                            case MenuItems.delete:
+                              String n = widget.master.workouts[index].name;
+                              showAlertDialog(context, widget.master, index,
+                                  "Are you sure you want to delete your workout $n");
+                              widget.master.workouts.remove(index);
+                              setState(() {});
+                              break;
+                          }
+                        },
+                        itemHeight: 48,
+                        itemPadding: const EdgeInsets.only(left: 16, right: 16),
+                        dropdownWidth: 160,
+                        dropdownPadding:
+                            const EdgeInsets.symmetric(vertical: 6),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        dropdownElevation: 8,
+                        offset: const Offset(0, 8),
+                      ),
                     ),
                   );
                 },
@@ -188,8 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: editingController,
               cursorColor: const Color.fromARGB(255, 190, 24, 12),
               decoration: const InputDecoration(
-                labelText: "Søg",
-                hintText: "Søg",
+                labelText: "Search",
+                hintText: "Search",
                 labelStyle:
                     (TextStyle(color: Color.fromARGB(255, 190, 24, 12))),
                 prefixIcon: Icon(
@@ -212,14 +285,22 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: publicWorkouts!.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(publicWorkouts![index].name),
-                  trailing: const Icon(
-                    Icons.fitness_center,
+                return Card(
+                  color: tileColorInList(items[index].type),
+                  key: Key('$index'),
+                  child: ListTile(
+                    trailing: IconButton(
+                      icon: iconForSearchList(items[index]),
+                      onPressed: () {
+                        addWorkoutToWorkout(items[index]);
+                      },
+                    ),
+                    onTap: () {},
+                    title: Text(items[index].name),
+                    subtitle: tagTitle(items[index]),
                   ),
-                  onTap: () {},
                 );
               },
             ),
@@ -230,36 +311,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Center(
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://previews.123rf.com/images/jemastock/jemastock1708/jemastock170807787/83959218-muscular-man-flexing-biceps-avatar-fitness-icon-image-vector-illustration-design.jpg'),
-                radius: 40.0,
-              ),
-            ),
-            Divider(
-              color: Colors.grey[600],
-              height: 60.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                DropdownButton<String>(
-                  items: days.map((String value){
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue){},                 
-                ),
-              ],
-            ),
             Stack(
               children: <Widget>[
                 Align(
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(
+                    heroTag: 'fl1',
                     hoverColor: Colors.orange,
                     onPressed: _hourIncrease,
                     backgroundColor: const Color(0xFF6fcd6b),
@@ -269,6 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: FloatingActionButton(
+                    heroTag: 'fl2',
                     hoverColor: Colors.orange,
                     onPressed: _hourDecrease,
                     backgroundColor: const Color(0xFF6fcd6b),
@@ -278,10 +336,29 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DropdownButton<String>(
+                  value: _dropdownvalue.weekdayToString(),
+                  items: days.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _dropdownvalue = newValue!.toEnum(weekdays.values)!;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Antal timer trænet i dag',
+                  'Amount of hours trained ${_dropdownvalue.weekdayToString()}:',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 18.0,
@@ -294,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '$_counter',
+                  hours[_dropdownvalue.index].toString(),
                   style: const TextStyle(
                     color: Color(0xFF6fcd6b),
                     fontSize: 24.0,
@@ -305,49 +382,59 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(
               width: 50,
-              height: 50,
+              height: 10,
             ),
             const Center(
               child: Text(
-                'Min uge',
+                'My week',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(
-              width: 400,
-              height: 400,
-              child: LineChart(
-                LineChartData(
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(show: false),
-                  titlesData: LineTitles.getTitleData(),
-                  minX: 0,
-                  maxX: 8,
-                  minY: 0,
-                  maxY: 3,
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: [
-                        FlSpot(1, _counter),
-                        const FlSpot(2, 0),
-                        const FlSpot(3, 2),
-                        const FlSpot(4, 0),
-                        const FlSpot(5, 1),
-                        const FlSpot(6, 1),
-                        const FlSpot(7, 2),
-                      ],
-                      isCurved: true,
-                      colors: [
-                        const Color(0xFF6fcd6b),
-                        const Color(0xFF6fcd6b)
-                      ],
-                      
-                      barWidth: 10,
-                    ),
-                  ],
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+              child: SizedBox(
+                width: 400,
+                height: 400,
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(show: false),
+                    titlesData: LineTitles.getTitleData(),
+                    minX: 0,
+                    maxX: 8,
+                    minY: 0,
+                    maxY: 4,
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: [
+                          FlSpot(weekdays.Monday.index.toDouble(),
+                              hours[weekdays.Monday.index]),
+                          FlSpot(weekdays.Tuesday.index.toDouble(),
+                              hours[weekdays.Tuesday.index]),
+                          FlSpot(weekdays.Wednesday.index.toDouble(),
+                              hours[weekdays.Wednesday.index]),
+                          FlSpot(weekdays.Thursday.index.toDouble(),
+                              hours[weekdays.Thursday.index]),
+                          FlSpot(weekdays.Friday.index.toDouble(),
+                              hours[weekdays.Friday.index]),
+                          FlSpot(weekdays.Saturday.index.toDouble(),
+                              hours[weekdays.Saturday.index]),
+                          FlSpot(weekdays.Sunday.index.toDouble(),
+                              hours[weekdays.Sunday.index]),
+                        ],
+                        isCurved: true,
+                        colors: [
+                          const Color(0xFF6fcd6b),
+                          const Color(0xFF6fcd6b),
+                        ],
+                        barWidth: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -358,22 +445,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget tagTitle(workout) {
-    String title = "";
-    for (String t in workout.tags) {
-      title += t;
+    return Text(workout.tags);
+  }
+
+  Widget iconForSearchList(workout) {
+    if (widget.master.workouts.contains(workout)) {
+      return const Icon(Icons.check);
     }
-    return Text(
-      title,
-    );
+    return const Icon(Icons.add);
+  }
+
+  void addWorkoutToWorkout(workout) {
+    if (!widget.master.workouts.contains(workout)) {
+      setState(() {
+        widget.master.addWorkout(workout);
+        workout.isAdded = true;
+      });
+    }
   }
 
   void filterSearchResults(String query) {
-    List<String> dummySearchList = <String>[];
+    List<Workout> dummySearchList = <Workout>[];
     dummySearchList.addAll(duplicateItems);
     if (query.isNotEmpty) {
-      List<String> dummyListData = <String>[];
+      List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.contains(query)) {
+        if (item.name.contains(query) || item.tags!.contains(query)) {
           dummyListData.add(item);
         }
       }
@@ -389,4 +486,71 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
   }
+}
+
+enum weekdays {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+
+extension ParseToString on weekdays {
+  String weekdayToString() {
+    return toString().split('.').last;
+  }
+}
+
+extension EnumParser on String {
+  T toEnum<T>(List<T> values) {
+    return values.firstWhere((e) =>
+        e.toString().toLowerCase().split(".").last == '$this'.toLowerCase());
+  }
+}
+
+showAlertDialog(
+    BuildContext context, Master master, int index, String alertText) {
+  Widget cancelButton = FlatButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget continueButton = FlatButton(
+    child: Text("Confirm"),
+    onPressed: () {
+      Navigator.of(context).pop();
+      final t1 = FirebaseFirestore.instance
+          .collection('publicWorkouts')
+          .doc(master.workouts[index].id);
+      final t2 = FirebaseFirestore.instance
+          .collection('users')
+          .doc(master.currentUser.email);
+
+      t1.delete();
+      t2.update({
+        'workoutIDs': FieldValue.arrayRemove([master.workouts[index].id]),
+      });
+      master.workouts.remove(index);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text("Warning!"),
+    content: Text(alertText),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

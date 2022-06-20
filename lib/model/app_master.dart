@@ -3,24 +3,22 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/model/local_user.dart';
 
 class Master {
-  List<Rutine> rutines = [];
   List<Workout> workouts = [];
   localUser currentUser;
 
-  Master(this.rutines, this.workouts, this.currentUser);
+  Master({required this.workouts, required this.currentUser}){}
 
-  void newRutine(Rutine r) {
-    rutines.add(r);
-  }
 
   void newWorkout(Workout w) {
     w.isAdded = true;
     workouts.add(w);
-    currentUser.workoutIDs.add(w.id!);
+    currentUser.addWorkoutID(w.id!);
   }
 
-  void deleteRutine(int index) {
-    rutines.remove(index);
+  void addWorkout(Workout w) {
+    w.isAdded = false;
+    workouts.add(w);
+    currentUser.addWorkoutID(w.id!);
   }
 
   void deleteWorkout(int index) {

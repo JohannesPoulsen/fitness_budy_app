@@ -9,6 +9,7 @@ import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fitness_body_app/widgets/menu_items.dart';
 
 class Add_rutine extends StatefulWidget {
   final Master master;
@@ -82,15 +83,14 @@ class _AddRutineState extends State<Add_rutine> {
                       customButton: const Icon(
                         Icons.more_vert,
                       ),
-                      customItemsIndexes: const [3],
+                      customItemsIndexes: const [2],
                       customItemsHeight: 8,
                       items: [
                         ...MenuItems.firstItems.map(
-                              (item) =>
-                              DropdownMenuItem<MenuItem>(
-                                value: item,
-                                child: MenuItems.buildItem(item),
-                              ),
+                          (item) => DropdownMenuItem<MenuItem2>(
+                            value: item,
+                            child: MenuItems.buildItem(item),
+                          ),
                         ),
                       ],
                       onChanged: (value) async{
@@ -114,26 +114,33 @@ class _AddRutineState extends State<Add_rutine> {
                             break;
                           case MenuItems.clone:
                             setState(() {
-                              if(listOfRutines[index] is Strength){
-                                Strength clone = listOfRutines[index] as Strength;
-                                clone.newStrength(clone.name, clone.public, clone.url, clone.repetitions, clone.duration);
+                              if (listOfRutines[index] is Strength) {
+                                Strength clone =
+                                    listOfRutines[index] as Strength;
+                                clone.newStrength(clone.name,
+                                    clone.url, clone.repetitions, clone.sets);
                                 listOfRutines.add(clone);
                                 rutines.add(clone.name);
-                              }
-                              else if(listOfRutines[index] is Cardio){
+                              } else if (listOfRutines[index] is Cardio) {
                                 Cardio clone = listOfRutines[index] as Cardio;
-                                clone.newCardio(clone.name, clone.public, clone.url, clone.distance, clone.duration);
+                                clone.newCardio(clone.name,
+                                    clone.url, clone.distance, clone.duration);
                                 listOfRutines.add(clone);
                                 rutines.add(clone.name);
-                              }
-                              else if(listOfRutines[index] is OtherRutine){
-                                OtherRutine clone = listOfRutines[index] as OtherRutine;
-                                clone.newOtherRutine(clone.name, clone.public, clone.url, clone.distance, clone.duration, clone.repetitions);
+                              } else if (listOfRutines[index] is OtherRutine) {
+                                OtherRutine clone =
+                                    listOfRutines[index] as OtherRutine;
+                                clone.newOtherRutine(
+                                    clone.name,
+                                    clone.url,
+                                    clone.distance,
+                                    clone.duration,
+                                    clone.repetitions);
                                 listOfRutines.add(clone);
                                 rutines.add(clone.name);
                               }
                             });
-                            break ;
+                            break;
                           case MenuItems.delete:
                             removeRutine(index);
                             break;
@@ -188,8 +195,7 @@ class _AddRutineState extends State<Add_rutine> {
       return Text(
           "Distance: ${rutine.distance} - Duration: ${rutine.duration}");
     } else if (rutine is Strength) {
-      return Text(
-          "Repetitions: ${rutine.repetitions} - Sets: ${rutine.duration}");
+      return Text("Repetitions: ${rutine.repetitions} - Sets: ${rutine.sets}");
     } else {
       return Text(
           "Repetitions: ${rutine.repetitions} - Duration: ${rutine.duration} - Distance: ${rutine.distance}");
@@ -257,40 +263,5 @@ class _AddRutineState extends State<Add_rutine> {
         rutines.add(r.name);
       }
     });
-  }
-}
-
-
-class MenuItem {
-  final String text;
-  final IconData icon;
-
-  const MenuItem({
-    required this.text,
-    required this.icon,
-  });
-}
-
-class MenuItems {
-  static const List<MenuItem> firstItems = [edit, clone, delete];
-
-  static const edit = MenuItem(text: 'Edit', icon: Icons.edit);
-  static const clone = MenuItem(text: 'Clone', icon: Icons.copy);
-  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
-
-  static Widget buildItem(MenuItem item) {
-    return Row(
-      children: [
-        Icon(
-            item.icon,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Text(
-          item.text,
-        ),
-      ],
-    );
   }
 }

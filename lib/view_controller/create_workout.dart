@@ -3,22 +3,20 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class CreateWorkout extends StatefulWidget {
-  const CreateWorkout({Key? key, required this.master}) : super(key: key);
+  const CreateWorkout({Key? key, required this.master, this.workout})
+      : super(key: key);
 
   final Master master;
+  final Workout? workout;
 
   @override
   State<CreateWorkout> createState() => _CreateWorkoutState();
 }
 
 class _CreateWorkoutState extends State<CreateWorkout> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   String workoutName = "";
 
   String typeValue = "Cardio";
@@ -33,13 +31,25 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   bool public = false;
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.workout != null) {
+      workoutName = widget.workout!.name;
+      typeValue = widget.workout!.type!;
+      public = widget.workout!.public;
+      tagName = widget.workout!.tags!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Workout'),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+   body: SingleChildScrollView(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(
@@ -49,7 +59,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Workout: "),
           ),
-          textFieldWidget("Enter workout name...", "workoutName"),
+          textFieldWidget("Enter workout name...", "workoutName", workoutName),
           const SizedBox(
             height: 25,
           ),
@@ -83,7 +93,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
             padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
             child: Text("Tags: "),
           ),
-          textFieldWidget("Add tags...", "tagName"),
+          textFieldWidget("Add tags...", "tagName", tagName),
           const SizedBox(
             height: 10,
           ),
@@ -113,19 +123,27 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (workoutName.isNotEmpty) {
-                    Workout workout = Workout(name: workoutName);
+                    if (widget.workout != null) {
+                      widget.workout!.workoutName = workoutName;
+                      widget.workout!.workoutType = typeValue;
+                      widget.workout!.tags = tagName;
+                      Navigator.pop(context);
+                    } else {
+                      Workout workout = Workout(name: workoutName);
 
-                    workout.addTags(tagName);
-                    workout.workoutType = typeValue;
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            Add_rutine(master: widget.master, workout: workout),
-                      ),
-                    );
-                    if (result != null) {
-                      widget.master.newWorkout(result);
+                      workout.tags = tagName;
+                      workout.workoutType = typeValue;
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Add_rutine(
+                              master: widget.master, workout: workout),
+                        ),
+                      );
+
+                      if (result != null) {
+                        widget.master.newWorkout(result);
+                      }
                     }
                   } else {
                     showDialog(
@@ -148,13 +166,15 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           )
         ],
       ),
+    ),
     );
   }
 
-  Widget textFieldWidget(tekst, content) {
+  Widget textFieldWidget(tekst, content, initial) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: TextField(
+        controller: TextEditingController()..text = '$initial',
         cursorColor: Colors.grey,
         onChanged: (value) {
           saveTextValue(content, value);
@@ -179,13 +199,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
   void saveTextValue(content, value) {
     if (content == "workoutName") {
-      setState(() {
-        workoutName = value;
-      });
+      workoutName = value;
     } else {
-      setState(() {
-        tagName = value;
-      });
+      tagName = value;
     }
   }
 }

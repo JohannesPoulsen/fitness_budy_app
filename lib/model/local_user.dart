@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fitness_body_app/model/workout.dart';
+import 'package:fitness_body_app/main.dart';
 
 class localUser {
   String id;
@@ -45,21 +49,47 @@ class localUser {
         'instagram': instagram,
         'spotify': spotify,
         'facebook': facebook,
+        "workoutIDs": workoutIDs,
       };
 
-  static localUser fromJson(Map<String, dynamic> json) => localUser(
-        id: json['id'],
-        profileImagePath: json['profileImagePath'],
-        coverImagePath: json['coverImagePath'],
-        name: json['name'],
-        email: json['email'],
-        center: json['center'],
-        amountOfPublicWorkouts: json['amountOfPublicWorkouts'],
-        amountOfFollowing: json['amountOfFollowing'],
-        amountOfFollowers: json['amountOfFollowers'],
-        twitter: json['center'],
-        instagram: json['center'],
-        spotify: json['center'],
-        facebook: json['center'],
-      );
+  static localUser fromJson(Map<String, dynamic> json) {
+    var user = localUser(
+      id: json['id'],
+      profileImagePath: json['profileImagePath'],
+      coverImagePath: json['coverImagePath'],
+      name: json['name'],
+      email: json['email'],
+      center: json['center'],
+      amountOfPublicWorkouts: json['amountOfPublicWorkouts'],
+      amountOfFollowing: json['amountOfFollowing'],
+      amountOfFollowers: json['amountOfFollowers'],
+      twitter: json['center'],
+      instagram: json['center'],
+      spotify: json['center'],
+      facebook: json['center'],
+    );
+    user.workoutIDs = (json["workoutIDs"] is Iterable
+        ? List.from(json["workoutIDs"])
+        : null)!;
+    return user;
+  }
+
+  void addWorkoutID(String id) {
+    workoutIDs.add(id);
+    FirebaseFirestore.instance.collection("users").doc(email).update({
+      "workoutIDs": FieldValue.arrayUnion([id]),
+    });
+  }
+
+  List<Workout> getWorkouts() {
+    List<Workout> workouts = [];
+    for (Workout w in publicWorkouts) {
+      for (var id in workoutIDs) {
+        if (id == w.workoutID) {
+          workouts.add(w);
+        }
+      }
+    }
+    return workouts;
+  }
 }
