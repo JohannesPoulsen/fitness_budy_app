@@ -3,6 +3,7 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
+import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class CreateWorkout extends StatefulWidget {
   const CreateWorkout({Key? key, required this.master, this.workout})
@@ -123,19 +124,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 onPressed: () async {
                   if (workoutName.isNotEmpty) {
                     if (widget.workout != null) {
-                      late Workout w;
-                      if (widget.workout!.isAdded){
-                        w = widget.workout!;
-                      }
-                      else {
-                        w = widget.workout!.cloneWorkout();
-                        widget.master.currentUser
-                        widget.master.workouts.remove(widget.workout!);
-                        widget.master.newWorkout(w);
-                      }
-                      w.workoutName = workoutName;
-                      w.workoutType = typeValue;
-                      w.tags = tagName;
+                      widget.workout!.workoutName = workoutName;
+                      widget.workout!.workoutType = typeValue;
+                      widget.workout!.tags = tagName;
                       Navigator.pop(context);
                     } else {
                       Workout workout = Workout(name: workoutName);

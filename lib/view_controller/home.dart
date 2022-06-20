@@ -187,8 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               widget.master.workouts[index],
                                         )),
                               );
-                              FirestoreUpload.uploadPublicWorkout(
-                                  widget.master.workouts[index]);
+                              FirestoreUpload.uploadPublicWorkout(widget.master.workouts[index]);
                               setState(() {});
                               break;
                             case MenuItems.delete:
