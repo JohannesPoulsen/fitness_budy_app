@@ -135,7 +135,7 @@ class _CreateRutineState extends State<CreateRutine> {
           ),
           Row(children: [
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repetitions", repitionsController),
             const SizedBox(
               width: 20,
             ),
@@ -159,7 +159,7 @@ class _CreateRutineState extends State<CreateRutine> {
             ),
             ExpTextField("Duration", durationController),
             const SizedBox(width: 10),
-            ExpTextField("Repitions", repitionsController),
+            ExpTextField("Repetitions", repitionsController),
             const SizedBox(
               width: 10,
             )
@@ -229,7 +229,7 @@ class _CreateRutineState extends State<CreateRutine> {
           print(e);
         }
       });
-    } else if (content == "Repitions") {
+    } else if (content == "Repetitions") {
       setState(() {
         try {
           repitions = int.parse(value);
