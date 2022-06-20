@@ -83,13 +83,19 @@ class localUser {
 
   List<Workout> getWorkouts() {
     List<Workout> workouts = [];
+    List<String> exists = [];
     for (Workout w in publicWorkouts) {
       for (var id in workoutIDs) {
         if (id == w.workoutID) {
           workouts.add(w);
+          exists.add(w.workoutID!);
         }
       }
     }
+    this.workoutIDs = exists;
+    FirebaseFirestore.instance.collection("users").doc(email).update({
+      "workoutIDs": exists,
+    });
     return workouts;
   }
 }
