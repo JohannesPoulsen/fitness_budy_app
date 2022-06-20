@@ -216,7 +216,9 @@ class _LoginState extends State<Login> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreen(
-                                master: Master(workouts: userWorkouts,currentUser: testUser),
+                                master: Master(
+                                    workouts: userWorkouts,
+                                    currentUser: testUser),
                               )),
                     );
                   },
