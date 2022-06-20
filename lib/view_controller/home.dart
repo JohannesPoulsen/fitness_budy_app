@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         customButton: const Icon(
                           Icons.more_vert,
                         ),
-                        customItemsIndexes: const [2],
+                        customItemsIndexes: const [3],
                         customItemsHeight: 8,
                         items: [
                           ...MenuItems.secondItems.map(
@@ -459,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (query.isNotEmpty) {
       List<Workout> dummyListData = <Workout>[];
       for (var item in dummySearchList) {
-        if (item.name.contains(query)) {
+        if (item.name.contains(query) || item.tags!.contains(query)) {
           dummyListData.add(item);
         }
       }
