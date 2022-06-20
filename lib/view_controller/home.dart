@@ -486,13 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget tagTitle(workout) {
-    String title = "";
-    for (String t in workout.tags) {
-      title += t;
-    }
-    return Text(
-      title,
-    );
+    return Text(workout.tags);
   }
 
   void filterSearchResults(String query) {

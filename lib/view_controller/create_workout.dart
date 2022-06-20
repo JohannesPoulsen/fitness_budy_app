@@ -115,7 +115,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   if (workoutName.isNotEmpty) {
                     Workout workout = Workout(name: workoutName);
 
-                    workout.addTags(tagName);
+                    workout.tags = tagName;
                     workout.workoutType = typeValue;
                     final result = await Navigator.push(
                       context,
