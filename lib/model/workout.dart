@@ -68,7 +68,7 @@ class Workout {
     workout.url = this.url;
     workout.Tags = this.tags ?? '';
     workout.workoutType = this.type ?? '';
-    workout.public = this.public;
+    workout.public = false;
     List<Rutine> l = [];
     for (var i = 0; i < workoutList.length; i++){
       if (workoutList[i] is Cardio){

@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List? workouts;
   TextEditingController editingController = TextEditingController();
-  final duplicateItems = publicWorkouts;
+  var duplicateItems = publicWorkouts;
   var items = <Workout>[];
 
   String searchString = "";
@@ -97,7 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
+    if (index == 1){
+      publicWorkouts = await FirestoreDownload.getWorkouts();
+      duplicateItems = publicWorkouts;
+      items = [];
+      items.addAll(duplicateItems);
+      widgetOptions = listOfWidgets();
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -158,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         customButton: const Icon(
                           Icons.more_vert,
                         ),
-                        customItemsIndexes: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? const [3] : const [1],
+                        customItemsIndexes: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? const [3] : const [2],
                         customItemsHeight: 8,
                         items: (widget.master.currentUser.id == widget.master.workouts[index].userId) ? [
                           ...MenuItems.secondItems.map(
@@ -201,7 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             case MenuItems.delete:
                               String n = widget.master.workouts[index].name;
                               await showDialog(context: context, builder: (context) => AlertBox(master: widget.master, index: index,
-                                  alertText: "Are you sure you want to delete your workout $n"));
+                                  alertText: "Are you sure you want to delete your workout $n", delete: true,));
+                              setState(() {});
+                              break;
+                            case MenuItems.remove:
+                              String n = widget.master.workouts[index].name;
+                              await showDialog(context: context, builder: (context) => AlertBox(master: widget.master, index: index,
+                                  alertText: "Are you sure you want to remove $n", delete: false,));
                               setState(() {});
                               break;
                           }
@@ -291,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   key: Key('$index'),
                   child: ListTile(
                     trailing: IconButton(
-                      icon: iconForSearchList(items[index]),
+                      icon: (widget.master.containsWorkout(items[index])) ? Icon(Icons.check) : Icon(Icons.add),
                       onPressed: () {
                         addWorkoutToWorkout(items[index]);
                       },
@@ -447,15 +460,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Text(workout.tags);
   }
 
-  Widget iconForSearchList(workout) {
-    if (widget.master.workouts.contains(workout)) {
-      return const Icon(Icons.check);
-    }
-    return const Icon(Icons.add);
-  }
 
   void addWorkoutToWorkout(workout) {
-    if (!widget.master.workouts.contains(workout)) {
+    if (!widget.master.containsWorkout(workout)) {
       setState(() {
         widget.master.addWorkout(workout);
         workout.isAdded = true;
@@ -511,11 +518,12 @@ extension EnumParser on String {
 }
 
 class AlertBox extends StatelessWidget {
-  const AlertBox({Key? key, required this.alertText, required this.index,required this.master}) : super(key: key);
+  const AlertBox({Key? key, required this.alertText, required this.index,required this.master, required this.delete}) : super(key: key);
 
   final String alertText;
   final int index;
   final Master master;
+  final bool delete;
 
   @override
   Widget build(BuildContext context) {
@@ -539,7 +547,9 @@ class AlertBox extends StatelessWidget {
                 .collection('users')
                 .doc(master.currentUser.email);
 
-            t1.delete();
+            if(this.delete){
+              t1.delete();
+            }
             t2.update({
               'workoutIDs': FieldValue.arrayRemove([master.workouts[index].id]),
             });

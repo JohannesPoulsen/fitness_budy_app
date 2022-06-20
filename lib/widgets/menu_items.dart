@@ -14,11 +14,12 @@ class MenuItem2 {
 class MenuItems {
   static const List<MenuItem2> firstItems = [clone, delete];
   static const List<MenuItem2> secondItems = [edit, clone, delete];
-  static const List<MenuItem2> thirdItems = [clone];
+  static const List<MenuItem2> thirdItems = [clone, remove];
 
   static const clone = MenuItem2(text: 'Clone', icon: Icons.copy);
   static const delete = MenuItem2(text: 'Delete', icon: Icons.delete);
   static const edit = MenuItem2(text: 'Edit', icon: Icons.edit);
+  static const remove = MenuItem2(text: 'Remove', icon: Icons.remove);
 
   static Widget buildItem(MenuItem2 item) {
     return Row(

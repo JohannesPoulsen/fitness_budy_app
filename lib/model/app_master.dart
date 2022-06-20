@@ -24,4 +24,13 @@ class Master {
   void deleteWorkout(int index) {
     workouts.remove(index);
   }
+
+  bool containsWorkout(Workout w){
+    for (int i = 0; i< workouts.length; i++){
+      if (workouts[i].id == w.id){
+        return true;
+      }
+    }
+    return false;
+  }
 }
