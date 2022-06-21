@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/main.dart';
 
