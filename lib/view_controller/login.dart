@@ -19,7 +19,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  late localUser tempUser;
+  late LocalUser tempUser;
 
   @override
   initState() {
@@ -201,11 +201,11 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<localUser> getUserInfo({required String email}) async {
+  Future<LocalUser> getUserInfo({required String email}) async {
     final userDocument =
         FirebaseFirestore.instance.collection('users').doc(email);
     final snapshot = await userDocument.get();
 
-    return localUser.fromJson(snapshot.data()!);
+    return LocalUser.fromJson(snapshot.data()!);
   }
 }

@@ -3,7 +3,7 @@ import 'package:fitness_body_app/model/local_user.dart';
 
 class Master {
   List<Workout> workouts = [];
-  localUser currentUser;
+  LocalUser currentUser;
 
   Master({required this.workouts, required this.currentUser}){}
 

@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/main.dart';
 
-class localUser {
+class LocalUser {
   String id;
   String profileImagePath;
   String coverImagePath;
@@ -19,7 +19,7 @@ class localUser {
   String? facebook;
   List<String> workoutIDs = [];
 
-  localUser({
+  LocalUser({
     required this.id,
     required this.name,
     required this.profileImagePath,
@@ -52,8 +52,8 @@ class localUser {
         "workoutIDs": workoutIDs,
       };
 
-  static localUser fromJson(Map<String, dynamic> json) {
-    var user = localUser(
+  static LocalUser fromJson(Map<String, dynamic> json) {
+    var user = LocalUser(
       id: json['id'],
       profileImagePath: json['profileImagePath'],
       coverImagePath: json['coverImagePath'],

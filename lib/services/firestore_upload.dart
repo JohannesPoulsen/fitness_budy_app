@@ -7,7 +7,7 @@ import 'package:fitness_body_app/model/local_user.dart';
 import 'package:fitness_body_app/model/cardio.dart';
 
 class FirestoreUpload {
-  static Future uploadUser(localUser user) async {
+  static Future uploadUser(LocalUser user) async {
     final firestoreDocument =
         FirebaseFirestore.instance.collection("users").doc(user.email);
 

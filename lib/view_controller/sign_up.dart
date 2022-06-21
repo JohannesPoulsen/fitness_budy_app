@@ -179,7 +179,7 @@ class _SignUpState extends State<SignUp> {
                                   });
 
                           if (!mounted) return;
-                          localUser user = localUser(
+                          LocalUser user = LocalUser(
                               name: auth.currentUser?.displayName ?? '',
                               profileImagePath:
                                   'https://www.inside.dtu.dk/gimage.ashx?i=VHJ1ZV9ffHxfX2h0dHBzOi8vd3d3LmR0dWJhc2VuLmR0dS5kay9zaG93aW1hZ2UuYXNweD9pZD0xNjk3MjlfX3x8X18xMDNfX3x8X18xNDBfX3x8X19UcnVlX198fF9fRmFsc2VfX3x8X19GYWxzZV9ffHxfXzBfX3x8X19fX3x8X18w',
