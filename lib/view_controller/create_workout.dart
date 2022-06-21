@@ -3,7 +3,6 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/model/app_master.dart';
 import 'package:fitness_body_app/view_controller/add_rutine.dart';
 import 'package:fitness_body_app/widgets/error_box.dart';
-import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class CreateWorkout extends StatefulWidget {
   const CreateWorkout({Key? key, required this.master, this.workout})

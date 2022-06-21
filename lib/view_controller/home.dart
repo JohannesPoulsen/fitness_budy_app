@@ -11,7 +11,6 @@ import 'package:fitness_body_app/widgets/line_titles.dart';
 import 'package:fitness_body_app/services/firestore_download.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fitness_body_app/widgets/menu_items.dart';
-import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
 
 class HomeScreen extends StatefulWidget {

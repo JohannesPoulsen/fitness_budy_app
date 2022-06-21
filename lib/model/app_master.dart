@@ -1,4 +1,3 @@
-import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/model/local_user.dart';
 

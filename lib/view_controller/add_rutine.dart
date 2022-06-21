@@ -7,7 +7,6 @@ import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/create_rutine.dart';
 import 'package:fitness_body_app/model/rutine.dart';
 import 'package:fitness_body_app/services/firestore_upload.dart';
-import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fitness_body_app/widgets/menu_items.dart';
 

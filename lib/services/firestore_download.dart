@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_body_app/model/workout.dart';
-import '../model/cardio.dart';
-import '../model/other_rutine.dart';
-import '../model/rutine.dart';
-import '../model/strength.dart';
+import 'package:fitness_body_app/model/cardio.dart';
+import 'package:fitness_body_app/model/other_rutine.dart';
+import 'package:fitness_body_app/model/rutine.dart';
+import 'package:fitness_body_app/model/strength.dart';
 
 class FirestoreDownload {
   static List<String> workoutIDList = [];

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_body_app/model/workout.dart';
 import 'package:fitness_body_app/view_controller/forgot_password.dart';
 import 'package:fitness_body_app/view_controller/sign_up.dart';
 import 'package:flutter/material.dart';
